@@ -90,6 +90,7 @@ class Scanner:
         self.lexer = lex.lex(module=self, **kwargs)
 
     def input(self, text):
+        self.data = text
         self.lexer.input(text)
         return
 
@@ -99,3 +100,13 @@ class Scanner:
     def find_column(self, input, token):
         line_start = input.rfind('\n', 0, token.lexpos) + 1
         return (token.lexpos - line_start) + 1
+
+    def find_tok_column(self, token):
+        if token.type in self.literals:
+            # token.lexer is a type of ply.lex.Lexer
+            line_start = token.lexer.data.rfind('\n', 0, token.lexpos) + 1
+            return (token.lexpos - line_start) + 1
+        else:
+            # token.lexer is a type of scanner.Scanner
+            line_start = token.lexer.lexdata.rfind('\n', 0, token.lexpos) + 1
+            return (token.lexpos - line_start) + 1

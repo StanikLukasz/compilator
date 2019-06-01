@@ -19,7 +19,6 @@ precedence = (
 def p_error(p):
     if p:
         print("Syntax error at line {0}, column {1}: LexToken({2}, '{3}')".format(p.lineno, s.find_tok_column(p), p.type, p.value))
-#        print("Syntax error at line {0}, column #TODO#: LexToken({1}, '{2}')".format(p.lineno, p.type, p.value))
     else:
         print("Unexpected end of input")
 
