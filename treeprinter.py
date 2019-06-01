@@ -31,13 +31,18 @@ class TreePrinter:
     def printTree(self, indent=0):
         TreePrinter.printIndented('WHILE', indent)
         self.condition.printTree(indent + 1)
-        self.instruction_lines.printTree(indent + 1)
+        self.instruction.printTree(indent + 1)
 
     @addToClass(AST.Condition)
     def printTree(self, indent=0):
-        TreePrinter.printIndented(self.op, indent)
+        #TreePrinter.printIndented(self.op, indent)
+        self.op.printTree(indent)
         self.left.printTree(indent + 1)
         self.right.printTree(indent + 1)
+
+    @addToClass(AST.String)
+    def printTree(self, indent=0):
+        TreePrinter.printIndented(self.content, indent)
 
     @addToClass(AST.Error)
     def printTree(self, indent=0):
@@ -45,6 +50,6 @@ class TreePrinter:
         # fill in the body
 
 
+
     # define printTree for other classes
     # ...
-

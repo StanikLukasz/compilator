@@ -32,15 +32,19 @@ class IfElse(Node):
         self.else_instruction = else_instruction
 
 class WhileLoop(Node):
-    def __init__(self, condition, instruction_line):
+    def __init__(self, condition, instruction):
         self.condition = condition
-        self.instruction = instruction_line
+        self.instruction = instruction
 
 class Condition(Node):
     def __init__(self, op, left, right):
         self.op = op
         self.left = left
         self.right = right
+
+class String(Node):
+    def __init__(self, content):
+        self.content = content
 
 # ...
 # fill out missing classes

@@ -2,6 +2,7 @@
 
 import scanner
 import ply.yacc as yacc
+import AST
 
 s = scanner.Scanner()
 
@@ -29,13 +30,20 @@ def p_error(p):
 def p_program(p):
     """program : instruction_lines
                | empty"""
+    p[0] = AST.Program(p[1])
 
 def p_empty(p):
     """empty : """
+    #todo what type
 
 def p_instructions(p):
     """instruction_lines : instruction_lines instruction_line
                          | instruction_line"""
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = p[1] + [p[2]]
+
 
 def p_instruction_line(p):
     """instruction_line : instruction ';'
@@ -43,13 +51,19 @@ def p_instruction_line(p):
                         | while_loop
                         | for_loop
                         | code_block"""
+    p[0] = p[1]
 
 def p_if_else(p):
     """if_else : IF condition instruction_line
                | IF condition instruction_line ELSE instruction_line"""
+    if len(p) == 4:
+        p[0] = AST.IfElse(p[2], p[3])
+    else:
+        p[0] = AST.IfElse(p[2], p[3], p[5])
 
 def p_while_loop(p):
     """while_loop : WHILE condition instruction_line"""
+    p[0] = AST.WhileLoop(p[2], p[3])
 
 def p_for_loop(p):
     """for_loop : FOR ID '=' range instruction_line"""
@@ -63,12 +77,14 @@ def p_instruction(p):
                    | CONTINUE
                    | BREAK
                    | returning"""
+    p[0] = p[1]
 
 
 # INSTRUCTION TYPES
 
 def p_assignment(p):
     """assignment : identifier assignment_op expression"""
+    p[0] = AST.Assignment(p[2], p[1], p[3])
 
 def p_printing(p):
     """printing : PRINT array_line"""
@@ -91,9 +107,11 @@ def p_assignment_op(p):
 
 def p_condition(p):
     """condition : '(' bool_expression ')'"""
+    p[0] = p[2]
 
 def p_bool_expression(p):
     """bool_expression : expression comparison_op expression"""
+    p[0] = AST.Condition(p[2], p[1], p[3])
 
 def p_comparison_op(p):
     """comparison_op : '<'
@@ -102,6 +120,7 @@ def p_comparison_op(p):
                      | NEQ
                      | GEQ
                      | LEQ"""
+    p[0] = AST.String(p[1])
 
 
 # NEEDED FOR LOOPS AND "IF" STATEMENT
@@ -120,6 +139,7 @@ def p_expression(p):
                   | negation
                   | transposition
                   | expression_group"""
+    p[0] = p[1]
 
 
 # ARRAY DEFINITION
@@ -162,14 +182,18 @@ def p_negation(p):
 def p_elementary(p):
     """elementary : id_or_number
                   | STRING"""
+    p[0] = AST.String(p[1])
 
 def p_id_or_number(p):
     """id_or_number : identifier
                     | number"""
+    p[0] = p[1]
 
 def p_identifier(p):
     """identifier : ID '[' array_line ']'
                   | ID"""
+    if len(p) == 2:
+        p[0] = p[1]
 
 def p_number(p):
     """number : INTNUM
