@@ -17,8 +17,7 @@ class TreePrinter:
 
     @addToClass(AST.IntNum)
     def printTree(self, indent=0):
-        pass
-        # fill in the body
+        TreePrinter.printIndented(str(self.value), indent)
 
 
     @addToClass(AST.Error)
