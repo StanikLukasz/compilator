@@ -1,0 +1,3715 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> instruction_lines
+Rule 2     program -> empty
+Rule 3     empty -> <empty>
+Rule 4     instruction_lines -> instruction_lines instruction_line
+Rule 5     instruction_lines -> instruction_line
+Rule 6     instruction_line -> instruction ;
+Rule 7     instruction -> assignment
+Rule 8     instruction -> while_loop
+Rule 9     instruction -> for_loop
+Rule 10    instruction -> if_else
+Rule 11    instruction -> printing
+Rule 12    instruction -> CONTINUE
+Rule 13    instruction -> BREAK
+Rule 14    instruction -> returning
+Rule 15    assignment -> identifier assignment_op expression
+Rule 16    while_loop -> WHILE condition statements
+Rule 17    for_loop -> FOR ID = range statements
+Rule 18    if_else -> IF condition statements
+Rule 19    if_else -> IF condition statements ELSE statements
+Rule 20    printing -> PRINT array_line
+Rule 21    returning -> RETURN elementary
+Rule 22    assignment_op -> =
+Rule 23    assignment_op -> ADDASSIGN
+Rule 24    assignment_op -> SUBASSIGN
+Rule 25    assignment_op -> MULASSIGN
+Rule 26    assignment_op -> DIVASSIGN
+Rule 27    condition -> ( bool_expression )
+Rule 28    bool_expression -> expression comparison_op expression
+Rule 29    comparison_op -> <
+Rule 30    comparison_op -> >
+Rule 31    comparison_op -> EQ
+Rule 32    comparison_op -> NEQ
+Rule 33    comparison_op -> GEQ
+Rule 34    comparison_op -> LEQ
+Rule 35    statements -> { program }
+Rule 36    statements -> instruction_line
+Rule 37    range -> id_or_number : id_or_number
+Rule 38    expression -> expression_binary
+Rule 39    expression -> array
+Rule 40    expression -> elementary
+Rule 41    expression -> array_special
+Rule 42    expression -> negation
+Rule 43    expression -> transposition
+Rule 44    array -> [ array_lines ]
+Rule 45    array_lines -> array_lines ; array_line
+Rule 46    array_lines -> array_line
+Rule 47    array_line -> array_line , expression
+Rule 48    array_line -> expression
+Rule 49    array_special -> ZEROS array_special_specifier
+Rule 50    array_special -> ONES array_special_specifier
+Rule 51    array_special -> EYE array_special_specifier
+Rule 52    array_special_specifier -> ( id_or_number )
+Rule 53    transposition -> ID '
+Rule 54    transposition -> array '
+Rule 55    negation -> - expression
+Rule 56    elementary -> id_or_number
+Rule 57    elementary -> STRING
+Rule 58    id_or_number -> identifier
+Rule 59    id_or_number -> number
+Rule 60    identifier -> ID [ array_line ]
+Rule 61    identifier -> ID
+Rule 62    number -> INTNUM
+Rule 63    number -> REALNUM
+Rule 64    expression_binary -> normal_binary_expression
+Rule 65    expression_binary -> dot_binary_expression
+Rule 66    normal_binary_expression -> add_expression
+Rule 67    normal_binary_expression -> sub_expression
+Rule 68    normal_binary_expression -> mul_expression
+Rule 69    normal_binary_expression -> div_expression
+Rule 70    dot_binary_expression -> dot_add_expression
+Rule 71    dot_binary_expression -> dot_sub_expression
+Rule 72    dot_binary_expression -> dot_mul_expression
+Rule 73    dot_binary_expression -> dot_div_expression
+Rule 74    add_expression -> expression + expression
+Rule 75    sub_expression -> expression - expression
+Rule 76    mul_expression -> expression * expression
+Rule 77    div_expression -> expression / expression
+Rule 78    dot_add_expression -> expression DOTADD expression
+Rule 79    dot_sub_expression -> expression DOTSUB expression
+Rule 80    dot_mul_expression -> expression DOTMUL expression
+Rule 81    dot_div_expression -> expression DOTDIV expression
+
+Terminals, with rules where they appear
+
+'                    : 53 54
+(                    : 27 52
+)                    : 27 52
+*                    : 76
++                    : 74
+,                    : 47
+-                    : 55 75
+/                    : 77
+:                    : 37
+;                    : 6 45
+<                    : 29
+=                    : 17 22
+>                    : 30
+ADDASSIGN            : 23
+BREAK                : 13
+CONTINUE             : 12
+DIVASSIGN            : 26
+DOTADD               : 78
+DOTDIV               : 81
+DOTMUL               : 80
+DOTSUB               : 79
+ELSE                 : 19
+EQ                   : 31
+EYE                  : 51
+FOR                  : 17
+GEQ                  : 33
+ID                   : 17 53 60 61
+IF                   : 18 19
+INTNUM               : 62
+LEQ                  : 34
+MULASSIGN            : 25
+NEQ                  : 32
+ONES                 : 50
+PRINT                : 20
+REALNUM              : 63
+RETURN               : 21
+STRING               : 57
+SUBASSIGN            : 24
+WHILE                : 16
+ZEROS                : 49
+[                    : 44 60
+]                    : 44 60
+error                : 
+{                    : 35
+}                    : 35
+
+Nonterminals, with rules where they appear
+
+add_expression       : 66
+array                : 39 54
+array_line           : 20 45 46 47 60
+array_lines          : 44 45
+array_special        : 41
+array_special_specifier : 49 50 51
+assignment           : 7
+assignment_op        : 15
+bool_expression      : 27
+comparison_op        : 28
+condition            : 16 18 19
+div_expression       : 69
+dot_add_expression   : 70
+dot_binary_expression : 65
+dot_div_expression   : 73
+dot_mul_expression   : 72
+dot_sub_expression   : 71
+elementary           : 21 40
+empty                : 2
+expression           : 15 28 28 47 48 55 74 74 75 75 76 76 77 77 78 78 79 79 80 80 81 81
+expression_binary    : 38
+for_loop             : 9
+id_or_number         : 37 37 52 56
+identifier           : 15 58
+if_else              : 10
+instruction          : 6
+instruction_line     : 4 5 36
+instruction_lines    : 1 4
+mul_expression       : 68
+negation             : 42
+normal_binary_expression : 64
+number               : 59
+printing             : 11
+program              : 35 0
+range                : 17
+returning            : 14
+statements           : 16 17 18 19 19
+sub_expression       : 67
+transposition        : 43
+while_loop           : 8
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . instruction_lines
+    (2) program -> . empty
+    (4) instruction_lines -> . instruction_lines instruction_line
+    (5) instruction_lines -> . instruction_line
+    (3) empty -> .
+    (6) instruction_line -> . instruction ;
+    (7) instruction -> . assignment
+    (8) instruction -> . while_loop
+    (9) instruction -> . for_loop
+    (10) instruction -> . if_else
+    (11) instruction -> . printing
+    (12) instruction -> . CONTINUE
+    (13) instruction -> . BREAK
+    (14) instruction -> . returning
+    (15) assignment -> . identifier assignment_op expression
+    (16) while_loop -> . WHILE condition statements
+    (17) for_loop -> . FOR ID = range statements
+    (18) if_else -> . IF condition statements
+    (19) if_else -> . IF condition statements ELSE statements
+    (20) printing -> . PRINT array_line
+    (21) returning -> . RETURN elementary
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+
+    $end            reduce using rule 3 (empty -> .)
+    CONTINUE        shift and go to state 11
+    BREAK           shift and go to state 12
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 16
+    IF              shift and go to state 18
+    PRINT           shift and go to state 19
+    RETURN          shift and go to state 20
+    ID              shift and go to state 17
+
+    program                        shift and go to state 1
+    instruction_lines              shift and go to state 2
+    empty                          shift and go to state 3
+    instruction_line               shift and go to state 4
+    instruction                    shift and go to state 5
+    assignment                     shift and go to state 6
+    while_loop                     shift and go to state 7
+    for_loop                       shift and go to state 8
+    if_else                        shift and go to state 9
+    printing                       shift and go to state 10
+    returning                      shift and go to state 13
+    identifier                     shift and go to state 14
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> instruction_lines .
+    (4) instruction_lines -> instruction_lines . instruction_line
+    (6) instruction_line -> . instruction ;
+    (7) instruction -> . assignment
+    (8) instruction -> . while_loop
+    (9) instruction -> . for_loop
+    (10) instruction -> . if_else
+    (11) instruction -> . printing
+    (12) instruction -> . CONTINUE
+    (13) instruction -> . BREAK
+    (14) instruction -> . returning
+    (15) assignment -> . identifier assignment_op expression
+    (16) while_loop -> . WHILE condition statements
+    (17) for_loop -> . FOR ID = range statements
+    (18) if_else -> . IF condition statements
+    (19) if_else -> . IF condition statements ELSE statements
+    (20) printing -> . PRINT array_line
+    (21) returning -> . RETURN elementary
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+
+    $end            reduce using rule 1 (program -> instruction_lines .)
+    }               reduce using rule 1 (program -> instruction_lines .)
+    CONTINUE        shift and go to state 11
+    BREAK           shift and go to state 12
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 16
+    IF              shift and go to state 18
+    PRINT           shift and go to state 19
+    RETURN          shift and go to state 20
+    ID              shift and go to state 17
+
+    instruction_line               shift and go to state 21
+    instruction                    shift and go to state 5
+    assignment                     shift and go to state 6
+    while_loop                     shift and go to state 7
+    for_loop                       shift and go to state 8
+    if_else                        shift and go to state 9
+    printing                       shift and go to state 10
+    returning                      shift and go to state 13
+    identifier                     shift and go to state 14
+
+state 3
+
+    (2) program -> empty .
+
+    $end            reduce using rule 2 (program -> empty .)
+    }               reduce using rule 2 (program -> empty .)
+
+
+state 4
+
+    (5) instruction_lines -> instruction_line .
+
+    CONTINUE        reduce using rule 5 (instruction_lines -> instruction_line .)
+    BREAK           reduce using rule 5 (instruction_lines -> instruction_line .)
+    WHILE           reduce using rule 5 (instruction_lines -> instruction_line .)
+    FOR             reduce using rule 5 (instruction_lines -> instruction_line .)
+    IF              reduce using rule 5 (instruction_lines -> instruction_line .)
+    PRINT           reduce using rule 5 (instruction_lines -> instruction_line .)
+    RETURN          reduce using rule 5 (instruction_lines -> instruction_line .)
+    ID              reduce using rule 5 (instruction_lines -> instruction_line .)
+    $end            reduce using rule 5 (instruction_lines -> instruction_line .)
+    }               reduce using rule 5 (instruction_lines -> instruction_line .)
+
+
+state 5
+
+    (6) instruction_line -> instruction . ;
+
+    ;               shift and go to state 22
+
+
+state 6
+
+    (7) instruction -> assignment .
+
+    ;               reduce using rule 7 (instruction -> assignment .)
+
+
+state 7
+
+    (8) instruction -> while_loop .
+
+    ;               reduce using rule 8 (instruction -> while_loop .)
+
+
+state 8
+
+    (9) instruction -> for_loop .
+
+    ;               reduce using rule 9 (instruction -> for_loop .)
+
+
+state 9
+
+    (10) instruction -> if_else .
+
+    ;               reduce using rule 10 (instruction -> if_else .)
+
+
+state 10
+
+    (11) instruction -> printing .
+
+    ;               reduce using rule 11 (instruction -> printing .)
+
+
+state 11
+
+    (12) instruction -> CONTINUE .
+
+    ;               reduce using rule 12 (instruction -> CONTINUE .)
+
+
+state 12
+
+    (13) instruction -> BREAK .
+
+    ;               reduce using rule 13 (instruction -> BREAK .)
+
+
+state 13
+
+    (14) instruction -> returning .
+
+    ;               reduce using rule 14 (instruction -> returning .)
+
+
+state 14
+
+    (15) assignment -> identifier . assignment_op expression
+    (22) assignment_op -> . =
+    (23) assignment_op -> . ADDASSIGN
+    (24) assignment_op -> . SUBASSIGN
+    (25) assignment_op -> . MULASSIGN
+    (26) assignment_op -> . DIVASSIGN
+
+    =               shift and go to state 24
+    ADDASSIGN       shift and go to state 25
+    SUBASSIGN       shift and go to state 26
+    MULASSIGN       shift and go to state 27
+    DIVASSIGN       shift and go to state 28
+
+    assignment_op                  shift and go to state 23
+
+state 15
+
+    (16) while_loop -> WHILE . condition statements
+    (27) condition -> . ( bool_expression )
+
+    (               shift and go to state 30
+
+    condition                      shift and go to state 29
+
+state 16
+
+    (17) for_loop -> FOR . ID = range statements
+
+    ID              shift and go to state 31
+
+
+state 17
+
+    (60) identifier -> ID . [ array_line ]
+    (61) identifier -> ID .
+
+    [               shift and go to state 32
+    =               reduce using rule 61 (identifier -> ID .)
+    ADDASSIGN       reduce using rule 61 (identifier -> ID .)
+    SUBASSIGN       reduce using rule 61 (identifier -> ID .)
+    MULASSIGN       reduce using rule 61 (identifier -> ID .)
+    DIVASSIGN       reduce using rule 61 (identifier -> ID .)
+    ;               reduce using rule 61 (identifier -> ID .)
+    :               reduce using rule 61 (identifier -> ID .)
+    )               reduce using rule 61 (identifier -> ID .)
+    {               reduce using rule 61 (identifier -> ID .)
+    CONTINUE        reduce using rule 61 (identifier -> ID .)
+    BREAK           reduce using rule 61 (identifier -> ID .)
+    WHILE           reduce using rule 61 (identifier -> ID .)
+    FOR             reduce using rule 61 (identifier -> ID .)
+    IF              reduce using rule 61 (identifier -> ID .)
+    PRINT           reduce using rule 61 (identifier -> ID .)
+    RETURN          reduce using rule 61 (identifier -> ID .)
+    ID              reduce using rule 61 (identifier -> ID .)
+
+
+state 18
+
+    (18) if_else -> IF . condition statements
+    (19) if_else -> IF . condition statements ELSE statements
+    (27) condition -> . ( bool_expression )
+
+    (               shift and go to state 30
+
+    condition                      shift and go to state 33
+
+state 19
+
+    (20) printing -> PRINT . array_line
+    (47) array_line -> . array_line , expression
+    (48) array_line -> . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    array_line                     shift and go to state 34
+    expression                     shift and go to state 35
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 20
+
+    (21) returning -> RETURN . elementary
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    STRING          shift and go to state 46
+    ID              shift and go to state 17
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    elementary                     shift and go to state 64
+    id_or_number                   shift and go to state 45
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 21
+
+    (4) instruction_lines -> instruction_lines instruction_line .
+
+    CONTINUE        reduce using rule 4 (instruction_lines -> instruction_lines instruction_line .)
+    BREAK           reduce using rule 4 (instruction_lines -> instruction_lines instruction_line .)
+    WHILE           reduce using rule 4 (instruction_lines -> instruction_lines instruction_line .)
+    FOR             reduce using rule 4 (instruction_lines -> instruction_lines instruction_line .)
+    IF              reduce using rule 4 (instruction_lines -> instruction_lines instruction_line .)
+    PRINT           reduce using rule 4 (instruction_lines -> instruction_lines instruction_line .)
+    RETURN          reduce using rule 4 (instruction_lines -> instruction_lines instruction_line .)
+    ID              reduce using rule 4 (instruction_lines -> instruction_lines instruction_line .)
+    $end            reduce using rule 4 (instruction_lines -> instruction_lines instruction_line .)
+    }               reduce using rule 4 (instruction_lines -> instruction_lines instruction_line .)
+
+
+state 22
+
+    (6) instruction_line -> instruction ; .
+
+    CONTINUE        reduce using rule 6 (instruction_line -> instruction ; .)
+    BREAK           reduce using rule 6 (instruction_line -> instruction ; .)
+    WHILE           reduce using rule 6 (instruction_line -> instruction ; .)
+    FOR             reduce using rule 6 (instruction_line -> instruction ; .)
+    IF              reduce using rule 6 (instruction_line -> instruction ; .)
+    PRINT           reduce using rule 6 (instruction_line -> instruction ; .)
+    RETURN          reduce using rule 6 (instruction_line -> instruction ; .)
+    ID              reduce using rule 6 (instruction_line -> instruction ; .)
+    $end            reduce using rule 6 (instruction_line -> instruction ; .)
+    }               reduce using rule 6 (instruction_line -> instruction ; .)
+    ;               reduce using rule 6 (instruction_line -> instruction ; .)
+    ELSE            reduce using rule 6 (instruction_line -> instruction ; .)
+
+
+state 23
+
+    (15) assignment -> identifier assignment_op . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    identifier                     shift and go to state 60
+    expression                     shift and go to state 65
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    number                         shift and go to state 61
+
+state 24
+
+    (22) assignment_op -> = .
+
+    [               reduce using rule 22 (assignment_op -> = .)
+    STRING          reduce using rule 22 (assignment_op -> = .)
+    ZEROS           reduce using rule 22 (assignment_op -> = .)
+    ONES            reduce using rule 22 (assignment_op -> = .)
+    EYE             reduce using rule 22 (assignment_op -> = .)
+    -               reduce using rule 22 (assignment_op -> = .)
+    ID              reduce using rule 22 (assignment_op -> = .)
+    INTNUM          reduce using rule 22 (assignment_op -> = .)
+    REALNUM         reduce using rule 22 (assignment_op -> = .)
+
+
+state 25
+
+    (23) assignment_op -> ADDASSIGN .
+
+    [               reduce using rule 23 (assignment_op -> ADDASSIGN .)
+    STRING          reduce using rule 23 (assignment_op -> ADDASSIGN .)
+    ZEROS           reduce using rule 23 (assignment_op -> ADDASSIGN .)
+    ONES            reduce using rule 23 (assignment_op -> ADDASSIGN .)
+    EYE             reduce using rule 23 (assignment_op -> ADDASSIGN .)
+    -               reduce using rule 23 (assignment_op -> ADDASSIGN .)
+    ID              reduce using rule 23 (assignment_op -> ADDASSIGN .)
+    INTNUM          reduce using rule 23 (assignment_op -> ADDASSIGN .)
+    REALNUM         reduce using rule 23 (assignment_op -> ADDASSIGN .)
+
+
+state 26
+
+    (24) assignment_op -> SUBASSIGN .
+
+    [               reduce using rule 24 (assignment_op -> SUBASSIGN .)
+    STRING          reduce using rule 24 (assignment_op -> SUBASSIGN .)
+    ZEROS           reduce using rule 24 (assignment_op -> SUBASSIGN .)
+    ONES            reduce using rule 24 (assignment_op -> SUBASSIGN .)
+    EYE             reduce using rule 24 (assignment_op -> SUBASSIGN .)
+    -               reduce using rule 24 (assignment_op -> SUBASSIGN .)
+    ID              reduce using rule 24 (assignment_op -> SUBASSIGN .)
+    INTNUM          reduce using rule 24 (assignment_op -> SUBASSIGN .)
+    REALNUM         reduce using rule 24 (assignment_op -> SUBASSIGN .)
+
+
+state 27
+
+    (25) assignment_op -> MULASSIGN .
+
+    [               reduce using rule 25 (assignment_op -> MULASSIGN .)
+    STRING          reduce using rule 25 (assignment_op -> MULASSIGN .)
+    ZEROS           reduce using rule 25 (assignment_op -> MULASSIGN .)
+    ONES            reduce using rule 25 (assignment_op -> MULASSIGN .)
+    EYE             reduce using rule 25 (assignment_op -> MULASSIGN .)
+    -               reduce using rule 25 (assignment_op -> MULASSIGN .)
+    ID              reduce using rule 25 (assignment_op -> MULASSIGN .)
+    INTNUM          reduce using rule 25 (assignment_op -> MULASSIGN .)
+    REALNUM         reduce using rule 25 (assignment_op -> MULASSIGN .)
+
+
+state 28
+
+    (26) assignment_op -> DIVASSIGN .
+
+    [               reduce using rule 26 (assignment_op -> DIVASSIGN .)
+    STRING          reduce using rule 26 (assignment_op -> DIVASSIGN .)
+    ZEROS           reduce using rule 26 (assignment_op -> DIVASSIGN .)
+    ONES            reduce using rule 26 (assignment_op -> DIVASSIGN .)
+    EYE             reduce using rule 26 (assignment_op -> DIVASSIGN .)
+    -               reduce using rule 26 (assignment_op -> DIVASSIGN .)
+    ID              reduce using rule 26 (assignment_op -> DIVASSIGN .)
+    INTNUM          reduce using rule 26 (assignment_op -> DIVASSIGN .)
+    REALNUM         reduce using rule 26 (assignment_op -> DIVASSIGN .)
+
+
+state 29
+
+    (16) while_loop -> WHILE condition . statements
+    (35) statements -> . { program }
+    (36) statements -> . instruction_line
+    (6) instruction_line -> . instruction ;
+    (7) instruction -> . assignment
+    (8) instruction -> . while_loop
+    (9) instruction -> . for_loop
+    (10) instruction -> . if_else
+    (11) instruction -> . printing
+    (12) instruction -> . CONTINUE
+    (13) instruction -> . BREAK
+    (14) instruction -> . returning
+    (15) assignment -> . identifier assignment_op expression
+    (16) while_loop -> . WHILE condition statements
+    (17) for_loop -> . FOR ID = range statements
+    (18) if_else -> . IF condition statements
+    (19) if_else -> . IF condition statements ELSE statements
+    (20) printing -> . PRINT array_line
+    (21) returning -> . RETURN elementary
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+
+    {               shift and go to state 67
+    CONTINUE        shift and go to state 11
+    BREAK           shift and go to state 12
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 16
+    IF              shift and go to state 18
+    PRINT           shift and go to state 19
+    RETURN          shift and go to state 20
+    ID              shift and go to state 17
+
+    statements                     shift and go to state 66
+    instruction_line               shift and go to state 68
+    instruction                    shift and go to state 5
+    assignment                     shift and go to state 6
+    while_loop                     shift and go to state 7
+    for_loop                       shift and go to state 8
+    if_else                        shift and go to state 9
+    printing                       shift and go to state 10
+    returning                      shift and go to state 13
+    identifier                     shift and go to state 14
+
+state 30
+
+    (27) condition -> ( . bool_expression )
+    (28) bool_expression -> . expression comparison_op expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    bool_expression                shift and go to state 69
+    expression                     shift and go to state 70
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 31
+
+    (17) for_loop -> FOR ID . = range statements
+
+    =               shift and go to state 71
+
+
+state 32
+
+    (60) identifier -> ID [ . array_line ]
+    (47) array_line -> . array_line , expression
+    (48) array_line -> . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    array_line                     shift and go to state 72
+    expression                     shift and go to state 35
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 33
+
+    (18) if_else -> IF condition . statements
+    (19) if_else -> IF condition . statements ELSE statements
+    (35) statements -> . { program }
+    (36) statements -> . instruction_line
+    (6) instruction_line -> . instruction ;
+    (7) instruction -> . assignment
+    (8) instruction -> . while_loop
+    (9) instruction -> . for_loop
+    (10) instruction -> . if_else
+    (11) instruction -> . printing
+    (12) instruction -> . CONTINUE
+    (13) instruction -> . BREAK
+    (14) instruction -> . returning
+    (15) assignment -> . identifier assignment_op expression
+    (16) while_loop -> . WHILE condition statements
+    (17) for_loop -> . FOR ID = range statements
+    (18) if_else -> . IF condition statements
+    (19) if_else -> . IF condition statements ELSE statements
+    (20) printing -> . PRINT array_line
+    (21) returning -> . RETURN elementary
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+
+    {               shift and go to state 67
+    CONTINUE        shift and go to state 11
+    BREAK           shift and go to state 12
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 16
+    IF              shift and go to state 18
+    PRINT           shift and go to state 19
+    RETURN          shift and go to state 20
+    ID              shift and go to state 17
+
+    statements                     shift and go to state 73
+    instruction_line               shift and go to state 68
+    instruction                    shift and go to state 5
+    assignment                     shift and go to state 6
+    while_loop                     shift and go to state 7
+    for_loop                       shift and go to state 8
+    if_else                        shift and go to state 9
+    printing                       shift and go to state 10
+    returning                      shift and go to state 13
+    identifier                     shift and go to state 14
+
+state 34
+
+    (20) printing -> PRINT array_line .
+    (47) array_line -> array_line . , expression
+
+    ;               reduce using rule 20 (printing -> PRINT array_line .)
+    ,               shift and go to state 74
+
+
+state 35
+
+    (48) array_line -> expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    ,               reduce using rule 48 (array_line -> expression .)
+    ;               reduce using rule 48 (array_line -> expression .)
+    ]               reduce using rule 48 (array_line -> expression .)
+    +               shift and go to state 75
+    -               shift and go to state 76
+    *               shift and go to state 77
+    /               shift and go to state 78
+    DOTADD          shift and go to state 79
+    DOTSUB          shift and go to state 80
+    DOTMUL          shift and go to state 81
+    DOTDIV          shift and go to state 82
+
+
+state 36
+
+    (38) expression -> expression_binary .
+
+    +               reduce using rule 38 (expression -> expression_binary .)
+    -               reduce using rule 38 (expression -> expression_binary .)
+    *               reduce using rule 38 (expression -> expression_binary .)
+    /               reduce using rule 38 (expression -> expression_binary .)
+    DOTADD          reduce using rule 38 (expression -> expression_binary .)
+    DOTSUB          reduce using rule 38 (expression -> expression_binary .)
+    DOTMUL          reduce using rule 38 (expression -> expression_binary .)
+    DOTDIV          reduce using rule 38 (expression -> expression_binary .)
+    ,               reduce using rule 38 (expression -> expression_binary .)
+    ;               reduce using rule 38 (expression -> expression_binary .)
+    <               reduce using rule 38 (expression -> expression_binary .)
+    >               reduce using rule 38 (expression -> expression_binary .)
+    EQ              reduce using rule 38 (expression -> expression_binary .)
+    NEQ             reduce using rule 38 (expression -> expression_binary .)
+    GEQ             reduce using rule 38 (expression -> expression_binary .)
+    LEQ             reduce using rule 38 (expression -> expression_binary .)
+    ]               reduce using rule 38 (expression -> expression_binary .)
+    )               reduce using rule 38 (expression -> expression_binary .)
+
+
+state 37
+
+    (39) expression -> array .
+    (54) transposition -> array . '
+
+    +               reduce using rule 39 (expression -> array .)
+    -               reduce using rule 39 (expression -> array .)
+    *               reduce using rule 39 (expression -> array .)
+    /               reduce using rule 39 (expression -> array .)
+    DOTADD          reduce using rule 39 (expression -> array .)
+    DOTSUB          reduce using rule 39 (expression -> array .)
+    DOTMUL          reduce using rule 39 (expression -> array .)
+    DOTDIV          reduce using rule 39 (expression -> array .)
+    ,               reduce using rule 39 (expression -> array .)
+    ;               reduce using rule 39 (expression -> array .)
+    <               reduce using rule 39 (expression -> array .)
+    >               reduce using rule 39 (expression -> array .)
+    EQ              reduce using rule 39 (expression -> array .)
+    NEQ             reduce using rule 39 (expression -> array .)
+    GEQ             reduce using rule 39 (expression -> array .)
+    LEQ             reduce using rule 39 (expression -> array .)
+    ]               reduce using rule 39 (expression -> array .)
+    )               reduce using rule 39 (expression -> array .)
+    '               shift and go to state 83
+
+
+state 38
+
+    (40) expression -> elementary .
+
+    +               reduce using rule 40 (expression -> elementary .)
+    -               reduce using rule 40 (expression -> elementary .)
+    *               reduce using rule 40 (expression -> elementary .)
+    /               reduce using rule 40 (expression -> elementary .)
+    DOTADD          reduce using rule 40 (expression -> elementary .)
+    DOTSUB          reduce using rule 40 (expression -> elementary .)
+    DOTMUL          reduce using rule 40 (expression -> elementary .)
+    DOTDIV          reduce using rule 40 (expression -> elementary .)
+    ,               reduce using rule 40 (expression -> elementary .)
+    ;               reduce using rule 40 (expression -> elementary .)
+    <               reduce using rule 40 (expression -> elementary .)
+    >               reduce using rule 40 (expression -> elementary .)
+    EQ              reduce using rule 40 (expression -> elementary .)
+    NEQ             reduce using rule 40 (expression -> elementary .)
+    GEQ             reduce using rule 40 (expression -> elementary .)
+    LEQ             reduce using rule 40 (expression -> elementary .)
+    ]               reduce using rule 40 (expression -> elementary .)
+    )               reduce using rule 40 (expression -> elementary .)
+
+
+state 39
+
+    (41) expression -> array_special .
+
+    +               reduce using rule 41 (expression -> array_special .)
+    -               reduce using rule 41 (expression -> array_special .)
+    *               reduce using rule 41 (expression -> array_special .)
+    /               reduce using rule 41 (expression -> array_special .)
+    DOTADD          reduce using rule 41 (expression -> array_special .)
+    DOTSUB          reduce using rule 41 (expression -> array_special .)
+    DOTMUL          reduce using rule 41 (expression -> array_special .)
+    DOTDIV          reduce using rule 41 (expression -> array_special .)
+    ,               reduce using rule 41 (expression -> array_special .)
+    ;               reduce using rule 41 (expression -> array_special .)
+    <               reduce using rule 41 (expression -> array_special .)
+    >               reduce using rule 41 (expression -> array_special .)
+    EQ              reduce using rule 41 (expression -> array_special .)
+    NEQ             reduce using rule 41 (expression -> array_special .)
+    GEQ             reduce using rule 41 (expression -> array_special .)
+    LEQ             reduce using rule 41 (expression -> array_special .)
+    ]               reduce using rule 41 (expression -> array_special .)
+    )               reduce using rule 41 (expression -> array_special .)
+
+
+state 40
+
+    (42) expression -> negation .
+
+    +               reduce using rule 42 (expression -> negation .)
+    -               reduce using rule 42 (expression -> negation .)
+    *               reduce using rule 42 (expression -> negation .)
+    /               reduce using rule 42 (expression -> negation .)
+    DOTADD          reduce using rule 42 (expression -> negation .)
+    DOTSUB          reduce using rule 42 (expression -> negation .)
+    DOTMUL          reduce using rule 42 (expression -> negation .)
+    DOTDIV          reduce using rule 42 (expression -> negation .)
+    ,               reduce using rule 42 (expression -> negation .)
+    ;               reduce using rule 42 (expression -> negation .)
+    <               reduce using rule 42 (expression -> negation .)
+    >               reduce using rule 42 (expression -> negation .)
+    EQ              reduce using rule 42 (expression -> negation .)
+    NEQ             reduce using rule 42 (expression -> negation .)
+    GEQ             reduce using rule 42 (expression -> negation .)
+    LEQ             reduce using rule 42 (expression -> negation .)
+    ]               reduce using rule 42 (expression -> negation .)
+    )               reduce using rule 42 (expression -> negation .)
+
+
+state 41
+
+    (43) expression -> transposition .
+
+    +               reduce using rule 43 (expression -> transposition .)
+    -               reduce using rule 43 (expression -> transposition .)
+    *               reduce using rule 43 (expression -> transposition .)
+    /               reduce using rule 43 (expression -> transposition .)
+    DOTADD          reduce using rule 43 (expression -> transposition .)
+    DOTSUB          reduce using rule 43 (expression -> transposition .)
+    DOTMUL          reduce using rule 43 (expression -> transposition .)
+    DOTDIV          reduce using rule 43 (expression -> transposition .)
+    ,               reduce using rule 43 (expression -> transposition .)
+    ;               reduce using rule 43 (expression -> transposition .)
+    <               reduce using rule 43 (expression -> transposition .)
+    >               reduce using rule 43 (expression -> transposition .)
+    EQ              reduce using rule 43 (expression -> transposition .)
+    NEQ             reduce using rule 43 (expression -> transposition .)
+    GEQ             reduce using rule 43 (expression -> transposition .)
+    LEQ             reduce using rule 43 (expression -> transposition .)
+    ]               reduce using rule 43 (expression -> transposition .)
+    )               reduce using rule 43 (expression -> transposition .)
+
+
+state 42
+
+    (64) expression_binary -> normal_binary_expression .
+
+    +               reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    -               reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    *               reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    /               reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    DOTADD          reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    DOTSUB          reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    DOTMUL          reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    DOTDIV          reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    ,               reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    ;               reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    <               reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    >               reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    EQ              reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    NEQ             reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    GEQ             reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    LEQ             reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    ]               reduce using rule 64 (expression_binary -> normal_binary_expression .)
+    )               reduce using rule 64 (expression_binary -> normal_binary_expression .)
+
+
+state 43
+
+    (65) expression_binary -> dot_binary_expression .
+
+    +               reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    -               reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    *               reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    /               reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    DOTADD          reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    DOTSUB          reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    DOTMUL          reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    DOTDIV          reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    ,               reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    ;               reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    <               reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    >               reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    EQ              reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    NEQ             reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    GEQ             reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    LEQ             reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    ]               reduce using rule 65 (expression_binary -> dot_binary_expression .)
+    )               reduce using rule 65 (expression_binary -> dot_binary_expression .)
+
+
+state 44
+
+    (44) array -> [ . array_lines ]
+    (45) array_lines -> . array_lines ; array_line
+    (46) array_lines -> . array_line
+    (47) array_line -> . array_line , expression
+    (48) array_line -> . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    array_lines                    shift and go to state 84
+    array_line                     shift and go to state 85
+    expression                     shift and go to state 35
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 45
+
+    (56) elementary -> id_or_number .
+
+    +               reduce using rule 56 (elementary -> id_or_number .)
+    -               reduce using rule 56 (elementary -> id_or_number .)
+    *               reduce using rule 56 (elementary -> id_or_number .)
+    /               reduce using rule 56 (elementary -> id_or_number .)
+    DOTADD          reduce using rule 56 (elementary -> id_or_number .)
+    DOTSUB          reduce using rule 56 (elementary -> id_or_number .)
+    DOTMUL          reduce using rule 56 (elementary -> id_or_number .)
+    DOTDIV          reduce using rule 56 (elementary -> id_or_number .)
+    ,               reduce using rule 56 (elementary -> id_or_number .)
+    ;               reduce using rule 56 (elementary -> id_or_number .)
+    <               reduce using rule 56 (elementary -> id_or_number .)
+    >               reduce using rule 56 (elementary -> id_or_number .)
+    EQ              reduce using rule 56 (elementary -> id_or_number .)
+    NEQ             reduce using rule 56 (elementary -> id_or_number .)
+    GEQ             reduce using rule 56 (elementary -> id_or_number .)
+    LEQ             reduce using rule 56 (elementary -> id_or_number .)
+    ]               reduce using rule 56 (elementary -> id_or_number .)
+    )               reduce using rule 56 (elementary -> id_or_number .)
+
+
+state 46
+
+    (57) elementary -> STRING .
+
+    +               reduce using rule 57 (elementary -> STRING .)
+    -               reduce using rule 57 (elementary -> STRING .)
+    *               reduce using rule 57 (elementary -> STRING .)
+    /               reduce using rule 57 (elementary -> STRING .)
+    DOTADD          reduce using rule 57 (elementary -> STRING .)
+    DOTSUB          reduce using rule 57 (elementary -> STRING .)
+    DOTMUL          reduce using rule 57 (elementary -> STRING .)
+    DOTDIV          reduce using rule 57 (elementary -> STRING .)
+    ,               reduce using rule 57 (elementary -> STRING .)
+    ;               reduce using rule 57 (elementary -> STRING .)
+    <               reduce using rule 57 (elementary -> STRING .)
+    >               reduce using rule 57 (elementary -> STRING .)
+    EQ              reduce using rule 57 (elementary -> STRING .)
+    NEQ             reduce using rule 57 (elementary -> STRING .)
+    GEQ             reduce using rule 57 (elementary -> STRING .)
+    LEQ             reduce using rule 57 (elementary -> STRING .)
+    ]               reduce using rule 57 (elementary -> STRING .)
+    )               reduce using rule 57 (elementary -> STRING .)
+
+
+state 47
+
+    (49) array_special -> ZEROS . array_special_specifier
+    (52) array_special_specifier -> . ( id_or_number )
+
+    (               shift and go to state 87
+
+    array_special_specifier        shift and go to state 86
+
+state 48
+
+    (50) array_special -> ONES . array_special_specifier
+    (52) array_special_specifier -> . ( id_or_number )
+
+    (               shift and go to state 87
+
+    array_special_specifier        shift and go to state 88
+
+state 49
+
+    (51) array_special -> EYE . array_special_specifier
+    (52) array_special_specifier -> . ( id_or_number )
+
+    (               shift and go to state 87
+
+    array_special_specifier        shift and go to state 89
+
+state 50
+
+    (55) negation -> - . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    expression                     shift and go to state 90
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 51
+
+    (53) transposition -> ID . '
+    (60) identifier -> ID . [ array_line ]
+    (61) identifier -> ID .
+
+    '               shift and go to state 91
+    [               shift and go to state 32
+    +               reduce using rule 61 (identifier -> ID .)
+    -               reduce using rule 61 (identifier -> ID .)
+    *               reduce using rule 61 (identifier -> ID .)
+    /               reduce using rule 61 (identifier -> ID .)
+    DOTADD          reduce using rule 61 (identifier -> ID .)
+    DOTSUB          reduce using rule 61 (identifier -> ID .)
+    DOTMUL          reduce using rule 61 (identifier -> ID .)
+    DOTDIV          reduce using rule 61 (identifier -> ID .)
+    ,               reduce using rule 61 (identifier -> ID .)
+    ;               reduce using rule 61 (identifier -> ID .)
+    <               reduce using rule 61 (identifier -> ID .)
+    >               reduce using rule 61 (identifier -> ID .)
+    EQ              reduce using rule 61 (identifier -> ID .)
+    NEQ             reduce using rule 61 (identifier -> ID .)
+    GEQ             reduce using rule 61 (identifier -> ID .)
+    LEQ             reduce using rule 61 (identifier -> ID .)
+    ]               reduce using rule 61 (identifier -> ID .)
+    )               reduce using rule 61 (identifier -> ID .)
+
+
+state 52
+
+    (66) normal_binary_expression -> add_expression .
+
+    +               reduce using rule 66 (normal_binary_expression -> add_expression .)
+    -               reduce using rule 66 (normal_binary_expression -> add_expression .)
+    *               reduce using rule 66 (normal_binary_expression -> add_expression .)
+    /               reduce using rule 66 (normal_binary_expression -> add_expression .)
+    DOTADD          reduce using rule 66 (normal_binary_expression -> add_expression .)
+    DOTSUB          reduce using rule 66 (normal_binary_expression -> add_expression .)
+    DOTMUL          reduce using rule 66 (normal_binary_expression -> add_expression .)
+    DOTDIV          reduce using rule 66 (normal_binary_expression -> add_expression .)
+    ,               reduce using rule 66 (normal_binary_expression -> add_expression .)
+    ;               reduce using rule 66 (normal_binary_expression -> add_expression .)
+    <               reduce using rule 66 (normal_binary_expression -> add_expression .)
+    >               reduce using rule 66 (normal_binary_expression -> add_expression .)
+    EQ              reduce using rule 66 (normal_binary_expression -> add_expression .)
+    NEQ             reduce using rule 66 (normal_binary_expression -> add_expression .)
+    GEQ             reduce using rule 66 (normal_binary_expression -> add_expression .)
+    LEQ             reduce using rule 66 (normal_binary_expression -> add_expression .)
+    ]               reduce using rule 66 (normal_binary_expression -> add_expression .)
+    )               reduce using rule 66 (normal_binary_expression -> add_expression .)
+
+
+state 53
+
+    (67) normal_binary_expression -> sub_expression .
+
+    +               reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    -               reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    *               reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    /               reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    DOTADD          reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    DOTSUB          reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    DOTMUL          reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    DOTDIV          reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    ,               reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    ;               reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    <               reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    >               reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    EQ              reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    NEQ             reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    GEQ             reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    LEQ             reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    ]               reduce using rule 67 (normal_binary_expression -> sub_expression .)
+    )               reduce using rule 67 (normal_binary_expression -> sub_expression .)
+
+
+state 54
+
+    (68) normal_binary_expression -> mul_expression .
+
+    +               reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    -               reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    *               reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    /               reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    DOTADD          reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    DOTSUB          reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    DOTMUL          reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    DOTDIV          reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    ,               reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    ;               reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    <               reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    >               reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    EQ              reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    NEQ             reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    GEQ             reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    LEQ             reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    ]               reduce using rule 68 (normal_binary_expression -> mul_expression .)
+    )               reduce using rule 68 (normal_binary_expression -> mul_expression .)
+
+
+state 55
+
+    (69) normal_binary_expression -> div_expression .
+
+    +               reduce using rule 69 (normal_binary_expression -> div_expression .)
+    -               reduce using rule 69 (normal_binary_expression -> div_expression .)
+    *               reduce using rule 69 (normal_binary_expression -> div_expression .)
+    /               reduce using rule 69 (normal_binary_expression -> div_expression .)
+    DOTADD          reduce using rule 69 (normal_binary_expression -> div_expression .)
+    DOTSUB          reduce using rule 69 (normal_binary_expression -> div_expression .)
+    DOTMUL          reduce using rule 69 (normal_binary_expression -> div_expression .)
+    DOTDIV          reduce using rule 69 (normal_binary_expression -> div_expression .)
+    ,               reduce using rule 69 (normal_binary_expression -> div_expression .)
+    ;               reduce using rule 69 (normal_binary_expression -> div_expression .)
+    <               reduce using rule 69 (normal_binary_expression -> div_expression .)
+    >               reduce using rule 69 (normal_binary_expression -> div_expression .)
+    EQ              reduce using rule 69 (normal_binary_expression -> div_expression .)
+    NEQ             reduce using rule 69 (normal_binary_expression -> div_expression .)
+    GEQ             reduce using rule 69 (normal_binary_expression -> div_expression .)
+    LEQ             reduce using rule 69 (normal_binary_expression -> div_expression .)
+    ]               reduce using rule 69 (normal_binary_expression -> div_expression .)
+    )               reduce using rule 69 (normal_binary_expression -> div_expression .)
+
+
+state 56
+
+    (70) dot_binary_expression -> dot_add_expression .
+
+    +               reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    -               reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    *               reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    /               reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    DOTADD          reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    DOTSUB          reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    DOTMUL          reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    DOTDIV          reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    ,               reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    ;               reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    <               reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    >               reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    EQ              reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    NEQ             reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    GEQ             reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    LEQ             reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    ]               reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+    )               reduce using rule 70 (dot_binary_expression -> dot_add_expression .)
+
+
+state 57
+
+    (71) dot_binary_expression -> dot_sub_expression .
+
+    +               reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    -               reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    *               reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    /               reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    DOTADD          reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    DOTSUB          reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    DOTMUL          reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    DOTDIV          reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    ,               reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    ;               reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    <               reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    >               reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    EQ              reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    NEQ             reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    GEQ             reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    LEQ             reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    ]               reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+    )               reduce using rule 71 (dot_binary_expression -> dot_sub_expression .)
+
+
+state 58
+
+    (72) dot_binary_expression -> dot_mul_expression .
+
+    +               reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    -               reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    *               reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    /               reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    DOTADD          reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    DOTSUB          reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    DOTMUL          reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    DOTDIV          reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    ,               reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    ;               reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    <               reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    >               reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    EQ              reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    NEQ             reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    GEQ             reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    LEQ             reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    ]               reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+    )               reduce using rule 72 (dot_binary_expression -> dot_mul_expression .)
+
+
+state 59
+
+    (73) dot_binary_expression -> dot_div_expression .
+
+    +               reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    -               reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    *               reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    /               reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    DOTADD          reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    DOTSUB          reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    DOTMUL          reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    DOTDIV          reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    ,               reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    ;               reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    <               reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    >               reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    EQ              reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    NEQ             reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    GEQ             reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    LEQ             reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    ]               reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+    )               reduce using rule 73 (dot_binary_expression -> dot_div_expression .)
+
+
+state 60
+
+    (58) id_or_number -> identifier .
+
+    +               reduce using rule 58 (id_or_number -> identifier .)
+    -               reduce using rule 58 (id_or_number -> identifier .)
+    *               reduce using rule 58 (id_or_number -> identifier .)
+    /               reduce using rule 58 (id_or_number -> identifier .)
+    DOTADD          reduce using rule 58 (id_or_number -> identifier .)
+    DOTSUB          reduce using rule 58 (id_or_number -> identifier .)
+    DOTMUL          reduce using rule 58 (id_or_number -> identifier .)
+    DOTDIV          reduce using rule 58 (id_or_number -> identifier .)
+    ,               reduce using rule 58 (id_or_number -> identifier .)
+    ;               reduce using rule 58 (id_or_number -> identifier .)
+    <               reduce using rule 58 (id_or_number -> identifier .)
+    >               reduce using rule 58 (id_or_number -> identifier .)
+    EQ              reduce using rule 58 (id_or_number -> identifier .)
+    NEQ             reduce using rule 58 (id_or_number -> identifier .)
+    GEQ             reduce using rule 58 (id_or_number -> identifier .)
+    LEQ             reduce using rule 58 (id_or_number -> identifier .)
+    ]               reduce using rule 58 (id_or_number -> identifier .)
+    )               reduce using rule 58 (id_or_number -> identifier .)
+    :               reduce using rule 58 (id_or_number -> identifier .)
+    {               reduce using rule 58 (id_or_number -> identifier .)
+    CONTINUE        reduce using rule 58 (id_or_number -> identifier .)
+    BREAK           reduce using rule 58 (id_or_number -> identifier .)
+    WHILE           reduce using rule 58 (id_or_number -> identifier .)
+    FOR             reduce using rule 58 (id_or_number -> identifier .)
+    IF              reduce using rule 58 (id_or_number -> identifier .)
+    PRINT           reduce using rule 58 (id_or_number -> identifier .)
+    RETURN          reduce using rule 58 (id_or_number -> identifier .)
+    ID              reduce using rule 58 (id_or_number -> identifier .)
+
+
+state 61
+
+    (59) id_or_number -> number .
+
+    +               reduce using rule 59 (id_or_number -> number .)
+    -               reduce using rule 59 (id_or_number -> number .)
+    *               reduce using rule 59 (id_or_number -> number .)
+    /               reduce using rule 59 (id_or_number -> number .)
+    DOTADD          reduce using rule 59 (id_or_number -> number .)
+    DOTSUB          reduce using rule 59 (id_or_number -> number .)
+    DOTMUL          reduce using rule 59 (id_or_number -> number .)
+    DOTDIV          reduce using rule 59 (id_or_number -> number .)
+    ,               reduce using rule 59 (id_or_number -> number .)
+    ;               reduce using rule 59 (id_or_number -> number .)
+    <               reduce using rule 59 (id_or_number -> number .)
+    >               reduce using rule 59 (id_or_number -> number .)
+    EQ              reduce using rule 59 (id_or_number -> number .)
+    NEQ             reduce using rule 59 (id_or_number -> number .)
+    GEQ             reduce using rule 59 (id_or_number -> number .)
+    LEQ             reduce using rule 59 (id_or_number -> number .)
+    ]               reduce using rule 59 (id_or_number -> number .)
+    )               reduce using rule 59 (id_or_number -> number .)
+    :               reduce using rule 59 (id_or_number -> number .)
+    {               reduce using rule 59 (id_or_number -> number .)
+    CONTINUE        reduce using rule 59 (id_or_number -> number .)
+    BREAK           reduce using rule 59 (id_or_number -> number .)
+    WHILE           reduce using rule 59 (id_or_number -> number .)
+    FOR             reduce using rule 59 (id_or_number -> number .)
+    IF              reduce using rule 59 (id_or_number -> number .)
+    PRINT           reduce using rule 59 (id_or_number -> number .)
+    RETURN          reduce using rule 59 (id_or_number -> number .)
+    ID              reduce using rule 59 (id_or_number -> number .)
+
+
+state 62
+
+    (62) number -> INTNUM .
+
+    +               reduce using rule 62 (number -> INTNUM .)
+    -               reduce using rule 62 (number -> INTNUM .)
+    *               reduce using rule 62 (number -> INTNUM .)
+    /               reduce using rule 62 (number -> INTNUM .)
+    DOTADD          reduce using rule 62 (number -> INTNUM .)
+    DOTSUB          reduce using rule 62 (number -> INTNUM .)
+    DOTMUL          reduce using rule 62 (number -> INTNUM .)
+    DOTDIV          reduce using rule 62 (number -> INTNUM .)
+    ,               reduce using rule 62 (number -> INTNUM .)
+    ;               reduce using rule 62 (number -> INTNUM .)
+    <               reduce using rule 62 (number -> INTNUM .)
+    >               reduce using rule 62 (number -> INTNUM .)
+    EQ              reduce using rule 62 (number -> INTNUM .)
+    NEQ             reduce using rule 62 (number -> INTNUM .)
+    GEQ             reduce using rule 62 (number -> INTNUM .)
+    LEQ             reduce using rule 62 (number -> INTNUM .)
+    ]               reduce using rule 62 (number -> INTNUM .)
+    )               reduce using rule 62 (number -> INTNUM .)
+    :               reduce using rule 62 (number -> INTNUM .)
+    {               reduce using rule 62 (number -> INTNUM .)
+    CONTINUE        reduce using rule 62 (number -> INTNUM .)
+    BREAK           reduce using rule 62 (number -> INTNUM .)
+    WHILE           reduce using rule 62 (number -> INTNUM .)
+    FOR             reduce using rule 62 (number -> INTNUM .)
+    IF              reduce using rule 62 (number -> INTNUM .)
+    PRINT           reduce using rule 62 (number -> INTNUM .)
+    RETURN          reduce using rule 62 (number -> INTNUM .)
+    ID              reduce using rule 62 (number -> INTNUM .)
+
+
+state 63
+
+    (63) number -> REALNUM .
+
+    +               reduce using rule 63 (number -> REALNUM .)
+    -               reduce using rule 63 (number -> REALNUM .)
+    *               reduce using rule 63 (number -> REALNUM .)
+    /               reduce using rule 63 (number -> REALNUM .)
+    DOTADD          reduce using rule 63 (number -> REALNUM .)
+    DOTSUB          reduce using rule 63 (number -> REALNUM .)
+    DOTMUL          reduce using rule 63 (number -> REALNUM .)
+    DOTDIV          reduce using rule 63 (number -> REALNUM .)
+    ,               reduce using rule 63 (number -> REALNUM .)
+    ;               reduce using rule 63 (number -> REALNUM .)
+    <               reduce using rule 63 (number -> REALNUM .)
+    >               reduce using rule 63 (number -> REALNUM .)
+    EQ              reduce using rule 63 (number -> REALNUM .)
+    NEQ             reduce using rule 63 (number -> REALNUM .)
+    GEQ             reduce using rule 63 (number -> REALNUM .)
+    LEQ             reduce using rule 63 (number -> REALNUM .)
+    ]               reduce using rule 63 (number -> REALNUM .)
+    )               reduce using rule 63 (number -> REALNUM .)
+    :               reduce using rule 63 (number -> REALNUM .)
+    {               reduce using rule 63 (number -> REALNUM .)
+    CONTINUE        reduce using rule 63 (number -> REALNUM .)
+    BREAK           reduce using rule 63 (number -> REALNUM .)
+    WHILE           reduce using rule 63 (number -> REALNUM .)
+    FOR             reduce using rule 63 (number -> REALNUM .)
+    IF              reduce using rule 63 (number -> REALNUM .)
+    PRINT           reduce using rule 63 (number -> REALNUM .)
+    RETURN          reduce using rule 63 (number -> REALNUM .)
+    ID              reduce using rule 63 (number -> REALNUM .)
+
+
+state 64
+
+    (21) returning -> RETURN elementary .
+
+    ;               reduce using rule 21 (returning -> RETURN elementary .)
+
+
+state 65
+
+    (15) assignment -> identifier assignment_op expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    ;               reduce using rule 15 (assignment -> identifier assignment_op expression .)
+    +               shift and go to state 75
+    -               shift and go to state 76
+    *               shift and go to state 77
+    /               shift and go to state 78
+    DOTADD          shift and go to state 79
+    DOTSUB          shift and go to state 80
+    DOTMUL          shift and go to state 81
+    DOTDIV          shift and go to state 82
+
+
+state 66
+
+    (16) while_loop -> WHILE condition statements .
+
+    ;               reduce using rule 16 (while_loop -> WHILE condition statements .)
+
+
+state 67
+
+    (35) statements -> { . program }
+    (1) program -> . instruction_lines
+    (2) program -> . empty
+    (4) instruction_lines -> . instruction_lines instruction_line
+    (5) instruction_lines -> . instruction_line
+    (3) empty -> .
+    (6) instruction_line -> . instruction ;
+    (7) instruction -> . assignment
+    (8) instruction -> . while_loop
+    (9) instruction -> . for_loop
+    (10) instruction -> . if_else
+    (11) instruction -> . printing
+    (12) instruction -> . CONTINUE
+    (13) instruction -> . BREAK
+    (14) instruction -> . returning
+    (15) assignment -> . identifier assignment_op expression
+    (16) while_loop -> . WHILE condition statements
+    (17) for_loop -> . FOR ID = range statements
+    (18) if_else -> . IF condition statements
+    (19) if_else -> . IF condition statements ELSE statements
+    (20) printing -> . PRINT array_line
+    (21) returning -> . RETURN elementary
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+
+    }               reduce using rule 3 (empty -> .)
+    CONTINUE        shift and go to state 11
+    BREAK           shift and go to state 12
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 16
+    IF              shift and go to state 18
+    PRINT           shift and go to state 19
+    RETURN          shift and go to state 20
+    ID              shift and go to state 17
+
+    program                        shift and go to state 92
+    instruction_lines              shift and go to state 2
+    empty                          shift and go to state 3
+    instruction_line               shift and go to state 4
+    instruction                    shift and go to state 5
+    assignment                     shift and go to state 6
+    while_loop                     shift and go to state 7
+    for_loop                       shift and go to state 8
+    if_else                        shift and go to state 9
+    printing                       shift and go to state 10
+    returning                      shift and go to state 13
+    identifier                     shift and go to state 14
+
+state 68
+
+    (36) statements -> instruction_line .
+
+    ;               reduce using rule 36 (statements -> instruction_line .)
+    ELSE            reduce using rule 36 (statements -> instruction_line .)
+
+
+state 69
+
+    (27) condition -> ( bool_expression . )
+
+    )               shift and go to state 93
+
+
+state 70
+
+    (28) bool_expression -> expression . comparison_op expression
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+    (29) comparison_op -> . <
+    (30) comparison_op -> . >
+    (31) comparison_op -> . EQ
+    (32) comparison_op -> . NEQ
+    (33) comparison_op -> . GEQ
+    (34) comparison_op -> . LEQ
+
+    +               shift and go to state 75
+    -               shift and go to state 76
+    *               shift and go to state 77
+    /               shift and go to state 78
+    DOTADD          shift and go to state 79
+    DOTSUB          shift and go to state 80
+    DOTMUL          shift and go to state 81
+    DOTDIV          shift and go to state 82
+    <               shift and go to state 95
+    >               shift and go to state 96
+    EQ              shift and go to state 97
+    NEQ             shift and go to state 98
+    GEQ             shift and go to state 99
+    LEQ             shift and go to state 100
+
+    comparison_op                  shift and go to state 94
+
+state 71
+
+    (17) for_loop -> FOR ID = . range statements
+    (37) range -> . id_or_number : id_or_number
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    ID              shift and go to state 17
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    range                          shift and go to state 101
+    id_or_number                   shift and go to state 102
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 72
+
+    (60) identifier -> ID [ array_line . ]
+    (47) array_line -> array_line . , expression
+
+    ]               shift and go to state 103
+    ,               shift and go to state 74
+
+
+state 73
+
+    (18) if_else -> IF condition statements .
+    (19) if_else -> IF condition statements . ELSE statements
+
+    ;               reduce using rule 18 (if_else -> IF condition statements .)
+    ELSE            shift and go to state 104
+
+
+state 74
+
+    (47) array_line -> array_line , . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    expression                     shift and go to state 105
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 75
+
+    (74) add_expression -> expression + . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    expression                     shift and go to state 106
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 76
+
+    (75) sub_expression -> expression - . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    expression                     shift and go to state 107
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 77
+
+    (76) mul_expression -> expression * . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    expression                     shift and go to state 108
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 78
+
+    (77) div_expression -> expression / . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    expression                     shift and go to state 109
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 79
+
+    (78) dot_add_expression -> expression DOTADD . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    expression                     shift and go to state 110
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 80
+
+    (79) dot_sub_expression -> expression DOTSUB . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    expression                     shift and go to state 111
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 81
+
+    (80) dot_mul_expression -> expression DOTMUL . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    expression                     shift and go to state 112
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 82
+
+    (81) dot_div_expression -> expression DOTDIV . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    expression                     shift and go to state 113
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 83
+
+    (54) transposition -> array ' .
+
+    +               reduce using rule 54 (transposition -> array ' .)
+    -               reduce using rule 54 (transposition -> array ' .)
+    *               reduce using rule 54 (transposition -> array ' .)
+    /               reduce using rule 54 (transposition -> array ' .)
+    DOTADD          reduce using rule 54 (transposition -> array ' .)
+    DOTSUB          reduce using rule 54 (transposition -> array ' .)
+    DOTMUL          reduce using rule 54 (transposition -> array ' .)
+    DOTDIV          reduce using rule 54 (transposition -> array ' .)
+    ,               reduce using rule 54 (transposition -> array ' .)
+    ;               reduce using rule 54 (transposition -> array ' .)
+    <               reduce using rule 54 (transposition -> array ' .)
+    >               reduce using rule 54 (transposition -> array ' .)
+    EQ              reduce using rule 54 (transposition -> array ' .)
+    NEQ             reduce using rule 54 (transposition -> array ' .)
+    GEQ             reduce using rule 54 (transposition -> array ' .)
+    LEQ             reduce using rule 54 (transposition -> array ' .)
+    ]               reduce using rule 54 (transposition -> array ' .)
+    )               reduce using rule 54 (transposition -> array ' .)
+
+
+state 84
+
+    (44) array -> [ array_lines . ]
+    (45) array_lines -> array_lines . ; array_line
+
+    ]               shift and go to state 114
+    ;               shift and go to state 115
+
+
+state 85
+
+    (46) array_lines -> array_line .
+    (47) array_line -> array_line . , expression
+
+    ]               reduce using rule 46 (array_lines -> array_line .)
+    ;               reduce using rule 46 (array_lines -> array_line .)
+    ,               shift and go to state 74
+
+
+state 86
+
+    (49) array_special -> ZEROS array_special_specifier .
+
+    +               reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    -               reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    *               reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    /               reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    DOTADD          reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    DOTSUB          reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    DOTMUL          reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    DOTDIV          reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    ,               reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    ;               reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    <               reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    >               reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    EQ              reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    NEQ             reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    GEQ             reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    LEQ             reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    ]               reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+    )               reduce using rule 49 (array_special -> ZEROS array_special_specifier .)
+
+
+state 87
+
+    (52) array_special_specifier -> ( . id_or_number )
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    ID              shift and go to state 17
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    id_or_number                   shift and go to state 116
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 88
+
+    (50) array_special -> ONES array_special_specifier .
+
+    +               reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    -               reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    *               reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    /               reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    DOTADD          reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    DOTSUB          reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    DOTMUL          reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    DOTDIV          reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    ,               reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    ;               reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    <               reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    >               reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    EQ              reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    NEQ             reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    GEQ             reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    LEQ             reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    ]               reduce using rule 50 (array_special -> ONES array_special_specifier .)
+    )               reduce using rule 50 (array_special -> ONES array_special_specifier .)
+
+
+state 89
+
+    (51) array_special -> EYE array_special_specifier .
+
+    +               reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    -               reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    *               reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    /               reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    DOTADD          reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    DOTSUB          reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    DOTMUL          reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    DOTDIV          reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    ,               reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    ;               reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    <               reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    >               reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    EQ              reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    NEQ             reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    GEQ             reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    LEQ             reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    ]               reduce using rule 51 (array_special -> EYE array_special_specifier .)
+    )               reduce using rule 51 (array_special -> EYE array_special_specifier .)
+
+
+state 90
+
+    (55) negation -> - expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    +               reduce using rule 55 (negation -> - expression .)
+    -               reduce using rule 55 (negation -> - expression .)
+    DOTADD          reduce using rule 55 (negation -> - expression .)
+    DOTSUB          reduce using rule 55 (negation -> - expression .)
+    ,               reduce using rule 55 (negation -> - expression .)
+    ;               reduce using rule 55 (negation -> - expression .)
+    <               reduce using rule 55 (negation -> - expression .)
+    >               reduce using rule 55 (negation -> - expression .)
+    EQ              reduce using rule 55 (negation -> - expression .)
+    NEQ             reduce using rule 55 (negation -> - expression .)
+    GEQ             reduce using rule 55 (negation -> - expression .)
+    LEQ             reduce using rule 55 (negation -> - expression .)
+    ]               reduce using rule 55 (negation -> - expression .)
+    )               reduce using rule 55 (negation -> - expression .)
+    *               shift and go to state 77
+    /               shift and go to state 78
+    DOTMUL          shift and go to state 81
+    DOTDIV          shift and go to state 82
+
+  ! *               [ reduce using rule 55 (negation -> - expression .) ]
+  ! /               [ reduce using rule 55 (negation -> - expression .) ]
+  ! DOTMUL          [ reduce using rule 55 (negation -> - expression .) ]
+  ! DOTDIV          [ reduce using rule 55 (negation -> - expression .) ]
+  ! +               [ shift and go to state 75 ]
+  ! -               [ shift and go to state 76 ]
+  ! DOTADD          [ shift and go to state 79 ]
+  ! DOTSUB          [ shift and go to state 80 ]
+
+
+state 91
+
+    (53) transposition -> ID ' .
+
+    +               reduce using rule 53 (transposition -> ID ' .)
+    -               reduce using rule 53 (transposition -> ID ' .)
+    *               reduce using rule 53 (transposition -> ID ' .)
+    /               reduce using rule 53 (transposition -> ID ' .)
+    DOTADD          reduce using rule 53 (transposition -> ID ' .)
+    DOTSUB          reduce using rule 53 (transposition -> ID ' .)
+    DOTMUL          reduce using rule 53 (transposition -> ID ' .)
+    DOTDIV          reduce using rule 53 (transposition -> ID ' .)
+    ,               reduce using rule 53 (transposition -> ID ' .)
+    ;               reduce using rule 53 (transposition -> ID ' .)
+    <               reduce using rule 53 (transposition -> ID ' .)
+    >               reduce using rule 53 (transposition -> ID ' .)
+    EQ              reduce using rule 53 (transposition -> ID ' .)
+    NEQ             reduce using rule 53 (transposition -> ID ' .)
+    GEQ             reduce using rule 53 (transposition -> ID ' .)
+    LEQ             reduce using rule 53 (transposition -> ID ' .)
+    ]               reduce using rule 53 (transposition -> ID ' .)
+    )               reduce using rule 53 (transposition -> ID ' .)
+
+
+state 92
+
+    (35) statements -> { program . }
+
+    }               shift and go to state 117
+
+
+state 93
+
+    (27) condition -> ( bool_expression ) .
+
+    {               reduce using rule 27 (condition -> ( bool_expression ) .)
+    CONTINUE        reduce using rule 27 (condition -> ( bool_expression ) .)
+    BREAK           reduce using rule 27 (condition -> ( bool_expression ) .)
+    WHILE           reduce using rule 27 (condition -> ( bool_expression ) .)
+    FOR             reduce using rule 27 (condition -> ( bool_expression ) .)
+    IF              reduce using rule 27 (condition -> ( bool_expression ) .)
+    PRINT           reduce using rule 27 (condition -> ( bool_expression ) .)
+    RETURN          reduce using rule 27 (condition -> ( bool_expression ) .)
+    ID              reduce using rule 27 (condition -> ( bool_expression ) .)
+
+
+state 94
+
+    (28) bool_expression -> expression comparison_op . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    expression                     shift and go to state 118
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 95
+
+    (29) comparison_op -> < .
+
+    [               reduce using rule 29 (comparison_op -> < .)
+    STRING          reduce using rule 29 (comparison_op -> < .)
+    ZEROS           reduce using rule 29 (comparison_op -> < .)
+    ONES            reduce using rule 29 (comparison_op -> < .)
+    EYE             reduce using rule 29 (comparison_op -> < .)
+    -               reduce using rule 29 (comparison_op -> < .)
+    ID              reduce using rule 29 (comparison_op -> < .)
+    INTNUM          reduce using rule 29 (comparison_op -> < .)
+    REALNUM         reduce using rule 29 (comparison_op -> < .)
+
+
+state 96
+
+    (30) comparison_op -> > .
+
+    [               reduce using rule 30 (comparison_op -> > .)
+    STRING          reduce using rule 30 (comparison_op -> > .)
+    ZEROS           reduce using rule 30 (comparison_op -> > .)
+    ONES            reduce using rule 30 (comparison_op -> > .)
+    EYE             reduce using rule 30 (comparison_op -> > .)
+    -               reduce using rule 30 (comparison_op -> > .)
+    ID              reduce using rule 30 (comparison_op -> > .)
+    INTNUM          reduce using rule 30 (comparison_op -> > .)
+    REALNUM         reduce using rule 30 (comparison_op -> > .)
+
+
+state 97
+
+    (31) comparison_op -> EQ .
+
+    [               reduce using rule 31 (comparison_op -> EQ .)
+    STRING          reduce using rule 31 (comparison_op -> EQ .)
+    ZEROS           reduce using rule 31 (comparison_op -> EQ .)
+    ONES            reduce using rule 31 (comparison_op -> EQ .)
+    EYE             reduce using rule 31 (comparison_op -> EQ .)
+    -               reduce using rule 31 (comparison_op -> EQ .)
+    ID              reduce using rule 31 (comparison_op -> EQ .)
+    INTNUM          reduce using rule 31 (comparison_op -> EQ .)
+    REALNUM         reduce using rule 31 (comparison_op -> EQ .)
+
+
+state 98
+
+    (32) comparison_op -> NEQ .
+
+    [               reduce using rule 32 (comparison_op -> NEQ .)
+    STRING          reduce using rule 32 (comparison_op -> NEQ .)
+    ZEROS           reduce using rule 32 (comparison_op -> NEQ .)
+    ONES            reduce using rule 32 (comparison_op -> NEQ .)
+    EYE             reduce using rule 32 (comparison_op -> NEQ .)
+    -               reduce using rule 32 (comparison_op -> NEQ .)
+    ID              reduce using rule 32 (comparison_op -> NEQ .)
+    INTNUM          reduce using rule 32 (comparison_op -> NEQ .)
+    REALNUM         reduce using rule 32 (comparison_op -> NEQ .)
+
+
+state 99
+
+    (33) comparison_op -> GEQ .
+
+    [               reduce using rule 33 (comparison_op -> GEQ .)
+    STRING          reduce using rule 33 (comparison_op -> GEQ .)
+    ZEROS           reduce using rule 33 (comparison_op -> GEQ .)
+    ONES            reduce using rule 33 (comparison_op -> GEQ .)
+    EYE             reduce using rule 33 (comparison_op -> GEQ .)
+    -               reduce using rule 33 (comparison_op -> GEQ .)
+    ID              reduce using rule 33 (comparison_op -> GEQ .)
+    INTNUM          reduce using rule 33 (comparison_op -> GEQ .)
+    REALNUM         reduce using rule 33 (comparison_op -> GEQ .)
+
+
+state 100
+
+    (34) comparison_op -> LEQ .
+
+    [               reduce using rule 34 (comparison_op -> LEQ .)
+    STRING          reduce using rule 34 (comparison_op -> LEQ .)
+    ZEROS           reduce using rule 34 (comparison_op -> LEQ .)
+    ONES            reduce using rule 34 (comparison_op -> LEQ .)
+    EYE             reduce using rule 34 (comparison_op -> LEQ .)
+    -               reduce using rule 34 (comparison_op -> LEQ .)
+    ID              reduce using rule 34 (comparison_op -> LEQ .)
+    INTNUM          reduce using rule 34 (comparison_op -> LEQ .)
+    REALNUM         reduce using rule 34 (comparison_op -> LEQ .)
+
+
+state 101
+
+    (17) for_loop -> FOR ID = range . statements
+    (35) statements -> . { program }
+    (36) statements -> . instruction_line
+    (6) instruction_line -> . instruction ;
+    (7) instruction -> . assignment
+    (8) instruction -> . while_loop
+    (9) instruction -> . for_loop
+    (10) instruction -> . if_else
+    (11) instruction -> . printing
+    (12) instruction -> . CONTINUE
+    (13) instruction -> . BREAK
+    (14) instruction -> . returning
+    (15) assignment -> . identifier assignment_op expression
+    (16) while_loop -> . WHILE condition statements
+    (17) for_loop -> . FOR ID = range statements
+    (18) if_else -> . IF condition statements
+    (19) if_else -> . IF condition statements ELSE statements
+    (20) printing -> . PRINT array_line
+    (21) returning -> . RETURN elementary
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+
+    {               shift and go to state 67
+    CONTINUE        shift and go to state 11
+    BREAK           shift and go to state 12
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 16
+    IF              shift and go to state 18
+    PRINT           shift and go to state 19
+    RETURN          shift and go to state 20
+    ID              shift and go to state 17
+
+    statements                     shift and go to state 119
+    instruction_line               shift and go to state 68
+    instruction                    shift and go to state 5
+    assignment                     shift and go to state 6
+    while_loop                     shift and go to state 7
+    for_loop                       shift and go to state 8
+    if_else                        shift and go to state 9
+    printing                       shift and go to state 10
+    returning                      shift and go to state 13
+    identifier                     shift and go to state 14
+
+state 102
+
+    (37) range -> id_or_number . : id_or_number
+
+    :               shift and go to state 120
+
+
+state 103
+
+    (60) identifier -> ID [ array_line ] .
+
+    =               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    ADDASSIGN       reduce using rule 60 (identifier -> ID [ array_line ] .)
+    SUBASSIGN       reduce using rule 60 (identifier -> ID [ array_line ] .)
+    MULASSIGN       reduce using rule 60 (identifier -> ID [ array_line ] .)
+    DIVASSIGN       reduce using rule 60 (identifier -> ID [ array_line ] .)
+    +               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    -               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    *               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    /               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    DOTADD          reduce using rule 60 (identifier -> ID [ array_line ] .)
+    DOTSUB          reduce using rule 60 (identifier -> ID [ array_line ] .)
+    DOTMUL          reduce using rule 60 (identifier -> ID [ array_line ] .)
+    DOTDIV          reduce using rule 60 (identifier -> ID [ array_line ] .)
+    ,               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    ;               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    <               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    >               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    EQ              reduce using rule 60 (identifier -> ID [ array_line ] .)
+    NEQ             reduce using rule 60 (identifier -> ID [ array_line ] .)
+    GEQ             reduce using rule 60 (identifier -> ID [ array_line ] .)
+    LEQ             reduce using rule 60 (identifier -> ID [ array_line ] .)
+    ]               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    )               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    :               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    {               reduce using rule 60 (identifier -> ID [ array_line ] .)
+    CONTINUE        reduce using rule 60 (identifier -> ID [ array_line ] .)
+    BREAK           reduce using rule 60 (identifier -> ID [ array_line ] .)
+    WHILE           reduce using rule 60 (identifier -> ID [ array_line ] .)
+    FOR             reduce using rule 60 (identifier -> ID [ array_line ] .)
+    IF              reduce using rule 60 (identifier -> ID [ array_line ] .)
+    PRINT           reduce using rule 60 (identifier -> ID [ array_line ] .)
+    RETURN          reduce using rule 60 (identifier -> ID [ array_line ] .)
+    ID              reduce using rule 60 (identifier -> ID [ array_line ] .)
+
+
+state 104
+
+    (19) if_else -> IF condition statements ELSE . statements
+    (35) statements -> . { program }
+    (36) statements -> . instruction_line
+    (6) instruction_line -> . instruction ;
+    (7) instruction -> . assignment
+    (8) instruction -> . while_loop
+    (9) instruction -> . for_loop
+    (10) instruction -> . if_else
+    (11) instruction -> . printing
+    (12) instruction -> . CONTINUE
+    (13) instruction -> . BREAK
+    (14) instruction -> . returning
+    (15) assignment -> . identifier assignment_op expression
+    (16) while_loop -> . WHILE condition statements
+    (17) for_loop -> . FOR ID = range statements
+    (18) if_else -> . IF condition statements
+    (19) if_else -> . IF condition statements ELSE statements
+    (20) printing -> . PRINT array_line
+    (21) returning -> . RETURN elementary
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+
+    {               shift and go to state 67
+    CONTINUE        shift and go to state 11
+    BREAK           shift and go to state 12
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 16
+    IF              shift and go to state 18
+    PRINT           shift and go to state 19
+    RETURN          shift and go to state 20
+    ID              shift and go to state 17
+
+    statements                     shift and go to state 121
+    instruction_line               shift and go to state 68
+    instruction                    shift and go to state 5
+    assignment                     shift and go to state 6
+    while_loop                     shift and go to state 7
+    for_loop                       shift and go to state 8
+    if_else                        shift and go to state 9
+    printing                       shift and go to state 10
+    returning                      shift and go to state 13
+    identifier                     shift and go to state 14
+
+state 105
+
+    (47) array_line -> array_line , expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    ,               reduce using rule 47 (array_line -> array_line , expression .)
+    ;               reduce using rule 47 (array_line -> array_line , expression .)
+    ]               reduce using rule 47 (array_line -> array_line , expression .)
+    +               shift and go to state 75
+    -               shift and go to state 76
+    *               shift and go to state 77
+    /               shift and go to state 78
+    DOTADD          shift and go to state 79
+    DOTSUB          shift and go to state 80
+    DOTMUL          shift and go to state 81
+    DOTDIV          shift and go to state 82
+
+
+state 106
+
+    (74) add_expression -> expression + expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    +               reduce using rule 74 (add_expression -> expression + expression .)
+    -               reduce using rule 74 (add_expression -> expression + expression .)
+    DOTADD          reduce using rule 74 (add_expression -> expression + expression .)
+    DOTSUB          reduce using rule 74 (add_expression -> expression + expression .)
+    ,               reduce using rule 74 (add_expression -> expression + expression .)
+    ;               reduce using rule 74 (add_expression -> expression + expression .)
+    <               reduce using rule 74 (add_expression -> expression + expression .)
+    >               reduce using rule 74 (add_expression -> expression + expression .)
+    EQ              reduce using rule 74 (add_expression -> expression + expression .)
+    NEQ             reduce using rule 74 (add_expression -> expression + expression .)
+    GEQ             reduce using rule 74 (add_expression -> expression + expression .)
+    LEQ             reduce using rule 74 (add_expression -> expression + expression .)
+    ]               reduce using rule 74 (add_expression -> expression + expression .)
+    )               reduce using rule 74 (add_expression -> expression + expression .)
+    *               shift and go to state 77
+    /               shift and go to state 78
+    DOTMUL          shift and go to state 81
+    DOTDIV          shift and go to state 82
+
+  ! *               [ reduce using rule 74 (add_expression -> expression + expression .) ]
+  ! /               [ reduce using rule 74 (add_expression -> expression + expression .) ]
+  ! DOTMUL          [ reduce using rule 74 (add_expression -> expression + expression .) ]
+  ! DOTDIV          [ reduce using rule 74 (add_expression -> expression + expression .) ]
+  ! +               [ shift and go to state 75 ]
+  ! -               [ shift and go to state 76 ]
+  ! DOTADD          [ shift and go to state 79 ]
+  ! DOTSUB          [ shift and go to state 80 ]
+
+
+state 107
+
+    (75) sub_expression -> expression - expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    +               reduce using rule 75 (sub_expression -> expression - expression .)
+    -               reduce using rule 75 (sub_expression -> expression - expression .)
+    DOTADD          reduce using rule 75 (sub_expression -> expression - expression .)
+    DOTSUB          reduce using rule 75 (sub_expression -> expression - expression .)
+    ,               reduce using rule 75 (sub_expression -> expression - expression .)
+    ;               reduce using rule 75 (sub_expression -> expression - expression .)
+    <               reduce using rule 75 (sub_expression -> expression - expression .)
+    >               reduce using rule 75 (sub_expression -> expression - expression .)
+    EQ              reduce using rule 75 (sub_expression -> expression - expression .)
+    NEQ             reduce using rule 75 (sub_expression -> expression - expression .)
+    GEQ             reduce using rule 75 (sub_expression -> expression - expression .)
+    LEQ             reduce using rule 75 (sub_expression -> expression - expression .)
+    ]               reduce using rule 75 (sub_expression -> expression - expression .)
+    )               reduce using rule 75 (sub_expression -> expression - expression .)
+    *               shift and go to state 77
+    /               shift and go to state 78
+    DOTMUL          shift and go to state 81
+    DOTDIV          shift and go to state 82
+
+  ! *               [ reduce using rule 75 (sub_expression -> expression - expression .) ]
+  ! /               [ reduce using rule 75 (sub_expression -> expression - expression .) ]
+  ! DOTMUL          [ reduce using rule 75 (sub_expression -> expression - expression .) ]
+  ! DOTDIV          [ reduce using rule 75 (sub_expression -> expression - expression .) ]
+  ! +               [ shift and go to state 75 ]
+  ! -               [ shift and go to state 76 ]
+  ! DOTADD          [ shift and go to state 79 ]
+  ! DOTSUB          [ shift and go to state 80 ]
+
+
+state 108
+
+    (76) mul_expression -> expression * expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    +               reduce using rule 76 (mul_expression -> expression * expression .)
+    -               reduce using rule 76 (mul_expression -> expression * expression .)
+    *               reduce using rule 76 (mul_expression -> expression * expression .)
+    /               reduce using rule 76 (mul_expression -> expression * expression .)
+    DOTADD          reduce using rule 76 (mul_expression -> expression * expression .)
+    DOTSUB          reduce using rule 76 (mul_expression -> expression * expression .)
+    DOTMUL          reduce using rule 76 (mul_expression -> expression * expression .)
+    DOTDIV          reduce using rule 76 (mul_expression -> expression * expression .)
+    ,               reduce using rule 76 (mul_expression -> expression * expression .)
+    ;               reduce using rule 76 (mul_expression -> expression * expression .)
+    <               reduce using rule 76 (mul_expression -> expression * expression .)
+    >               reduce using rule 76 (mul_expression -> expression * expression .)
+    EQ              reduce using rule 76 (mul_expression -> expression * expression .)
+    NEQ             reduce using rule 76 (mul_expression -> expression * expression .)
+    GEQ             reduce using rule 76 (mul_expression -> expression * expression .)
+    LEQ             reduce using rule 76 (mul_expression -> expression * expression .)
+    ]               reduce using rule 76 (mul_expression -> expression * expression .)
+    )               reduce using rule 76 (mul_expression -> expression * expression .)
+
+  ! +               [ shift and go to state 75 ]
+  ! -               [ shift and go to state 76 ]
+  ! *               [ shift and go to state 77 ]
+  ! /               [ shift and go to state 78 ]
+  ! DOTADD          [ shift and go to state 79 ]
+  ! DOTSUB          [ shift and go to state 80 ]
+  ! DOTMUL          [ shift and go to state 81 ]
+  ! DOTDIV          [ shift and go to state 82 ]
+
+
+state 109
+
+    (77) div_expression -> expression / expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    +               reduce using rule 77 (div_expression -> expression / expression .)
+    -               reduce using rule 77 (div_expression -> expression / expression .)
+    *               reduce using rule 77 (div_expression -> expression / expression .)
+    /               reduce using rule 77 (div_expression -> expression / expression .)
+    DOTADD          reduce using rule 77 (div_expression -> expression / expression .)
+    DOTSUB          reduce using rule 77 (div_expression -> expression / expression .)
+    DOTMUL          reduce using rule 77 (div_expression -> expression / expression .)
+    DOTDIV          reduce using rule 77 (div_expression -> expression / expression .)
+    ,               reduce using rule 77 (div_expression -> expression / expression .)
+    ;               reduce using rule 77 (div_expression -> expression / expression .)
+    <               reduce using rule 77 (div_expression -> expression / expression .)
+    >               reduce using rule 77 (div_expression -> expression / expression .)
+    EQ              reduce using rule 77 (div_expression -> expression / expression .)
+    NEQ             reduce using rule 77 (div_expression -> expression / expression .)
+    GEQ             reduce using rule 77 (div_expression -> expression / expression .)
+    LEQ             reduce using rule 77 (div_expression -> expression / expression .)
+    ]               reduce using rule 77 (div_expression -> expression / expression .)
+    )               reduce using rule 77 (div_expression -> expression / expression .)
+
+  ! +               [ shift and go to state 75 ]
+  ! -               [ shift and go to state 76 ]
+  ! *               [ shift and go to state 77 ]
+  ! /               [ shift and go to state 78 ]
+  ! DOTADD          [ shift and go to state 79 ]
+  ! DOTSUB          [ shift and go to state 80 ]
+  ! DOTMUL          [ shift and go to state 81 ]
+  ! DOTDIV          [ shift and go to state 82 ]
+
+
+state 110
+
+    (78) dot_add_expression -> expression DOTADD expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    +               reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    -               reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    DOTADD          reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    DOTSUB          reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    ,               reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    ;               reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    <               reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    >               reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    EQ              reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    NEQ             reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    GEQ             reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    LEQ             reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    ]               reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    )               reduce using rule 78 (dot_add_expression -> expression DOTADD expression .)
+    *               shift and go to state 77
+    /               shift and go to state 78
+    DOTMUL          shift and go to state 81
+    DOTDIV          shift and go to state 82
+
+  ! *               [ reduce using rule 78 (dot_add_expression -> expression DOTADD expression .) ]
+  ! /               [ reduce using rule 78 (dot_add_expression -> expression DOTADD expression .) ]
+  ! DOTMUL          [ reduce using rule 78 (dot_add_expression -> expression DOTADD expression .) ]
+  ! DOTDIV          [ reduce using rule 78 (dot_add_expression -> expression DOTADD expression .) ]
+  ! +               [ shift and go to state 75 ]
+  ! -               [ shift and go to state 76 ]
+  ! DOTADD          [ shift and go to state 79 ]
+  ! DOTSUB          [ shift and go to state 80 ]
+
+
+state 111
+
+    (79) dot_sub_expression -> expression DOTSUB expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    +               reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    -               reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    DOTADD          reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    DOTSUB          reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    ,               reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    ;               reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    <               reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    >               reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    EQ              reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    NEQ             reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    GEQ             reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    LEQ             reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    ]               reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    )               reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .)
+    *               shift and go to state 77
+    /               shift and go to state 78
+    DOTMUL          shift and go to state 81
+    DOTDIV          shift and go to state 82
+
+  ! *               [ reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .) ]
+  ! /               [ reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .) ]
+  ! DOTMUL          [ reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .) ]
+  ! DOTDIV          [ reduce using rule 79 (dot_sub_expression -> expression DOTSUB expression .) ]
+  ! +               [ shift and go to state 75 ]
+  ! -               [ shift and go to state 76 ]
+  ! DOTADD          [ shift and go to state 79 ]
+  ! DOTSUB          [ shift and go to state 80 ]
+
+
+state 112
+
+    (80) dot_mul_expression -> expression DOTMUL expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    +               reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    -               reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    *               reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    /               reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    DOTADD          reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    DOTSUB          reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    DOTMUL          reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    DOTDIV          reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    ,               reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    ;               reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    <               reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    >               reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    EQ              reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    NEQ             reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    GEQ             reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    LEQ             reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    ]               reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+    )               reduce using rule 80 (dot_mul_expression -> expression DOTMUL expression .)
+
+  ! +               [ shift and go to state 75 ]
+  ! -               [ shift and go to state 76 ]
+  ! *               [ shift and go to state 77 ]
+  ! /               [ shift and go to state 78 ]
+  ! DOTADD          [ shift and go to state 79 ]
+  ! DOTSUB          [ shift and go to state 80 ]
+  ! DOTMUL          [ shift and go to state 81 ]
+  ! DOTDIV          [ shift and go to state 82 ]
+
+
+state 113
+
+    (81) dot_div_expression -> expression DOTDIV expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    +               reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    -               reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    *               reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    /               reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    DOTADD          reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    DOTSUB          reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    DOTMUL          reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    DOTDIV          reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    ,               reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    ;               reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    <               reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    >               reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    EQ              reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    NEQ             reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    GEQ             reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    LEQ             reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    ]               reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+    )               reduce using rule 81 (dot_div_expression -> expression DOTDIV expression .)
+
+  ! +               [ shift and go to state 75 ]
+  ! -               [ shift and go to state 76 ]
+  ! *               [ shift and go to state 77 ]
+  ! /               [ shift and go to state 78 ]
+  ! DOTADD          [ shift and go to state 79 ]
+  ! DOTSUB          [ shift and go to state 80 ]
+  ! DOTMUL          [ shift and go to state 81 ]
+  ! DOTDIV          [ shift and go to state 82 ]
+
+
+state 114
+
+    (44) array -> [ array_lines ] .
+
+    '               reduce using rule 44 (array -> [ array_lines ] .)
+    +               reduce using rule 44 (array -> [ array_lines ] .)
+    -               reduce using rule 44 (array -> [ array_lines ] .)
+    *               reduce using rule 44 (array -> [ array_lines ] .)
+    /               reduce using rule 44 (array -> [ array_lines ] .)
+    DOTADD          reduce using rule 44 (array -> [ array_lines ] .)
+    DOTSUB          reduce using rule 44 (array -> [ array_lines ] .)
+    DOTMUL          reduce using rule 44 (array -> [ array_lines ] .)
+    DOTDIV          reduce using rule 44 (array -> [ array_lines ] .)
+    ,               reduce using rule 44 (array -> [ array_lines ] .)
+    ;               reduce using rule 44 (array -> [ array_lines ] .)
+    <               reduce using rule 44 (array -> [ array_lines ] .)
+    >               reduce using rule 44 (array -> [ array_lines ] .)
+    EQ              reduce using rule 44 (array -> [ array_lines ] .)
+    NEQ             reduce using rule 44 (array -> [ array_lines ] .)
+    GEQ             reduce using rule 44 (array -> [ array_lines ] .)
+    LEQ             reduce using rule 44 (array -> [ array_lines ] .)
+    ]               reduce using rule 44 (array -> [ array_lines ] .)
+    )               reduce using rule 44 (array -> [ array_lines ] .)
+
+
+state 115
+
+    (45) array_lines -> array_lines ; . array_line
+    (47) array_line -> . array_line , expression
+    (48) array_line -> . expression
+    (38) expression -> . expression_binary
+    (39) expression -> . array
+    (40) expression -> . elementary
+    (41) expression -> . array_special
+    (42) expression -> . negation
+    (43) expression -> . transposition
+    (64) expression_binary -> . normal_binary_expression
+    (65) expression_binary -> . dot_binary_expression
+    (44) array -> . [ array_lines ]
+    (56) elementary -> . id_or_number
+    (57) elementary -> . STRING
+    (49) array_special -> . ZEROS array_special_specifier
+    (50) array_special -> . ONES array_special_specifier
+    (51) array_special -> . EYE array_special_specifier
+    (55) negation -> . - expression
+    (53) transposition -> . ID '
+    (54) transposition -> . array '
+    (66) normal_binary_expression -> . add_expression
+    (67) normal_binary_expression -> . sub_expression
+    (68) normal_binary_expression -> . mul_expression
+    (69) normal_binary_expression -> . div_expression
+    (70) dot_binary_expression -> . dot_add_expression
+    (71) dot_binary_expression -> . dot_sub_expression
+    (72) dot_binary_expression -> . dot_mul_expression
+    (73) dot_binary_expression -> . dot_div_expression
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (74) add_expression -> . expression + expression
+    (75) sub_expression -> . expression - expression
+    (76) mul_expression -> . expression * expression
+    (77) div_expression -> . expression / expression
+    (78) dot_add_expression -> . expression DOTADD expression
+    (79) dot_sub_expression -> . expression DOTSUB expression
+    (80) dot_mul_expression -> . expression DOTMUL expression
+    (81) dot_div_expression -> . expression DOTDIV expression
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    [               shift and go to state 44
+    STRING          shift and go to state 46
+    ZEROS           shift and go to state 47
+    ONES            shift and go to state 48
+    EYE             shift and go to state 49
+    -               shift and go to state 50
+    ID              shift and go to state 51
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    array_line                     shift and go to state 122
+    expression                     shift and go to state 35
+    expression_binary              shift and go to state 36
+    array                          shift and go to state 37
+    elementary                     shift and go to state 38
+    array_special                  shift and go to state 39
+    negation                       shift and go to state 40
+    transposition                  shift and go to state 41
+    normal_binary_expression       shift and go to state 42
+    dot_binary_expression          shift and go to state 43
+    id_or_number                   shift and go to state 45
+    add_expression                 shift and go to state 52
+    sub_expression                 shift and go to state 53
+    mul_expression                 shift and go to state 54
+    div_expression                 shift and go to state 55
+    dot_add_expression             shift and go to state 56
+    dot_sub_expression             shift and go to state 57
+    dot_mul_expression             shift and go to state 58
+    dot_div_expression             shift and go to state 59
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 116
+
+    (52) array_special_specifier -> ( id_or_number . )
+
+    )               shift and go to state 123
+
+
+state 117
+
+    (35) statements -> { program } .
+
+    ;               reduce using rule 35 (statements -> { program } .)
+    ELSE            reduce using rule 35 (statements -> { program } .)
+
+
+state 118
+
+    (28) bool_expression -> expression comparison_op expression .
+    (74) add_expression -> expression . + expression
+    (75) sub_expression -> expression . - expression
+    (76) mul_expression -> expression . * expression
+    (77) div_expression -> expression . / expression
+    (78) dot_add_expression -> expression . DOTADD expression
+    (79) dot_sub_expression -> expression . DOTSUB expression
+    (80) dot_mul_expression -> expression . DOTMUL expression
+    (81) dot_div_expression -> expression . DOTDIV expression
+
+    )               reduce using rule 28 (bool_expression -> expression comparison_op expression .)
+    +               shift and go to state 75
+    -               shift and go to state 76
+    *               shift and go to state 77
+    /               shift and go to state 78
+    DOTADD          shift and go to state 79
+    DOTSUB          shift and go to state 80
+    DOTMUL          shift and go to state 81
+    DOTDIV          shift and go to state 82
+
+
+state 119
+
+    (17) for_loop -> FOR ID = range statements .
+
+    ;               reduce using rule 17 (for_loop -> FOR ID = range statements .)
+
+
+state 120
+
+    (37) range -> id_or_number : . id_or_number
+    (58) id_or_number -> . identifier
+    (59) id_or_number -> . number
+    (60) identifier -> . ID [ array_line ]
+    (61) identifier -> . ID
+    (62) number -> . INTNUM
+    (63) number -> . REALNUM
+
+    ID              shift and go to state 17
+    INTNUM          shift and go to state 62
+    REALNUM         shift and go to state 63
+
+    id_or_number                   shift and go to state 124
+    identifier                     shift and go to state 60
+    number                         shift and go to state 61
+
+state 121
+
+    (19) if_else -> IF condition statements ELSE statements .
+
+    ;               reduce using rule 19 (if_else -> IF condition statements ELSE statements .)
+
+
+state 122
+
+    (45) array_lines -> array_lines ; array_line .
+    (47) array_line -> array_line . , expression
+
+    ]               reduce using rule 45 (array_lines -> array_lines ; array_line .)
+    ;               reduce using rule 45 (array_lines -> array_lines ; array_line .)
+    ,               shift and go to state 74
+
+
+state 123
+
+    (52) array_special_specifier -> ( id_or_number ) .
+
+    +               reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    -               reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    *               reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    /               reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    DOTADD          reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    DOTSUB          reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    DOTMUL          reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    DOTDIV          reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    ,               reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    ;               reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    <               reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    >               reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    EQ              reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    NEQ             reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    GEQ             reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    LEQ             reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    ]               reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+    )               reduce using rule 52 (array_special_specifier -> ( id_or_number ) .)
+
+
+state 124
+
+    (37) range -> id_or_number : id_or_number .
+
+    {               reduce using rule 37 (range -> id_or_number : id_or_number .)
+    CONTINUE        reduce using rule 37 (range -> id_or_number : id_or_number .)
+    BREAK           reduce using rule 37 (range -> id_or_number : id_or_number .)
+    WHILE           reduce using rule 37 (range -> id_or_number : id_or_number .)
+    FOR             reduce using rule 37 (range -> id_or_number : id_or_number .)
+    IF              reduce using rule 37 (range -> id_or_number : id_or_number .)
+    PRINT           reduce using rule 37 (range -> id_or_number : id_or_number .)
+    RETURN          reduce using rule 37 (range -> id_or_number : id_or_number .)
+    ID              reduce using rule 37 (range -> id_or_number : id_or_number .)
+
