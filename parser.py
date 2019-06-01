@@ -9,10 +9,13 @@ literals = s.literals
 tokens = list(s.tokens) + literals
 
 precedence = (
+    ("left", "IF"),
+    ("left", "ELSE"),
     ("nonassoc", '=', "ADDASSIGN", "SUBASSIGN", "MULASSIGN", "DIVASSIGN"),
     ("nonassoc", '<', '>', "EQ", "NEQ", "LEQ", "GEQ"),
     ("left", '+', '-', "DOTADD", "DOTSUB"),
-    ("left", '*', '/', "DOTMUL", "DOTDIV")
+    ("left", '*', '/', "DOTMUL", "DOTDIV"),
+    ("nonassoc", "'")
 )
 
 
@@ -35,13 +38,27 @@ def p_instructions(p):
                          | instruction_line"""
 
 def p_instruction_line(p):
-    """instruction_line : instruction ';'"""
+    """instruction_line : instruction ';'
+                        | if_else
+                        | while_loop
+                        | for_loop
+                        | code_block"""
+
+def p_if_else(p):
+    """if_else : IF condition instruction_line
+               | IF condition instruction_line ELSE instruction_line"""
+
+def p_while_loop(p):
+    """while_loop : WHILE condition instruction_line"""
+
+def p_for_loop(p):
+    """for_loop : FOR ID '=' range instruction_line"""
+
+def p_code_block(p):
+    """code_block : '{' program '}' """
 
 def p_instruction(p):
     """instruction : assignment
-                   | while_loop
-                   | for_loop
-                   | if_else
                    | printing
                    | CONTINUE
                    | BREAK
@@ -53,21 +70,11 @@ def p_instruction(p):
 def p_assignment(p):
     """assignment : identifier assignment_op expression"""
 
-def p_while_loop(p):
-    """while_loop : WHILE condition statements"""
-
-def p_for_loop(p):
-    """for_loop : FOR ID '=' range statements"""
-
-def p_if_else(p):
-    """if_else : IF condition statements
-               | IF condition statements ELSE statements"""
-
 def p_printing(p):
     """printing : PRINT array_line"""
 
 def p_returning(p):
-    """returning : RETURN elementary"""
+    """returning : RETURN expression"""
 
 
 # ASSIGNMENT OPEARATORS
@@ -99,10 +106,6 @@ def p_comparison_op(p):
 
 # NEEDED FOR LOOPS AND "IF" STATEMENT
 
-def p_statements(p):
-    """statements : '{' program '}'
-                  | instruction_line""" # should be named differently
-
 def p_range(p):
     """range : id_or_number ':' id_or_number""" # what about strings?
 
@@ -115,7 +118,8 @@ def p_expression(p):
                   | elementary
                   | array_special
                   | negation
-                  | transposition"""
+                  | transposition
+                  | expression_group"""
 
 
 # ARRAY DEFINITION
@@ -213,5 +217,10 @@ def p_dot_mul_expression(p):
 
 def p_dot_div_expression(p):
     """dot_div_expression : expression DOTDIV expression"""
+
+# PARENTHESIS
+
+def p_expression_group(p):
+    """expression_group : '(' expression ')' """
 
 parser = yacc.yacc()
