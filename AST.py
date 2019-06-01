@@ -3,17 +3,18 @@ class Node(object):
         self.line = 0
         self.column = 0
 
-class IntNum(Node):
+class Integer(Node):
     def __init__(self, value):
         self.value = value
 
-class FloatNum(Node):
+class Real(Node):
     def __init__(self, value):
         self.value = value
 
-class Variable(Node):
-    def __init__(self, name):
+class Identifier(Node):
+    def __init__(self, name, indicies=None):
         self.name = name
+        self.indicies = indicies
 
 class BinExpr(Node):
     def __init__(self, op, left, right):
@@ -36,6 +37,16 @@ class WhileLoop(Node):
         self.condition = condition
         self.instruction = instruction
 
+class ForLoop(Node):
+    def __init__(self, iterator, range, instruction):
+        self.iterator = iterator
+        self.range = range
+        self.instruction = instruction
+
+class CodeBlock(Node):
+    def __init__(self, program):
+        self.program = program
+
 class Condition(Node):
     def __init__(self, op, left, right):
         self.op = op
@@ -45,6 +56,24 @@ class Condition(Node):
 class String(Node):
     def __init__(self, content):
         self.content = content
+
+class Assignment(Node):
+    def __init__(self, op, identifier, expression):
+        self.op = op
+        self.identifier = identifier
+        self.expression = expression
+
+class Printing(Node):
+    def __init__(self, array_line):
+        self.array_line = array_line
+
+class Returning(Node):
+    def __init__(self, expression):
+        self.expression = expression
+
+
+
+
 
 # ...
 # fill out missing classes
