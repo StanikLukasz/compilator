@@ -1,11 +1,13 @@
 import sys
+import ply.yacc as yacc
 import scanner
 import parser
+import treeprinter
 
 if __name__ == '__main__':
 
     try:
-        filename = sys.argv[1] if len(sys.argv) > 1 else "examples/example2_3.m"
+        filename = sys.argv[1] if len(sys.argv) > 1 else "examples/example3_1.m"
         file = open(filename, "r")
     except IOError:
         print("Cannot open {0} file".format(filename))
@@ -16,4 +18,6 @@ if __name__ == '__main__':
 
     parser = parser.parser
     text = file.read()
-    parser.parse(text, lexer=lexer)
+
+    ast = parser.parse(text, lexer=lexer)
+    ast.printTree()
