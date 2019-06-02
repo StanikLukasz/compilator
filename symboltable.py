@@ -15,13 +15,12 @@ class VariableSymbol(Symbol):
 class SymbolTable(object):
 
     def __init__(self, parent, name): # parent scope and symbol table name
-        self.symbols = {}
-        self.parent = parent
         self.name = name
+        self.parent = parent
+        self.symbols = {}
 
     def put(self, name, symbol): # put variable symbol or fundef under <name> entry
         self.symbols[name] = symbol
-
 
     def get(self, name): # get variable symbol or fundef from <name> entry
         if self.symbols.__contains__(name):
@@ -31,16 +30,18 @@ class SymbolTable(object):
         else:
             return None
 
-
     def getParentScope(self):
         return self.parent
 
-
     def pushScope(self, name):
-        pass
-
+        new_scope = SymbolTable(self, name)
+        new_scope.name = name
+        new_scope.parent = self
+        new_scope.symbols = deepcopy(self.symbols)
+        return new_scope
 
     def popScope(self):
-        pass
-
-
+        parent_scope = self.get_parent_scope()
+        if parent_scope is None:
+            print('No higher scopes')
+        return parent_scope
