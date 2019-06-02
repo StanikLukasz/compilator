@@ -89,14 +89,18 @@ class TreePrinter:
         self.expression.printTree(indent + 1)
 
     @addToClass(AST.Empty)
-    def printTree(self,indent=0):
+    def printTree(self, indent=0):
         pass
 
     @addToClass(AST.Identifier)
-    def printTree(self,indent=0):
+    def printTree(self, indent=0):
         TreePrinter.printIndented(self.name, indent) #todo: indicies
 
-
+    @addToClass(AST.Function)
+    def printTree(self, indent=0):
+        TreePrinter.printIndented(self.name, indent)
+        for argument in self.arguments:
+            argument.printTree(indent + 1)
 
     @addToClass(AST.Error)
     def printTree(self, indent=0):

@@ -75,9 +75,10 @@ class Return(Node):
     def __init__(self, expression):
         self.expression = expression
 
-
-
-
+class Function(Node):
+    def __init__(self, name, arguments):
+        self.name = name
+        self.arguments = arguments
 
 # ...
 # fill out missing classes

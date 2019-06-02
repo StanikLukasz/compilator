@@ -185,7 +185,7 @@ def p_array_special(p):
     """array_special : ZEROS array_special_specifier
                      | ONES array_special_specifier
                      | EYE array_special_specifier """
-    p[0] = AST.Function(p[1], p[2])
+    p[0] = AST.Function(p[1], [p[2]])
 
 
 def p_array_special_specifier(p):
