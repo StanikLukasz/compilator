@@ -3,6 +3,10 @@ class Node(object):
         self.line = 0
         self.column = 0
 
+class Empty(Node):
+    def __init__(self):
+        pass
+
 class Integer(Node):
     def __init__(self, value):
         self.value = value

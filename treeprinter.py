@@ -44,6 +44,16 @@ class TreePrinter:
         self.range.printTree(indent + 1)
         self.instruction.printTree(indent + 1)
 
+    @addToClass(AST.IfElse)
+    def printTree(self, indent=0):
+        TreePrinter.printIndented('IF', indent)
+        self.condition.printTree(indent + 1)
+        TreePrinter.printIndented('THEN', indent)
+        self.instruction_line.printTree(indent + 1)
+        if self.else_instruction:
+            TreePrinter.printIndented('ELSE', indent)
+            self.else_instruction.printTree(indent + 1)
+
     @addToClass(AST.CodeBlock)
     def printTree(self, indent=0):
         TreePrinter.printIndented('{', indent)
@@ -65,8 +75,8 @@ class TreePrinter:
     @addToClass(AST.Assignment)
     def printTree(self, indent=0):
         TreePrinter.printIndented(self.op, indent)
-        self.idetifier.printTree(indent + 1)
-        self.expresion.printTree(indent + 1)
+        self.identifier.printTree(indent + 1)
+        self.expression.printTree(indent + 1)
 
     @addToClass(AST.Printing)
     def printTree(self, indent=0):
@@ -77,6 +87,14 @@ class TreePrinter:
     def printTree(self, indent=0):
         TreePrinter.printIndented('RETURN', indent)
         self.expression.printTree(indent + 1)
+
+    @addToClass(AST.Empty)
+    def printTree(self,indent=0):
+        pass
+
+    @addToClass(AST.Identifier)
+    def printTree(self,indent=0):
+        TreePrinter.printIndented(self.name, indent) #todo: indicies
 
 
 

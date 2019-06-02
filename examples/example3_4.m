@@ -1,6 +1,1 @@
-while(k>"lol") {
-  while(k>"lol"){
-    while(k>"lol"){
-    }
-  }
-}
+if (N==0) A=10; else if (M==49) F=14;
