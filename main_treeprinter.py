@@ -19,5 +19,8 @@ if __name__ == '__main__':
     parser = parser.parser
     text = file.read()
 
-    ast = parser.parse(text, lexer=lexer)
-    ast.printTree()
+    try:
+        ast = parser.parse(text, lexer=lexer)
+        ast.printTree()
+    except ValueError as e:
+        print("Unable to create AST due to the following error: {}".format(e))

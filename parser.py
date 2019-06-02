@@ -22,9 +22,9 @@ precedence = (
 
 def p_error(p):
     if p:
-        print("Syntax error at line {0}, column {1}: LexToken({2}, '{3}')".format(p.lineno, s.find_tok_column(p), p.type, p.value))
+        raise ValueError("Syntax error at line {0}, column {1}: LexToken({2}, '{3}')".format(p.lineno, s.find_tok_column(p), p.type, p.value))
     else:
-        print("Unexpected end of input")
+        raise EOFError("Unexpected end of input")
 
 
 def p_program(p):
@@ -227,7 +227,7 @@ def p_identifier(p):
     if len(p) == 2:
         p[0] = AST.Identifier(p[1])
     else:
-        p[0] = AST.Identifier(p[1], p[2])
+        p[0] = AST.Reference(p[1], p[3])
 
 def p_number(p):
     """number : integer

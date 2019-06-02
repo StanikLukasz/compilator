@@ -16,4 +16,7 @@ if __name__ == '__main__':
 
     parser = parser.parser
     text = file.read()
-    parser.parse(text, lexer=lexer)
+    try:
+        parser.parse(text, lexer=lexer)
+    except ValueError as e:
+        print(e)

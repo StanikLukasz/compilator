@@ -16,8 +16,12 @@ class Real(Node):
         self.value = value
 
 class Identifier(Node):
-    def __init__(self, name, indicies=None):
+    def __init__(self, name):
         self.name = name
+
+class Reference(Node):
+    def __init__(self, id, indicies):
+        self.id = id
         self.indicies = indicies
 
 class BinExpr(Node):

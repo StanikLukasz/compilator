@@ -12,7 +12,7 @@ class TreePrinter:
 
     @classmethod
     def printIndented(cls, string, level):
-        print ("|   " * level + string)
+        print ("|  " * level + string)
 
     @addToClass(AST.Node)
     def printTree(self, indent=0):
@@ -109,7 +109,14 @@ class TreePrinter:
 
     @addToClass(AST.Identifier)
     def printTree(self, indent=0):
-        TreePrinter.printIndented(self.name, indent) #todo: indicies
+        TreePrinter.printIndented(self.name, indent)
+
+    @addToClass(AST.Reference)
+    def printTree(self, indent=0):
+        TreePrinter.printIndented('REF', indent)
+        TreePrinter.printIndented(self.id, indent + 1)
+        for index in self.indicies:
+            index.printTree(indent + 1)
 
     @addToClass(AST.Function)
     def printTree(self, indent=0):
@@ -136,11 +143,10 @@ class TreePrinter:
 
     @addToClass(AST.Array)
     def printTree(self, indent=0):
-        TreePrinter.printIndented('ARRAY', indent)
         for vector in self.content:
-            TreePrinter.printIndented('VECTOR', indent + 1)
+            TreePrinter.printIndented('VECTOR', indent)
             for element in vector:
-                element.printTree(indent + 2)
+                element.printTree(indent + 1)
 
     @addToClass(AST.Error)
     def printTree(self, indent=0):
