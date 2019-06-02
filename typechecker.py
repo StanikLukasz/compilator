@@ -3,6 +3,29 @@
 import AST
 import symboltable
 
+class Vector(object):
+    def __init__(self, size):
+        self.size = size
+
+op_and_type_map = dict()
+
+for op in ['+', '-', '/', '*', '+=', '-=', '*=', '/=']:
+    op_and_type_map[(op, 'int', 'int')] = 'int'
+    op_and_type_map[(op, 'float', 'float')] = 'float'
+    op_and_type_map[(op, 'int', 'float')] = 'float'
+    op_and_type_map[(op, 'float', 'int')] = 'float'
+
+for op in ['>', '<', '==', '!=', '>=', '<=']:
+    op_and_type_map[(op, 'int', 'int')] = 'int'
+    op_and_type_map[(op, 'float', 'float')] = 'int'
+    op_and_type_map[(op, 'int', 'float')] = 'int'
+    op_and_type_map[(op, 'float', 'int')] = 'int'
+
+for op in ['.+', '.-', './', '.*']:
+    op_and_type_map[(op, Vector.__name__, Vector.__name__)] = Vector.__name__
+
+
+
 class NodeVisitor(object):
 
     def visit(self, node):
@@ -126,7 +149,7 @@ class TypeChecker(NodeVisitor):
                 print('DEBUG: self.scope.put({},{})'.format(_id.name, -_value.expression.value))
 
     def visit_Print(self, node):
-        pass
+        self.visit(node.array_line)
 
     def visit_Continue(self, node):
         scopes = self.get_scopes()
@@ -168,16 +191,38 @@ class TypeChecker(NodeVisitor):
         if not isinstance(_expression, AST.Number): #todo and not isinstance(_expression, AST.Array):
             print('Semantic error: Cannot negate anything else than number')
             raise TypeError
+        return node.expression
 
 # 4.5 Binary expressions
     def visit_BinExpr(self, node):
-        # alternative usage,
-        # requires definition of accept method in class Node
-        type1 = self.visit(node.left)  # type1 = node.left.accept(self)
-        type2 = self.visit(node.right)  # type2 = node.right.accept(self)
+        result = {}
+        right = self.visit(node.left)  # type1 = node.left.accept(self)
+        left = self.visit(node.right)  # type2 = node.right.accept(self)
+        right_type = right.get('type')
+        left_type = left.get('type')
         op = node.op
-        # ...
-        #
+        key = (op, left_type, right_type)
+        if key not in op_and_type_map.key():
+            print('niewspierana operacja badz typ')
+        elif left_type is 'Vector' and right_type is 'Vector':
+            dim1 = right.get('size')
+            dim2 = left.get('size')
+            if dim1 and dim2:
+                if len(dim1) is not len(dim2):
+                   print('ew')
+                elif op is './' or op is '.*':
+                    if dim1[1] is not dim2[0]:
+                        print('incompatibile dims')
+                    else:
+                        result['size'] = [dim1[0], dim2[1]]
+                else:
+                    if not dim1 == dim2:
+                        print('incompatibile dims')
+            else:
+                print("incompatible types line")
+        else:
+            result['type'] = op_and_type_map[(op, left_type, right_type)]
+        return result
 
 # 4.6 Expressions in parenthesis
 # no AST classes for this part
