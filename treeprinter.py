@@ -35,6 +35,7 @@ class TreePrinter:
     def printTree(self, indent=0):
         TreePrinter.printIndented('WHILE', indent)
         self.condition.printTree(indent + 1)
+        #TreePrinter.printIndented('THEN', indent)
         self.instruction.printTree(indent + 1)
 
     @addToClass(AST.ForLoop)
@@ -48,10 +49,10 @@ class TreePrinter:
     def printTree(self, indent=0):
         TreePrinter.printIndented('IF', indent)
         self.condition.printTree(indent + 1)
-        TreePrinter.printIndented('THEN', indent)
+        #TreePrinter.printIndented('THEN', indent)
         self.instruction_line.printTree(indent + 1)
         if self.else_instruction:
-            TreePrinter.printIndented('ELSE', indent)
+            #TreePrinter.printIndented('ELSE', indent)
             self.else_instruction.printTree(indent + 1)
 
     @addToClass(AST.CodeBlock)
@@ -63,8 +64,7 @@ class TreePrinter:
 
     @addToClass(AST.Condition)
     def printTree(self, indent=0):
-        #TreePrinter.printIndented(self.op, indent)
-        self.op.printTree(indent)
+        TreePrinter.printIndented(self.op, indent)
         self.left.printTree(indent + 1)
         self.right.printTree(indent + 1)
 
@@ -81,7 +81,8 @@ class TreePrinter:
     @addToClass(AST.Print)
     def printTree(self, indent=0):
         TreePrinter.printIndented('PRINT', indent)
-        self.array_line.printTree(indent + 1)
+        for expression in self.array_line:
+            expression.printTree(indent + 1)
 
     @addToClass(AST.Return)
     def printTree(self, indent=0):
@@ -106,7 +107,6 @@ class TreePrinter:
     def printTree(self, indent=0):
         TreePrinter.printIndented('BREAK', indent)
 
-
     @addToClass(AST.Identifier)
     def printTree(self, indent=0):
         TreePrinter.printIndented(self.name, indent) #todo: indicies
@@ -125,7 +125,22 @@ class TreePrinter:
     @addToClass(AST.Transposition)
     def printTree(self, indent=0):
         TreePrinter.printIndented('TRANSPOSITION', indent)
-        self.array.printTree(indent + 1)
+        #TreePrinter.printIndented(self.argument, indent + 1)
+        self.argument.printTree(indent + 1)
+
+    @addToClass(AST.BinExpr)
+    def printTree(self, indent=0):
+        TreePrinter.printIndented(self.op, indent)
+        self.left.printTree(indent + 1)
+        self.right.printTree(indent + 1)
+
+    @addToClass(AST.Array)
+    def printTree(self, indent=0):
+        TreePrinter.printIndented('ARRAY', indent)
+        for vector in self.content:
+            TreePrinter.printIndented('VECTOR', indent + 1)
+            for element in vector:
+                element.printTree(indent + 2)
 
     @addToClass(AST.Error)
     def printTree(self, indent=0):

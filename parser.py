@@ -66,7 +66,7 @@ def p_while_loop(p):
     p[0] = AST.WhileLoop(p[2], p[3])
 
 def p_for_loop(p):
-    """for_loop : FOR ID '=' range instruction_line"""
+    """for_loop : FOR identifier '=' range instruction_line"""
     p[0] = AST.ForLoop(p[2], p[4], p[5])
 
 def p_code_block(p):
@@ -98,11 +98,11 @@ def p_assignment(p):
 
 def p_printing(p):
     """printing : PRINT array_line"""
-    p[0] = AST.Print(p[1])
+    p[0] = AST.Print(p[2])
 
 def p_returning(p):
     """returning : RETURN expression"""
-    p[0] = AST.Return(p[1])
+    p[0] = AST.Return(p[2])
 
 
 # ASSIGNMENT OPEARATORS
@@ -133,7 +133,7 @@ def p_comparison_op(p):
                      | NEQ
                      | GEQ
                      | LEQ"""
-    p[0] = AST.String(p[1]) #todo
+    p[0] = p[1]
 
 
 # NEEDED FOR LOOPS AND "IF" STATEMENT
@@ -160,7 +160,7 @@ def p_expression(p):
 
 def p_array(p):
     """array : '[' array_lines ']' """
-    p[0] = p[2]
+    p[0] = AST.Array(p[2])
 
 def p_array_lines(p):
     """array_lines : array_lines ';' array_line
@@ -193,7 +193,7 @@ def p_array_special_specifier(p):
     p[0] = p[2]
 
 def p_transposition(p):
-    """transposition : ID "'"
+    """transposition : identifier "'"
                      | array "'" """
     p[0] = AST.Transposition(p[1])
 
@@ -202,7 +202,7 @@ def p_transposition(p):
 
 def p_negation(p):
     """negation : '-' expression"""
-    p[0] = AST.Negation(p[1])
+    p[0] = AST.Negation(p[2])
 
 
 # ELEMTARY TYPES

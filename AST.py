@@ -98,10 +98,12 @@ class Negation(Node):
         self.expression = expression
 
 class Transposition(Node):
-    def __init__(self, array):
-        self.array = array
+    def __init__(self, argument):
+        self.argument = argument
 
-
+class Array(Node):
+    def __init__(self, content):
+        self.content = content
 
 
 
