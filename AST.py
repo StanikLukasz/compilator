@@ -1,6 +1,6 @@
 ## Table of contents
 #
-# Base Node class
+# 0. Base Node class
 # 1. Initial rules
 # 2. Statement types
 #   2.1 Condition statements
@@ -17,7 +17,9 @@
 #   4.7 Elementary types
 # X. Error raising
 
-# Base Node class
+
+## 0. Base Node class
+
 class Node(object):
     def __init__(self):
         self.line = 0
@@ -103,7 +105,6 @@ class Return(Node):
 ## 4. Expressions
 
 # 4.1 Array definition (and array lines used in other structures)
-
 class Array(Node):
     def __init__(self, content):
         self.content = content
@@ -156,7 +157,8 @@ class Real(Node):
     def __init__(self, value):
         self.value = value
 
-# X. Error class
+
+# X. Error raising
 
 class Error(Node):
     def __init__(self):
