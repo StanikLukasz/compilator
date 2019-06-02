@@ -1,14 +1,49 @@
 
 import AST
 import symboltable
-import memory
+from memory import *
 import exceptions
 from visit import *
 import sys
 
+import operator
+import numpy as np
+
 sys.setrecursionlimit(10000)
 
 class Interpreter(object):
+
+    def __init__(self):
+        self.memory_stack = MemoryStack()
+
+        self.binary_operations = {
+            "+": operator.add,
+            "-": operator.sub,
+            "*": operator.mul,
+            "/": operator.truediv,
+            ".+": operator.add,
+            ".-": operator.sub,
+            ".*": np.multiply,
+            "./": np.divide,
+            "<" : operator.lt,
+            ">": operator.gt,
+            "<=": operator.le,
+            ">=": operator.ge,
+            "==": operator.eq,
+            "!=": operator.ne,
+        }
+
+        self.unary_operations = {
+            "-": operator.neg,
+            "'": np.transpose,
+        }
+
+        self.functions = {
+            'EYE': np.eye,
+            'ZEROS': np.zeros,
+            'ONES': np.ones,
+        }
+
 
 
     @on('node')
