@@ -103,12 +103,15 @@ class TypeChecker(NodeVisitor):
         pass
 
     def visit_Break(self, node):
-        pass
+        scopes = self.getScopes()
+        if 'WhileLoop' not in scopes and 'ForLoop' not in scopes:
+            print('Break not in WhileLoop or ForLoop scope')
+        self.visit(node.expression)
 
     def visit_Return(self, node):
         scopes = self.getScopes()
         if 'Program' not in scopes:
-            print('Return not in Function scope')
+            print('Return not in Program scope')
         self.visit(node.expression)
 
 # 3.1 Assignment operators
