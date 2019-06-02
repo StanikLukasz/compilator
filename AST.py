@@ -3,6 +3,10 @@ class Node(object):
         self.line = 0
         self.column = 0
 
+class Empty(Node):
+    def __init__(self):
+        pass
+
 class Integer(Node):
     def __init__(self, value):
         self.value = value
@@ -63,13 +67,18 @@ class Assignment(Node):
         self.identifier = identifier
         self.expression = expression
 
-class Printing(Node):
+class Print(Node):
     def __init__(self, array_line):
         self.array_line = array_line
 
-class Returning(Node):
+class Return(Node):
     def __init__(self, expression):
         self.expression = expression
+
+class Function(Node):
+    def __init__(self, name, arguments):
+        self.name = name
+        self.arguments = arguments
 
 class Range(Node):
     def __init__(self, start_number, end_number):

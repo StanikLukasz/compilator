@@ -71,7 +71,7 @@ def p_for_loop(p):
 
 def p_code_block(p):
     """code_block : '{' program '}' """
-    p[0] = p[1]
+    p[0] = AST.CodeBlock(p[2])
 
 def p_instruction(p):
     """instruction : assignment
@@ -185,7 +185,7 @@ def p_array_special(p):
     """array_special : ZEROS array_special_specifier
                      | ONES array_special_specifier
                      | EYE array_special_specifier """
-    p[0] = AST.Function(p[1], p[2])
+    p[0] = AST.Function(p[1], [p[2]])
 
 
 def p_array_special_specifier(p):
