@@ -127,7 +127,7 @@ class TypeChecker(NodeVisitor):
 
         if isinstance(_value, AST.Variable):
             if _value.name not in self.scope.symbols.keys():
-                print('Identifier/Refernce used before initialization')
+                print('Semantic error at line {}: Identifier/Refernce used before initialization'.format(node.line))
                 return
 
         try:
@@ -154,17 +154,17 @@ class TypeChecker(NodeVisitor):
     def visit_Continue(self, node):
         scopes = self.get_scopes()
         if 'WhileLoop' not in scopes and 'ForLoop' not in scopes:
-            print('Semantic error: Continue not in WhileLoop or ForLoop scope')
+            print('Semantic error at line {}: Continue not in WhileLoop or ForLoop scope'.format(node.line))
 
     def visit_Break(self, node):
         scopes = self.get_scopes()
         if 'WhileLoop' not in scopes and 'ForLoop' not in scopes:
-            print('Semantic error: Break not in WhileLoop or ForLoop scope')
+            print('Semantic error at line {}: Break not in WhileLoop or ForLoop scope'.format(node.line))
 
     def visit_Return(self, node):
         scopes = self.get_scopes()
         if 'Program' not in scopes:
-            print('Semantic error: Return not in Program scope')
+            print('Semantic error at line {}: Return not in Program scope'.format(node.line))
 
 # 3.1 Assignment operators
 # no AST classes for this part
@@ -174,7 +174,11 @@ class TypeChecker(NodeVisitor):
 
 # 4.1 Array definition (and array lines used in other structures)
     def visit_Array(self, node):
-        pass
+        row_size = len(node.content[0])
+        for vector in node.content[1:]:
+            if len(vector) != row_size:
+                print('Semantic error at line {}: Incompatible row sizes in array'.format(node.line))
+                raise TypeError
 
 # 4.2 Array special functions
     def visit_Function(self, node):
@@ -189,7 +193,7 @@ class TypeChecker(NodeVisitor):
         _expression = node.expression
         self.visit(_expression)
         if not isinstance(_expression, AST.Number): #todo and not isinstance(_expression, AST.Array):
-            print('Semantic error: Cannot negate anything else than number')
+            print('Semantic error at line {}: Cannot negate anything else than number'.format(node.line))
             raise TypeError
         return node.expression
 
