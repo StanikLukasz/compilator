@@ -16,7 +16,9 @@ if __name__ == '__main__':
     lexer = scanner.Scanner()
     lexer.build()
 
-    parser = parser.parser
+    parser = parser.Parser(lexer)
+    parser.build()
+
     text = file.read()
 
     try:
