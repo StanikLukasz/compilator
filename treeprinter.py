@@ -78,12 +78,12 @@ class TreePrinter:
         self.identifier.printTree(indent + 1)
         self.expression.printTree(indent + 1)
 
-    @addToClass(AST.Printing)
+    @addToClass(AST.Print)
     def printTree(self, indent=0):
         TreePrinter.printIndented('PRINT', indent)
         self.array_line.printTree(indent + 1)
 
-    @addToClass(AST.Returning)
+    @addToClass(AST.Return)
     def printTree(self, indent=0):
         TreePrinter.printIndented('RETURN', indent)
         self.expression.printTree(indent + 1)

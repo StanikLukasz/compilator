@@ -67,11 +67,11 @@ class Assignment(Node):
         self.identifier = identifier
         self.expression = expression
 
-class Printing(Node):
+class Print(Node):
     def __init__(self, array_line):
         self.array_line = array_line
 
-class Returning(Node):
+class Return(Node):
     def __init__(self, expression):
         self.expression = expression
 

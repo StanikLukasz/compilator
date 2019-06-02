@@ -71,7 +71,7 @@ def p_for_loop(p):
 
 def p_code_block(p):
     """code_block : '{' program '}' """
-    p[0] = p[1]
+    p[0] = AST.CodeBlock(p[2])
 
 def p_instruction(p):
     """instruction : assignment
