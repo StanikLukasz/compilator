@@ -105,6 +105,7 @@ class Return(Node):
 ## 4. Expressions
 
 # 4.1 Array definition (and array lines used in other structures)
+# todo: Array(Value)
 class Array(Node):
     def __init__(self, content):
         self.content = content
@@ -136,26 +137,37 @@ class BinExpr(Node):
 # no AST classes for this part
 
 # 4.7 Elementary types
-class String(Node):
-    def __init__(self, content):
-        self.content = content
+# Value - something what camn be assigned to variable
+class Value(Node):
+    def __init__(self, value):
+        self.value = value
 
-class Identifier(Node):
+class String(Value):
+    pass
+
+# Variable - something what can have a value assigned to
+class Variable(Node):
     def __init__(self, name):
         self.name = name
 
-class Reference(Node):
-    def __init__(self, id, indicies):
-        self.id = id
+class Identifier(Variable):
+    def __init__(self, name):
+        self.name = name
+
+class Reference(Variable):
+    def __init__(self, name, indicies):
+        self.name = name
         self.indicies = indicies
 
-class Integer(Node):
-    def __init__(self, value):
-        self.value = value
+# Number - Integer or Real
+class Number(Value):
+    pass
 
-class Real(Node):
-    def __init__(self, value):
-        self.value = value
+class Integer(Number):
+    pass
+
+class Real(Number):
+    pass
 
 
 # X. Error raising
