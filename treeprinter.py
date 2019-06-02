@@ -176,7 +176,7 @@ class TreePrinter:
 # 4.7 Elementary types
     @addToClass(AST.String)
     def printTree(self, indent=0):
-        TreePrinter.printIndented(self.content, indent)
+        TreePrinter.printIndented(self.value, indent)
 
     @addToClass(AST.Identifier)
     def printTree(self, indent=0):
@@ -185,7 +185,7 @@ class TreePrinter:
     @addToClass(AST.Reference)
     def printTree(self, indent=0):
         TreePrinter.printIndented('REF', indent)
-        TreePrinter.printIndented(self.id, indent + 1)
+        TreePrinter.printIndented(self.name, indent + 1)
         for index in self.indicies:
             index.printTree(indent + 1)
 

@@ -96,18 +96,34 @@ class TypeChecker(NodeVisitor):
 ## 3. Instruction types
 
     def visit_Assignment(self, node):
-        _left = node.identifier
-        _right = node.expression
+        _id = node.identifier
+        _value = node.expression
         _op = node.op
-        if isinstance(_right, AST.Identifier):
-            if _right.name not in self.scope.symbols.keys():
-                print('niezainicjalizowany Identifier')
-        elif isinstance(_right, AST.Reference):
-            if _right.id not in self.scope.symbols.keys():
-                print('niezainicjalizowany Reference')
-        else:
-            print(_left)
-            self.scope.symbols[_left] = _right
+
+        self.visit(_id)
+
+        if isinstance(_value, AST.Variable):
+            if _value.name not in self.scope.symbols.keys():
+                print('Identifier/Refernce used before initialization')
+                return
+
+        try:
+            self.visit(_value)
+        except TypeError:
+            return
+
+        if isinstance(_value, AST.Value):
+            if isinstance(_id, AST.Variable):
+                self.scope.put(_id.name, _value.value)
+                print('DEBUG: self.scope.put({},{})'.format(_id.name, _value.value))
+        elif isinstance(_value, AST.Array):
+            if isinstance(_id, AST.Variable):
+                self.scope.put(_id.name, _value.content)
+                print('DEBUG: self.scope.put({},{})'.format(_id.name, _value.content))
+        elif isinstance(_value, AST.Negation):
+            if isinstance(_id, AST.Variable):
+                self.scope.put(_id.name, -_value.expression.value)
+                print('DEBUG: self.scope.put({},{})'.format(_id.name, -_value.expression.value))
 
     def visit_Print(self, node):
         pass
@@ -115,17 +131,17 @@ class TypeChecker(NodeVisitor):
     def visit_Continue(self, node):
         scopes = self.get_scopes()
         if 'WhileLoop' not in scopes and 'ForLoop' not in scopes:
-            print('Continue not in WhileLoop or ForLoop scope')
+            print('Semantic error: Continue not in WhileLoop or ForLoop scope')
 
     def visit_Break(self, node):
         scopes = self.get_scopes()
         if 'WhileLoop' not in scopes and 'ForLoop' not in scopes:
-            print('Break not in WhileLoop or ForLoop scope')
+            print('Semantic error: Break not in WhileLoop or ForLoop scope')
 
     def visit_Return(self, node):
         scopes = self.get_scopes()
         if 'Program' not in scopes:
-            print('Return not in Program scope')
+            print('Semantic error: Return not in Program scope')
 
 # 3.1 Assignment operators
 # no AST classes for this part
@@ -147,7 +163,11 @@ class TypeChecker(NodeVisitor):
 
 # 4.4 Unary negation
     def visit_Negation(self, node):
-        pass
+        _expression = node.expression
+        self.visit(_expression)
+        if not isinstance(_expression, AST.Number): #todo and not isinstance(_expression, AST.Array):
+            print('Semantic error: Cannot negate anything else than number')
+            raise TypeError
 
 # 4.5 Binary expressions
     def visit_BinExpr(self, node):
