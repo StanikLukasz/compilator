@@ -49,16 +49,33 @@ class TypeChecker(NodeVisitor):
 ## 2. Statement types
 
     def visit_IfElse(self, node):
-        pass
+        self.visit(node.condition)
+        self.scope = self.scope.pushScope('If')
+        self.visit(node.instruction_line)
+        self.scope = self.scope.popScope()
+        if node.else_instruction:
+            self.scope = self.scope.pushScope('Else')
+            self.visit(node.else_instruction)
+            self.scope = self.scope.popScope()
+
 
     def visit_WhileLoop(self, node):
-        pass
+        self.visit(node.condition)
+        self.scope = self.scope.pushScope('WhileLoop')
+        self.visit(node.instruction)
+        self.scope = self.scope.popScope()
 
     def visit_ForLoop(self, node):
-        pass
+        range = self.visit(node.range)
+        self.scope = self.scope.pushScope('ForLoop')
+        self.scope.put(node.iterator, range)
+        self.visit(node.instruction)
+        self.scope = self.scope.popScope()
 
     def visit_CodeBlock(self, node):
-        pass
+        self.scope = self.scope.pushScope('CodeBlock')
+        self.visit(node.program)
+        self.scope = self.scope.popScope()
 
 # 2.1 Condition statements
     def visit_Condition(self, node):
@@ -66,7 +83,12 @@ class TypeChecker(NodeVisitor):
 
 # 2.2 Values range
     def visit_Range(self, node):
-        pass
+        start_number = self.visit(node.start_number)
+        end_number = self.visit(node.end_number)
+
+        if start_number >= end_number:
+            print('cos wyebalo w reange parameter')
+        return start_number
 
 
 ## 3. Instruction types
@@ -84,7 +106,10 @@ class TypeChecker(NodeVisitor):
         pass
 
     def visit_Return(self, node):
-        pass
+        scopes = self.getScopes()
+        if 'Program' not in scopes:
+            print('Return not in Function scope')
+        self.visit(node.expression)
 
 # 3.1 Assignment operators
 # no AST classes for this part

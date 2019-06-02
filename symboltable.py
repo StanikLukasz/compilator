@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from copy import deepcopy
 
 
 class Symbol(object):
