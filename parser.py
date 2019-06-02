@@ -37,7 +37,7 @@ precedence = (
     ("left", "ELSE"),
     ("nonassoc", '=', "ADDASSIGN", "SUBASSIGN", "MULASSIGN", "DIVASSIGN"),
     ("nonassoc", '<', '>', "EQ", "NEQ", "LEQ", "GEQ"),
-    ("left", '+', '-', "DOTADD", "DOTSUB"),
+    ("left", 'PLUS', 'MINUS', "DOTADD", "DOTSUB"),
     ("left", '*', '/', "DOTMUL", "DOTDIV"),
     ("nonassoc", "'")
 )
@@ -215,7 +215,7 @@ def p_transposition(p):
 
 # 4.4 Unary negation
 def p_negation(p):
-    """negation : '-' expression"""
+    """negation : MINUS expression"""
     p[0] = AST.Negation(p[2])
 
 # 4.5 Binary expressions
@@ -239,11 +239,11 @@ def p_dot_binary_expression(p):
     p[0] = p[1]
 
 def p_add_expression(p):
-    """add_expression : expression '+' expression"""
+    """add_expression : expression PLUS expression"""
     p[0] = AST.BinExpr(p[2], p[1], p[3])
 
 def p_sub_expression(p):
-    """sub_expression : expression '-' expression"""
+    """sub_expression : expression MINUS expression"""
     p[0] = AST.BinExpr(p[2], p[1], p[3])
 
 def p_mul_expression(p):

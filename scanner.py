@@ -2,7 +2,7 @@ import ply.lex as lex
 
 class Scanner:
     literals = [
-    '+', '-', '*', '/', # 1. operatory binarne
+    '*', '/', # 1. operatory binarne
     '(', ')', '{', '}', '[', ']', # 5. nawiasy
     ':', "'", ',', ';', # 6, 7, 8
     '=', # 3a. operatory przypisania
@@ -18,6 +18,7 @@ class Scanner:
     'PRINT', # 12. print
     'ID', 'INTNUM', 'REALNUM', 'STRING', # 13, 14, 15, 16
     #'LEFT_SPAR', 'RIGHT_SPAR' # 5b. nawiasy
+    'PLUS', 'MINUS'
     )
 
     reserved = {
@@ -57,6 +58,14 @@ class Scanner:
     def t_COMMENT(self,t):
         r'\#.*'
         pass
+
+    def t_PLUS(self,t):
+        r'\+'
+        return t
+
+    def t_MINUS(self,t):
+        r'-'
+        return t
 
     def t_REALNUM(self,t):
         r'[-+]?(((\d+\.\d*)|(\d*\.\d+))([eE][-+]?\d+)?|\d+[eE][-+]?\d+)'
