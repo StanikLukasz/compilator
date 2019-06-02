@@ -2,33 +2,46 @@
 class Memory:
 
     def __init__(self, name): # memory name
-        pass
+        self.name = name
+        self.memory = {}
 
     def has_key(self, name):  # variable name
-        pass
+        return name in self.memory.key()
 
     def get(self, name):         # gets from memory current value of variable <name>
-        pass
+        return self.memory.get(name)
 
     def put(self, name, value):  # puts into memory current value of variable <name>
-        pass
+        self.memory[name] = value
+
+    def __repr__(self):
+        return self.name
 
 class MemoryStack:
 
     def __init__(self, memory=None): # initialize memory stack with memory <memory>
-        pass
+        self.stack = [memory] if memory else [Memory("Top Level")]
 
     def get(self, name):             # gets from memory stack current value of variable <name>
-        pass
+        indices = reversed(range(0, len(self.stack)))
+        for i in indices:
+            if self.stack[i].has_key(name):
+                return self.stack[i].get(name)
 
     def insert(self, name, value): # inserts into memory stack variable <name> with value <value>
-        pass
+        self.stack[-1].put(name, value)
 
     def set(self, name, value): # sets variable <name> to value <value>
-        pass
+        indices = reversed(range(0, len(self.stack)))
+        for i in indices:
+            if self.stack[i].has_key(name):
+                self.stack[i].put(name,value)
 
     def push(self, memory): # pushes memory <memory> onto the stack
-        pass
+        self.stack.append(memory)
 
     def pop(self):          # pops the top memory from the stack
-        pass
+        return self.stack.pop()
+
+    def peek(self):
+        return self.stack[-1]
