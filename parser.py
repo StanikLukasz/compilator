@@ -1,9 +1,5 @@
 #!/usr/bin/python
 
-## TODO:
-# zeros(x,y)
-# ones(x,y)
-
 ## Table of contents
 #
 # Error handling
@@ -201,11 +197,15 @@ def p_array_special(p):
     """array_special : ZEROS array_special_specifier
                      | ONES array_special_specifier
                      | EYE array_special_specifier """
-    p[0] = AST.Function(p[1], [p[2]])
+    p[0] = AST.Function(p[1], p[2])
 
 def p_array_special_specifier(p):
-    """array_special_specifier : '(' id_or_number ')'"""
-    p[0] = p[2]
+    """array_special_specifier : '(' id_or_number ')'
+                               | '(' id_or_number ',' id_or_number ')'"""
+    if len(p) == 4:
+        p[0] = [p[2]]
+    else:
+        p[0] = [p[2], p[4]]
 
 # 4.3 Array transposition
 def p_transposition(p):

@@ -20,7 +20,10 @@ if __name__ == '__main__':
     parser = parser.parser
     text = file.read()
 
-    ast = parser.parse(text, lexer=lexer)
+    try:
+        ast = parser.parse(text, lexer=lexer)
+    except ValueError as e:
+        print(e)
 
 
 
