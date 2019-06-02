@@ -1,12 +1,38 @@
-# special functions, initializations
+a = [[1,2,3],
+     [4,5,6],
+     [7,8,9]];
 
-A = zeros(5);  # create 5x5 matrix filled with zeros
-B = ones(7);   # create 7x7 matrix filled with ones
-I = eye(10);   # create 10x10 matrix filled with ones on diagonal and zeros elsewhere
+b = -a;
 
-E1 = [ [ 1, 2, 3],
-       [ 4, 5, 6],
-       [ 7, 8, 9] ];
+print b;
 
+print a .+ b;
 
-A[1,3] = 0 ;
+print eye(4);
+
+print ones(4) .* 4;
+
+c = [2,2,2];
+
+print a * c;
+
+x = 0;
+y = zeros(5);
+z = x + y;
+
+x = eye(5);
+y = eye(8);
+z = x + y;
+
+x = [ 1,2,3,4,5 ];
+y = [ [1,2,3,4,5],
+      [1,2,3,4,5] ];
+z = x + y;
+
+x = zeros(5);
+y = zeros(5,7);
+z = x + y;
+
+x = ones(3,5);
+z = x[7,10];
+v = x[2,3,4];
