@@ -20,14 +20,10 @@ if __name__ == '__main__':
     parser = parser.parser
     text = file.read()
 
+    typeChecker = typechecker.TypeChecker()
+
     try:
         ast = parser.parse(text, lexer=lexer)
+        typeChecker.visit(ast)
     except ValueError as e:
         print(e)
-
-
-
-
-    # Below code shows how to use visitor
-    typeChecker = typechecker()
-    typeChecker.visit(ast)  # or alternatively ast.accept(typeChecker)

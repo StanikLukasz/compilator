@@ -31,17 +31,17 @@ class SymbolTable(object):
         else:
             return None
 
-    def getParentScope(self):
+    def get_parent_scope(self):
         return self.parent
 
-    def pushScope(self, name):
+    def push_scope(self, name):
         new_scope = SymbolTable(self, name)
         new_scope.name = name
         new_scope.parent = self
         new_scope.symbols = deepcopy(self.symbols)
         return new_scope
 
-    def popScope(self):
+    def pop_scope(self):
         parent_scope = self.get_parent_scope()
         if parent_scope is None:
             print('No higher scopes')

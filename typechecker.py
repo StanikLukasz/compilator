@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import AST
-
+import symboltable
 
 class NodeVisitor(object):
 
@@ -31,6 +31,9 @@ class NodeVisitor(object):
 
 class TypeChecker(NodeVisitor):
 
+    def __init__(self):
+        self.scope = symboltable.SymbolTable(None, "Main")
+
 # 0. Base Node class
 
     def visit_Node(self, node):
@@ -40,7 +43,7 @@ class TypeChecker(NodeVisitor):
 ## 1. Initial rules
 
     def visit_Program(self, node):
-        pass
+        self.visit(node.instruction_lines)
 
     def visit_Empty(self, node):
         pass
@@ -50,32 +53,31 @@ class TypeChecker(NodeVisitor):
 
     def visit_IfElse(self, node):
         self.visit(node.condition)
-        self.scope = self.scope.pushScope('If')
+        self.scope = self.scope.push_scope('If')
         self.visit(node.instruction_line)
-        self.scope = self.scope.popScope()
+        self.scope = self.scope.pop_scope()
         if node.else_instruction:
-            self.scope = self.scope.pushScope('Else')
+            self.scope = self.scope.push_scope('Else')
             self.visit(node.else_instruction)
-            self.scope = self.scope.popScope()
-
+            self.scope = self.scope.pop_scope()
 
     def visit_WhileLoop(self, node):
         self.visit(node.condition)
-        self.scope = self.scope.pushScope('WhileLoop')
+        self.scope = self.scope.push_scope('WhileLoop')
         self.visit(node.instruction)
-        self.scope = self.scope.popScope()
+        self.scope = self.scope.pop_scope()
 
     def visit_ForLoop(self, node):
         range = self.visit(node.range)
-        self.scope = self.scope.pushScope('ForLoop')
+        self.scope = self.scope.push_scope('ForLoop')
         self.scope.put(node.iterator, range)
         self.visit(node.instruction)
-        self.scope = self.scope.popScope()
+        self.scope = self.scope.pop_scope()
 
     def visit_CodeBlock(self, node):
-        self.scope = self.scope.pushScope('CodeBlock')
+        self.scope = self.scope.push_scope('CodeBlock')
         self.visit(node.program)
-        self.scope = self.scope.popScope()
+        self.scope = self.scope.pop_scope()
 
 # 2.1 Condition statements
     def visit_Condition(self, node):
@@ -94,25 +96,36 @@ class TypeChecker(NodeVisitor):
 ## 3. Instruction types
 
     def visit_Assignment(self, node):
-        pass
+        _left = node.identifier
+        _right = node.expression
+        _op = node.op
+        if isinstance(_right, AST.Identifier):
+            if _right.name not in self.scope.symbols.keys():
+                print('niezainicjalizowany Identifier')
+        elif isinstance(_right, AST.Reference):
+            if _right.id not in self.scope.symbols.keys():
+                print('niezainicjalizowany Reference')
+        else:
+            print(_left)
+            self.scope.symbols[_left] = _right
 
     def visit_Print(self, node):
         pass
 
     def visit_Continue(self, node):
-        pass
+        scopes = self.get_scopes()
+        if 'WhileLoop' not in scopes and 'ForLoop' not in scopes:
+            print('Continue not in WhileLoop or ForLoop scope')
 
     def visit_Break(self, node):
-        scopes = self.getScopes()
+        scopes = self.get_scopes()
         if 'WhileLoop' not in scopes and 'ForLoop' not in scopes:
             print('Break not in WhileLoop or ForLoop scope')
-        self.visit(node.expression)
 
     def visit_Return(self, node):
-        scopes = self.getScopes()
+        scopes = self.get_scopes()
         if 'Program' not in scopes:
             print('Return not in Program scope')
-        self.visit(node.expression)
 
 # 3.1 Assignment operators
 # no AST classes for this part
@@ -170,3 +183,11 @@ class TypeChecker(NodeVisitor):
 
     def visit_Error(self, node):
         pass
+
+    def get_scopes(self):
+        scopes = []
+        parent = self.scope
+        while parent:
+            scopes.append(parent.name)
+            parent = parent.parent
+        return scopes
