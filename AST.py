@@ -71,6 +71,27 @@ class Returning(Node):
     def __init__(self, expression):
         self.expression = expression
 
+class Range(Node):
+    def __init__(self, start_number, end_number):
+        self.start_number = start_number
+        self.end_number = end_number
+
+class Continue(Node):
+    def __init__(self):
+        pass
+
+class Break(Node):
+    def __init__(self):
+        pass
+
+class Negation(Node):
+    def __init__(self, expression):
+        self.expression = expression
+
+class Transposition(Node):
+    def __init__(self, array):
+        self.array = array
+
 
 
 

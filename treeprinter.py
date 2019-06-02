@@ -78,7 +78,30 @@ class TreePrinter:
         TreePrinter.printIndented('RETURN', indent)
         self.expression.printTree(indent + 1)
 
+    @addToClass(AST.Range)
+    def printTree(self, indent=0):
+        TreePrinter.printIndented('RANGE', indent)
+        self.start_number.printTree(indent + 1)
+        self.end_number.printTree(indent + 1)
 
+    @addToClass(AST.Continue)
+    def printTree(self, indent=0):
+        TreePrinter.printIndented('CONTINUE', indent)
+
+    @addToClass(AST.Break)
+    def printTree(self, indent=0):
+        TreePrinter.printIndented('BREAK', indent)
+
+
+    @addToClass(AST.Negation)
+    def printTree(self, indent=0):
+        TreePrinter.printIndented('NEGATION', indent)
+        self.expression.printTree(indent + 1)
+
+    @addToClass(AST.Transposition)
+    def printTree(self, indent=0):
+        TreePrinter.printIndented('TRANSPOSITION', indent)
+        self.array.printTree(indent + 1)
 
     @addToClass(AST.Error)
     def printTree(self, indent=0):
