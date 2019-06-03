@@ -61,7 +61,7 @@ Rule 55    array_special_specifier -> ( id_or_number )
 Rule 56    array_special_specifier -> ( id_or_number , id_or_number )
 Rule 57    transposition -> identifier '
 Rule 58    transposition -> array '
-Rule 59    negation -> MINUS expression
+Rule 59    negation -> - expression
 Rule 60    expression_binary -> normal_binary_expression
 Rule 61    expression_binary -> dot_binary_expression
 Rule 62    normal_binary_expression -> add_expression
@@ -72,8 +72,8 @@ Rule 66    dot_binary_expression -> dot_add_expression
 Rule 67    dot_binary_expression -> dot_sub_expression
 Rule 68    dot_binary_expression -> dot_mul_expression
 Rule 69    dot_binary_expression -> dot_div_expression
-Rule 70    add_expression -> expression PLUS expression
-Rule 71    sub_expression -> expression MINUS expression
+Rule 70    add_expression -> expression + expression
+Rule 71    sub_expression -> expression - expression
 Rule 72    mul_expression -> expression * expression
 Rule 73    div_expression -> expression / expression
 Rule 74    dot_add_expression -> expression DOTADD expression
@@ -99,7 +99,9 @@ Terminals, with rules where they appear
 (                    : 16 54 55 56 78
 )                    : 16 54 55 56 78
 *                    : 72
++                    : 70
 ,                    : 50 56
+-                    : 59 71
 /                    : 73
 :                    : 24
 ;                    : 10 48
@@ -123,11 +125,9 @@ ID                   : 84 85
 IF                   : 11 12
 INTNUM               : 88
 LEQ                  : 23
-MINUS                : 59 71
 MULASSIGN            : 38
 NEQ                  : 21
 ONES                 : 53
-PLUS                 : 70
 PRINT                : 31
 REALNUM              : 89
 RETURN               : 34
@@ -571,7 +571,7 @@ state 20
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -588,8 +588,8 @@ state 20
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -605,7 +605,7 @@ state 20
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -670,7 +670,7 @@ state 23
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -687,8 +687,8 @@ state 23
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -704,7 +704,7 @@ state 23
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -748,8 +748,8 @@ state 24
     MULASSIGN       reduce using rule 85 (identifier -> ID .)
     DIVASSIGN       reduce using rule 85 (identifier -> ID .)
     '               reduce using rule 85 (identifier -> ID .)
-    PLUS            reduce using rule 85 (identifier -> ID .)
-    MINUS           reduce using rule 85 (identifier -> ID .)
+    +               reduce using rule 85 (identifier -> ID .)
+    -               reduce using rule 85 (identifier -> ID .)
     *               reduce using rule 85 (identifier -> ID .)
     /               reduce using rule 85 (identifier -> ID .)
     DOTADD          reduce using rule 85 (identifier -> ID .)
@@ -882,7 +882,7 @@ state 28
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -899,8 +899,8 @@ state 28
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -916,7 +916,7 @@ state 28
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -1023,7 +1023,7 @@ state 31
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -1040,8 +1040,8 @@ state 31
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -1057,7 +1057,7 @@ state 31
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -1097,7 +1097,7 @@ state 32
     ZEROS           reduce using rule 35 (assignment_op -> = .)
     ONES            reduce using rule 35 (assignment_op -> = .)
     EYE             reduce using rule 35 (assignment_op -> = .)
-    MINUS           reduce using rule 35 (assignment_op -> = .)
+    -               reduce using rule 35 (assignment_op -> = .)
     (               reduce using rule 35 (assignment_op -> = .)
     ID              reduce using rule 35 (assignment_op -> = .)
     STRING          reduce using rule 35 (assignment_op -> = .)
@@ -1113,7 +1113,7 @@ state 33
     ZEROS           reduce using rule 36 (assignment_op -> ADDASSIGN .)
     ONES            reduce using rule 36 (assignment_op -> ADDASSIGN .)
     EYE             reduce using rule 36 (assignment_op -> ADDASSIGN .)
-    MINUS           reduce using rule 36 (assignment_op -> ADDASSIGN .)
+    -               reduce using rule 36 (assignment_op -> ADDASSIGN .)
     (               reduce using rule 36 (assignment_op -> ADDASSIGN .)
     ID              reduce using rule 36 (assignment_op -> ADDASSIGN .)
     STRING          reduce using rule 36 (assignment_op -> ADDASSIGN .)
@@ -1129,7 +1129,7 @@ state 34
     ZEROS           reduce using rule 37 (assignment_op -> SUBASSIGN .)
     ONES            reduce using rule 37 (assignment_op -> SUBASSIGN .)
     EYE             reduce using rule 37 (assignment_op -> SUBASSIGN .)
-    MINUS           reduce using rule 37 (assignment_op -> SUBASSIGN .)
+    -               reduce using rule 37 (assignment_op -> SUBASSIGN .)
     (               reduce using rule 37 (assignment_op -> SUBASSIGN .)
     ID              reduce using rule 37 (assignment_op -> SUBASSIGN .)
     STRING          reduce using rule 37 (assignment_op -> SUBASSIGN .)
@@ -1145,7 +1145,7 @@ state 35
     ZEROS           reduce using rule 38 (assignment_op -> MULASSIGN .)
     ONES            reduce using rule 38 (assignment_op -> MULASSIGN .)
     EYE             reduce using rule 38 (assignment_op -> MULASSIGN .)
-    MINUS           reduce using rule 38 (assignment_op -> MULASSIGN .)
+    -               reduce using rule 38 (assignment_op -> MULASSIGN .)
     (               reduce using rule 38 (assignment_op -> MULASSIGN .)
     ID              reduce using rule 38 (assignment_op -> MULASSIGN .)
     STRING          reduce using rule 38 (assignment_op -> MULASSIGN .)
@@ -1161,7 +1161,7 @@ state 36
     ZEROS           reduce using rule 39 (assignment_op -> DIVASSIGN .)
     ONES            reduce using rule 39 (assignment_op -> DIVASSIGN .)
     EYE             reduce using rule 39 (assignment_op -> DIVASSIGN .)
-    MINUS           reduce using rule 39 (assignment_op -> DIVASSIGN .)
+    -               reduce using rule 39 (assignment_op -> DIVASSIGN .)
     (               reduce using rule 39 (assignment_op -> DIVASSIGN .)
     ID              reduce using rule 39 (assignment_op -> DIVASSIGN .)
     STRING          reduce using rule 39 (assignment_op -> DIVASSIGN .)
@@ -1188,8 +1188,8 @@ state 38
 state 39
 
     (51) array_line -> expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -1200,8 +1200,8 @@ state 39
     ,               reduce using rule 51 (array_line -> expression .)
     ;               reduce using rule 51 (array_line -> expression .)
     ]               reduce using rule 51 (array_line -> expression .)
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
+    +               shift and go to state 82
+    -               shift and go to state 83
     *               shift and go to state 84
     /               shift and go to state 85
     DOTADD          shift and go to state 86
@@ -1214,8 +1214,8 @@ state 40
 
     (40) expression -> expression_binary .
 
-    PLUS            reduce using rule 40 (expression -> expression_binary .)
-    MINUS           reduce using rule 40 (expression -> expression_binary .)
+    +               reduce using rule 40 (expression -> expression_binary .)
+    -               reduce using rule 40 (expression -> expression_binary .)
     *               reduce using rule 40 (expression -> expression_binary .)
     /               reduce using rule 40 (expression -> expression_binary .)
     DOTADD          reduce using rule 40 (expression -> expression_binary .)
@@ -1239,8 +1239,8 @@ state 41
     (41) expression -> array .
     (58) transposition -> array . '
 
-    PLUS            reduce using rule 41 (expression -> array .)
-    MINUS           reduce using rule 41 (expression -> array .)
+    +               reduce using rule 41 (expression -> array .)
+    -               reduce using rule 41 (expression -> array .)
     *               reduce using rule 41 (expression -> array .)
     /               reduce using rule 41 (expression -> array .)
     DOTADD          reduce using rule 41 (expression -> array .)
@@ -1264,8 +1264,8 @@ state 42
 
     (42) expression -> array_special .
 
-    PLUS            reduce using rule 42 (expression -> array_special .)
-    MINUS           reduce using rule 42 (expression -> array_special .)
+    +               reduce using rule 42 (expression -> array_special .)
+    -               reduce using rule 42 (expression -> array_special .)
     *               reduce using rule 42 (expression -> array_special .)
     /               reduce using rule 42 (expression -> array_special .)
     DOTADD          reduce using rule 42 (expression -> array_special .)
@@ -1288,8 +1288,8 @@ state 43
 
     (43) expression -> transposition .
 
-    PLUS            reduce using rule 43 (expression -> transposition .)
-    MINUS           reduce using rule 43 (expression -> transposition .)
+    +               reduce using rule 43 (expression -> transposition .)
+    -               reduce using rule 43 (expression -> transposition .)
     *               reduce using rule 43 (expression -> transposition .)
     /               reduce using rule 43 (expression -> transposition .)
     DOTADD          reduce using rule 43 (expression -> transposition .)
@@ -1312,8 +1312,8 @@ state 44
 
     (44) expression -> negation .
 
-    PLUS            reduce using rule 44 (expression -> negation .)
-    MINUS           reduce using rule 44 (expression -> negation .)
+    +               reduce using rule 44 (expression -> negation .)
+    -               reduce using rule 44 (expression -> negation .)
     *               reduce using rule 44 (expression -> negation .)
     /               reduce using rule 44 (expression -> negation .)
     DOTADD          reduce using rule 44 (expression -> negation .)
@@ -1336,8 +1336,8 @@ state 45
 
     (45) expression -> expression_group .
 
-    PLUS            reduce using rule 45 (expression -> expression_group .)
-    MINUS           reduce using rule 45 (expression -> expression_group .)
+    +               reduce using rule 45 (expression -> expression_group .)
+    -               reduce using rule 45 (expression -> expression_group .)
     *               reduce using rule 45 (expression -> expression_group .)
     /               reduce using rule 45 (expression -> expression_group .)
     DOTADD          reduce using rule 45 (expression -> expression_group .)
@@ -1360,8 +1360,8 @@ state 46
 
     (46) expression -> elementary .
 
-    PLUS            reduce using rule 46 (expression -> elementary .)
-    MINUS           reduce using rule 46 (expression -> elementary .)
+    +               reduce using rule 46 (expression -> elementary .)
+    -               reduce using rule 46 (expression -> elementary .)
     *               reduce using rule 46 (expression -> elementary .)
     /               reduce using rule 46 (expression -> elementary .)
     DOTADD          reduce using rule 46 (expression -> elementary .)
@@ -1384,8 +1384,8 @@ state 47
 
     (60) expression_binary -> normal_binary_expression .
 
-    PLUS            reduce using rule 60 (expression_binary -> normal_binary_expression .)
-    MINUS           reduce using rule 60 (expression_binary -> normal_binary_expression .)
+    +               reduce using rule 60 (expression_binary -> normal_binary_expression .)
+    -               reduce using rule 60 (expression_binary -> normal_binary_expression .)
     *               reduce using rule 60 (expression_binary -> normal_binary_expression .)
     /               reduce using rule 60 (expression_binary -> normal_binary_expression .)
     DOTADD          reduce using rule 60 (expression_binary -> normal_binary_expression .)
@@ -1408,8 +1408,8 @@ state 48
 
     (61) expression_binary -> dot_binary_expression .
 
-    PLUS            reduce using rule 61 (expression_binary -> dot_binary_expression .)
-    MINUS           reduce using rule 61 (expression_binary -> dot_binary_expression .)
+    +               reduce using rule 61 (expression_binary -> dot_binary_expression .)
+    -               reduce using rule 61 (expression_binary -> dot_binary_expression .)
     *               reduce using rule 61 (expression_binary -> dot_binary_expression .)
     /               reduce using rule 61 (expression_binary -> dot_binary_expression .)
     DOTADD          reduce using rule 61 (expression_binary -> dot_binary_expression .)
@@ -1450,7 +1450,7 @@ state 49
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -1467,8 +1467,8 @@ state 49
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -1484,7 +1484,7 @@ state 49
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -1563,7 +1563,7 @@ state 53
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -1580,8 +1580,8 @@ state 53
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -1597,7 +1597,7 @@ state 53
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -1633,8 +1633,8 @@ state 54
 
     (79) elementary -> id_or_number .
 
-    PLUS            reduce using rule 79 (elementary -> id_or_number .)
-    MINUS           reduce using rule 79 (elementary -> id_or_number .)
+    +               reduce using rule 79 (elementary -> id_or_number .)
+    -               reduce using rule 79 (elementary -> id_or_number .)
     *               reduce using rule 79 (elementary -> id_or_number .)
     /               reduce using rule 79 (elementary -> id_or_number .)
     DOTADD          reduce using rule 79 (elementary -> id_or_number .)
@@ -1659,8 +1659,8 @@ state 55
     (82) id_or_number -> identifier .
 
     '               shift and go to state 98
-    PLUS            reduce using rule 82 (id_or_number -> identifier .)
-    MINUS           reduce using rule 82 (id_or_number -> identifier .)
+    +               reduce using rule 82 (id_or_number -> identifier .)
+    -               reduce using rule 82 (id_or_number -> identifier .)
     *               reduce using rule 82 (id_or_number -> identifier .)
     /               reduce using rule 82 (id_or_number -> identifier .)
     DOTADD          reduce using rule 82 (id_or_number -> identifier .)
@@ -1681,7 +1681,7 @@ state 55
 
 state 56
 
-    (59) negation -> MINUS . expression
+    (59) negation -> - . expression
     (40) expression -> . expression_binary
     (41) expression -> . array
     (42) expression -> . array_special
@@ -1697,7 +1697,7 @@ state 56
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -1714,8 +1714,8 @@ state 56
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -1731,7 +1731,7 @@ state 56
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -1767,8 +1767,8 @@ state 57
 
     (80) elementary -> text .
 
-    PLUS            reduce using rule 80 (elementary -> text .)
-    MINUS           reduce using rule 80 (elementary -> text .)
+    +               reduce using rule 80 (elementary -> text .)
+    -               reduce using rule 80 (elementary -> text .)
     *               reduce using rule 80 (elementary -> text .)
     /               reduce using rule 80 (elementary -> text .)
     DOTADD          reduce using rule 80 (elementary -> text .)
@@ -1791,8 +1791,8 @@ state 58
 
     (62) normal_binary_expression -> add_expression .
 
-    PLUS            reduce using rule 62 (normal_binary_expression -> add_expression .)
-    MINUS           reduce using rule 62 (normal_binary_expression -> add_expression .)
+    +               reduce using rule 62 (normal_binary_expression -> add_expression .)
+    -               reduce using rule 62 (normal_binary_expression -> add_expression .)
     *               reduce using rule 62 (normal_binary_expression -> add_expression .)
     /               reduce using rule 62 (normal_binary_expression -> add_expression .)
     DOTADD          reduce using rule 62 (normal_binary_expression -> add_expression .)
@@ -1815,8 +1815,8 @@ state 59
 
     (63) normal_binary_expression -> sub_expression .
 
-    PLUS            reduce using rule 63 (normal_binary_expression -> sub_expression .)
-    MINUS           reduce using rule 63 (normal_binary_expression -> sub_expression .)
+    +               reduce using rule 63 (normal_binary_expression -> sub_expression .)
+    -               reduce using rule 63 (normal_binary_expression -> sub_expression .)
     *               reduce using rule 63 (normal_binary_expression -> sub_expression .)
     /               reduce using rule 63 (normal_binary_expression -> sub_expression .)
     DOTADD          reduce using rule 63 (normal_binary_expression -> sub_expression .)
@@ -1839,8 +1839,8 @@ state 60
 
     (64) normal_binary_expression -> mul_expression .
 
-    PLUS            reduce using rule 64 (normal_binary_expression -> mul_expression .)
-    MINUS           reduce using rule 64 (normal_binary_expression -> mul_expression .)
+    +               reduce using rule 64 (normal_binary_expression -> mul_expression .)
+    -               reduce using rule 64 (normal_binary_expression -> mul_expression .)
     *               reduce using rule 64 (normal_binary_expression -> mul_expression .)
     /               reduce using rule 64 (normal_binary_expression -> mul_expression .)
     DOTADD          reduce using rule 64 (normal_binary_expression -> mul_expression .)
@@ -1863,8 +1863,8 @@ state 61
 
     (65) normal_binary_expression -> div_expression .
 
-    PLUS            reduce using rule 65 (normal_binary_expression -> div_expression .)
-    MINUS           reduce using rule 65 (normal_binary_expression -> div_expression .)
+    +               reduce using rule 65 (normal_binary_expression -> div_expression .)
+    -               reduce using rule 65 (normal_binary_expression -> div_expression .)
     *               reduce using rule 65 (normal_binary_expression -> div_expression .)
     /               reduce using rule 65 (normal_binary_expression -> div_expression .)
     DOTADD          reduce using rule 65 (normal_binary_expression -> div_expression .)
@@ -1887,8 +1887,8 @@ state 62
 
     (66) dot_binary_expression -> dot_add_expression .
 
-    PLUS            reduce using rule 66 (dot_binary_expression -> dot_add_expression .)
-    MINUS           reduce using rule 66 (dot_binary_expression -> dot_add_expression .)
+    +               reduce using rule 66 (dot_binary_expression -> dot_add_expression .)
+    -               reduce using rule 66 (dot_binary_expression -> dot_add_expression .)
     *               reduce using rule 66 (dot_binary_expression -> dot_add_expression .)
     /               reduce using rule 66 (dot_binary_expression -> dot_add_expression .)
     DOTADD          reduce using rule 66 (dot_binary_expression -> dot_add_expression .)
@@ -1911,8 +1911,8 @@ state 63
 
     (67) dot_binary_expression -> dot_sub_expression .
 
-    PLUS            reduce using rule 67 (dot_binary_expression -> dot_sub_expression .)
-    MINUS           reduce using rule 67 (dot_binary_expression -> dot_sub_expression .)
+    +               reduce using rule 67 (dot_binary_expression -> dot_sub_expression .)
+    -               reduce using rule 67 (dot_binary_expression -> dot_sub_expression .)
     *               reduce using rule 67 (dot_binary_expression -> dot_sub_expression .)
     /               reduce using rule 67 (dot_binary_expression -> dot_sub_expression .)
     DOTADD          reduce using rule 67 (dot_binary_expression -> dot_sub_expression .)
@@ -1935,8 +1935,8 @@ state 64
 
     (68) dot_binary_expression -> dot_mul_expression .
 
-    PLUS            reduce using rule 68 (dot_binary_expression -> dot_mul_expression .)
-    MINUS           reduce using rule 68 (dot_binary_expression -> dot_mul_expression .)
+    +               reduce using rule 68 (dot_binary_expression -> dot_mul_expression .)
+    -               reduce using rule 68 (dot_binary_expression -> dot_mul_expression .)
     *               reduce using rule 68 (dot_binary_expression -> dot_mul_expression .)
     /               reduce using rule 68 (dot_binary_expression -> dot_mul_expression .)
     DOTADD          reduce using rule 68 (dot_binary_expression -> dot_mul_expression .)
@@ -1959,8 +1959,8 @@ state 65
 
     (69) dot_binary_expression -> dot_div_expression .
 
-    PLUS            reduce using rule 69 (dot_binary_expression -> dot_div_expression .)
-    MINUS           reduce using rule 69 (dot_binary_expression -> dot_div_expression .)
+    +               reduce using rule 69 (dot_binary_expression -> dot_div_expression .)
+    -               reduce using rule 69 (dot_binary_expression -> dot_div_expression .)
     *               reduce using rule 69 (dot_binary_expression -> dot_div_expression .)
     /               reduce using rule 69 (dot_binary_expression -> dot_div_expression .)
     DOTADD          reduce using rule 69 (dot_binary_expression -> dot_div_expression .)
@@ -1983,8 +1983,8 @@ state 66
 
     (83) id_or_number -> number .
 
-    PLUS            reduce using rule 83 (id_or_number -> number .)
-    MINUS           reduce using rule 83 (id_or_number -> number .)
+    +               reduce using rule 83 (id_or_number -> number .)
+    -               reduce using rule 83 (id_or_number -> number .)
     *               reduce using rule 83 (id_or_number -> number .)
     /               reduce using rule 83 (id_or_number -> number .)
     DOTADD          reduce using rule 83 (id_or_number -> number .)
@@ -2017,8 +2017,8 @@ state 67
 
     (81) text -> STRING .
 
-    PLUS            reduce using rule 81 (text -> STRING .)
-    MINUS           reduce using rule 81 (text -> STRING .)
+    +               reduce using rule 81 (text -> STRING .)
+    -               reduce using rule 81 (text -> STRING .)
     *               reduce using rule 81 (text -> STRING .)
     /               reduce using rule 81 (text -> STRING .)
     DOTADD          reduce using rule 81 (text -> STRING .)
@@ -2041,8 +2041,8 @@ state 68
 
     (86) number -> integer .
 
-    PLUS            reduce using rule 86 (number -> integer .)
-    MINUS           reduce using rule 86 (number -> integer .)
+    +               reduce using rule 86 (number -> integer .)
+    -               reduce using rule 86 (number -> integer .)
     *               reduce using rule 86 (number -> integer .)
     /               reduce using rule 86 (number -> integer .)
     DOTADD          reduce using rule 86 (number -> integer .)
@@ -2075,8 +2075,8 @@ state 69
 
     (87) number -> real .
 
-    PLUS            reduce using rule 87 (number -> real .)
-    MINUS           reduce using rule 87 (number -> real .)
+    +               reduce using rule 87 (number -> real .)
+    -               reduce using rule 87 (number -> real .)
     *               reduce using rule 87 (number -> real .)
     /               reduce using rule 87 (number -> real .)
     DOTADD          reduce using rule 87 (number -> real .)
@@ -2109,8 +2109,8 @@ state 70
 
     (88) integer -> INTNUM .
 
-    PLUS            reduce using rule 88 (integer -> INTNUM .)
-    MINUS           reduce using rule 88 (integer -> INTNUM .)
+    +               reduce using rule 88 (integer -> INTNUM .)
+    -               reduce using rule 88 (integer -> INTNUM .)
     *               reduce using rule 88 (integer -> INTNUM .)
     /               reduce using rule 88 (integer -> INTNUM .)
     DOTADD          reduce using rule 88 (integer -> INTNUM .)
@@ -2143,8 +2143,8 @@ state 71
 
     (89) real -> REALNUM .
 
-    PLUS            reduce using rule 89 (real -> REALNUM .)
-    MINUS           reduce using rule 89 (real -> REALNUM .)
+    +               reduce using rule 89 (real -> REALNUM .)
+    -               reduce using rule 89 (real -> REALNUM .)
     *               reduce using rule 89 (real -> REALNUM .)
     /               reduce using rule 89 (real -> REALNUM .)
     DOTADD          reduce using rule 89 (real -> REALNUM .)
@@ -2176,8 +2176,8 @@ state 71
 state 72
 
     (34) returning -> RETURN expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -2186,8 +2186,8 @@ state 72
     (77) dot_div_expression -> expression . DOTDIV expression
 
     ;               reduce using rule 34 (returning -> RETURN expression .)
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
+    +               shift and go to state 82
+    -               shift and go to state 83
     *               shift and go to state 84
     /               shift and go to state 85
     DOTADD          shift and go to state 86
@@ -2216,7 +2216,7 @@ state 73
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -2233,8 +2233,8 @@ state 73
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -2250,7 +2250,7 @@ state 73
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -2314,8 +2314,8 @@ state 75
 state 76
 
     (17) bool_expression -> expression . comparison_op expression
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -2329,8 +2329,8 @@ state 76
     (22) comparison_op -> . GEQ
     (23) comparison_op -> . LEQ
 
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
+    +               shift and go to state 82
+    -               shift and go to state 83
     *               shift and go to state 84
     /               shift and go to state 85
     DOTADD          shift and go to state 86
@@ -2391,8 +2391,8 @@ state 78
 state 79
 
     (30) assignment -> identifier assignment_op expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -2401,8 +2401,8 @@ state 79
     (77) dot_div_expression -> expression . DOTDIV expression
 
     ;               reduce using rule 30 (assignment -> identifier assignment_op expression .)
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
+    +               shift and go to state 82
+    -               shift and go to state 83
     *               shift and go to state 84
     /               shift and go to state 85
     DOTADD          shift and go to state 86
@@ -2447,7 +2447,7 @@ state 81
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -2464,8 +2464,8 @@ state 81
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -2481,7 +2481,7 @@ state 81
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -2515,7 +2515,7 @@ state 81
 
 state 82
 
-    (70) add_expression -> expression PLUS . expression
+    (70) add_expression -> expression + . expression
     (40) expression -> . expression_binary
     (41) expression -> . array
     (42) expression -> . array_special
@@ -2531,7 +2531,7 @@ state 82
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -2548,8 +2548,8 @@ state 82
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -2565,7 +2565,7 @@ state 82
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -2599,7 +2599,7 @@ state 82
 
 state 83
 
-    (71) sub_expression -> expression MINUS . expression
+    (71) sub_expression -> expression - . expression
     (40) expression -> . expression_binary
     (41) expression -> . array
     (42) expression -> . array_special
@@ -2615,7 +2615,7 @@ state 83
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -2632,8 +2632,8 @@ state 83
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -2649,7 +2649,7 @@ state 83
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -2699,7 +2699,7 @@ state 84
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -2716,8 +2716,8 @@ state 84
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -2733,7 +2733,7 @@ state 84
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -2783,7 +2783,7 @@ state 85
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -2800,8 +2800,8 @@ state 85
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -2817,7 +2817,7 @@ state 85
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -2867,7 +2867,7 @@ state 86
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -2884,8 +2884,8 @@ state 86
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -2901,7 +2901,7 @@ state 86
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -2951,7 +2951,7 @@ state 87
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -2968,8 +2968,8 @@ state 87
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -2985,7 +2985,7 @@ state 87
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -3035,7 +3035,7 @@ state 88
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -3052,8 +3052,8 @@ state 88
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -3069,7 +3069,7 @@ state 88
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -3119,7 +3119,7 @@ state 89
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -3136,8 +3136,8 @@ state 89
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -3153,7 +3153,7 @@ state 89
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -3189,8 +3189,8 @@ state 90
 
     (58) transposition -> array ' .
 
-    PLUS            reduce using rule 58 (transposition -> array ' .)
-    MINUS           reduce using rule 58 (transposition -> array ' .)
+    +               reduce using rule 58 (transposition -> array ' .)
+    -               reduce using rule 58 (transposition -> array ' .)
     *               reduce using rule 58 (transposition -> array ' .)
     /               reduce using rule 58 (transposition -> array ' .)
     DOTADD          reduce using rule 58 (transposition -> array ' .)
@@ -3232,8 +3232,8 @@ state 93
 
     (52) array_special -> ZEROS array_special_specifier .
 
-    PLUS            reduce using rule 52 (array_special -> ZEROS array_special_specifier .)
-    MINUS           reduce using rule 52 (array_special -> ZEROS array_special_specifier .)
+    +               reduce using rule 52 (array_special -> ZEROS array_special_specifier .)
+    -               reduce using rule 52 (array_special -> ZEROS array_special_specifier .)
     *               reduce using rule 52 (array_special -> ZEROS array_special_specifier .)
     /               reduce using rule 52 (array_special -> ZEROS array_special_specifier .)
     DOTADD          reduce using rule 52 (array_special -> ZEROS array_special_specifier .)
@@ -3279,8 +3279,8 @@ state 95
 
     (53) array_special -> ONES array_special_specifier .
 
-    PLUS            reduce using rule 53 (array_special -> ONES array_special_specifier .)
-    MINUS           reduce using rule 53 (array_special -> ONES array_special_specifier .)
+    +               reduce using rule 53 (array_special -> ONES array_special_specifier .)
+    -               reduce using rule 53 (array_special -> ONES array_special_specifier .)
     *               reduce using rule 53 (array_special -> ONES array_special_specifier .)
     /               reduce using rule 53 (array_special -> ONES array_special_specifier .)
     DOTADD          reduce using rule 53 (array_special -> ONES array_special_specifier .)
@@ -3324,8 +3324,8 @@ state 96
 state 97
 
     (78) expression_group -> ( expression . )
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -3334,8 +3334,8 @@ state 97
     (77) dot_div_expression -> expression . DOTDIV expression
 
     )               shift and go to state 126
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
+    +               shift and go to state 82
+    -               shift and go to state 83
     *               shift and go to state 84
     /               shift and go to state 85
     DOTADD          shift and go to state 86
@@ -3348,8 +3348,8 @@ state 98
 
     (57) transposition -> identifier ' .
 
-    PLUS            reduce using rule 57 (transposition -> identifier ' .)
-    MINUS           reduce using rule 57 (transposition -> identifier ' .)
+    +               reduce using rule 57 (transposition -> identifier ' .)
+    -               reduce using rule 57 (transposition -> identifier ' .)
     *               reduce using rule 57 (transposition -> identifier ' .)
     /               reduce using rule 57 (transposition -> identifier ' .)
     DOTADD          reduce using rule 57 (transposition -> identifier ' .)
@@ -3370,9 +3370,9 @@ state 98
 
 state 99
 
-    (59) negation -> MINUS expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (59) negation -> - expression .
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -3380,31 +3380,31 @@ state 99
     (76) dot_mul_expression -> expression . DOTMUL expression
     (77) dot_div_expression -> expression . DOTDIV expression
 
-    PLUS            reduce using rule 59 (negation -> MINUS expression .)
-    MINUS           reduce using rule 59 (negation -> MINUS expression .)
-    DOTADD          reduce using rule 59 (negation -> MINUS expression .)
-    DOTSUB          reduce using rule 59 (negation -> MINUS expression .)
-    ,               reduce using rule 59 (negation -> MINUS expression .)
-    ;               reduce using rule 59 (negation -> MINUS expression .)
-    <               reduce using rule 59 (negation -> MINUS expression .)
-    >               reduce using rule 59 (negation -> MINUS expression .)
-    EQ              reduce using rule 59 (negation -> MINUS expression .)
-    NEQ             reduce using rule 59 (negation -> MINUS expression .)
-    GEQ             reduce using rule 59 (negation -> MINUS expression .)
-    LEQ             reduce using rule 59 (negation -> MINUS expression .)
-    ]               reduce using rule 59 (negation -> MINUS expression .)
-    )               reduce using rule 59 (negation -> MINUS expression .)
+    +               reduce using rule 59 (negation -> - expression .)
+    -               reduce using rule 59 (negation -> - expression .)
+    DOTADD          reduce using rule 59 (negation -> - expression .)
+    DOTSUB          reduce using rule 59 (negation -> - expression .)
+    ,               reduce using rule 59 (negation -> - expression .)
+    ;               reduce using rule 59 (negation -> - expression .)
+    <               reduce using rule 59 (negation -> - expression .)
+    >               reduce using rule 59 (negation -> - expression .)
+    EQ              reduce using rule 59 (negation -> - expression .)
+    NEQ             reduce using rule 59 (negation -> - expression .)
+    GEQ             reduce using rule 59 (negation -> - expression .)
+    LEQ             reduce using rule 59 (negation -> - expression .)
+    ]               reduce using rule 59 (negation -> - expression .)
+    )               reduce using rule 59 (negation -> - expression .)
     *               shift and go to state 84
     /               shift and go to state 85
     DOTMUL          shift and go to state 88
     DOTDIV          shift and go to state 89
 
-  ! *               [ reduce using rule 59 (negation -> MINUS expression .) ]
-  ! /               [ reduce using rule 59 (negation -> MINUS expression .) ]
-  ! DOTMUL          [ reduce using rule 59 (negation -> MINUS expression .) ]
-  ! DOTDIV          [ reduce using rule 59 (negation -> MINUS expression .) ]
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
+  ! *               [ reduce using rule 59 (negation -> - expression .) ]
+  ! /               [ reduce using rule 59 (negation -> - expression .) ]
+  ! DOTMUL          [ reduce using rule 59 (negation -> - expression .) ]
+  ! DOTDIV          [ reduce using rule 59 (negation -> - expression .) ]
+  ! +               [ shift and go to state 82 ]
+  ! -               [ shift and go to state 83 ]
   ! DOTADD          [ shift and go to state 86 ]
   ! DOTSUB          [ shift and go to state 87 ]
 
@@ -3500,7 +3500,7 @@ state 103
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -3517,8 +3517,8 @@ state 103
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -3534,7 +3534,7 @@ state 103
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -3574,7 +3574,7 @@ state 104
     ZEROS           reduce using rule 18 (comparison_op -> < .)
     ONES            reduce using rule 18 (comparison_op -> < .)
     EYE             reduce using rule 18 (comparison_op -> < .)
-    MINUS           reduce using rule 18 (comparison_op -> < .)
+    -               reduce using rule 18 (comparison_op -> < .)
     (               reduce using rule 18 (comparison_op -> < .)
     ID              reduce using rule 18 (comparison_op -> < .)
     STRING          reduce using rule 18 (comparison_op -> < .)
@@ -3590,7 +3590,7 @@ state 105
     ZEROS           reduce using rule 19 (comparison_op -> > .)
     ONES            reduce using rule 19 (comparison_op -> > .)
     EYE             reduce using rule 19 (comparison_op -> > .)
-    MINUS           reduce using rule 19 (comparison_op -> > .)
+    -               reduce using rule 19 (comparison_op -> > .)
     (               reduce using rule 19 (comparison_op -> > .)
     ID              reduce using rule 19 (comparison_op -> > .)
     STRING          reduce using rule 19 (comparison_op -> > .)
@@ -3606,7 +3606,7 @@ state 106
     ZEROS           reduce using rule 20 (comparison_op -> EQ .)
     ONES            reduce using rule 20 (comparison_op -> EQ .)
     EYE             reduce using rule 20 (comparison_op -> EQ .)
-    MINUS           reduce using rule 20 (comparison_op -> EQ .)
+    -               reduce using rule 20 (comparison_op -> EQ .)
     (               reduce using rule 20 (comparison_op -> EQ .)
     ID              reduce using rule 20 (comparison_op -> EQ .)
     STRING          reduce using rule 20 (comparison_op -> EQ .)
@@ -3622,7 +3622,7 @@ state 107
     ZEROS           reduce using rule 21 (comparison_op -> NEQ .)
     ONES            reduce using rule 21 (comparison_op -> NEQ .)
     EYE             reduce using rule 21 (comparison_op -> NEQ .)
-    MINUS           reduce using rule 21 (comparison_op -> NEQ .)
+    -               reduce using rule 21 (comparison_op -> NEQ .)
     (               reduce using rule 21 (comparison_op -> NEQ .)
     ID              reduce using rule 21 (comparison_op -> NEQ .)
     STRING          reduce using rule 21 (comparison_op -> NEQ .)
@@ -3638,7 +3638,7 @@ state 108
     ZEROS           reduce using rule 22 (comparison_op -> GEQ .)
     ONES            reduce using rule 22 (comparison_op -> GEQ .)
     EYE             reduce using rule 22 (comparison_op -> GEQ .)
-    MINUS           reduce using rule 22 (comparison_op -> GEQ .)
+    -               reduce using rule 22 (comparison_op -> GEQ .)
     (               reduce using rule 22 (comparison_op -> GEQ .)
     ID              reduce using rule 22 (comparison_op -> GEQ .)
     STRING          reduce using rule 22 (comparison_op -> GEQ .)
@@ -3654,7 +3654,7 @@ state 109
     ZEROS           reduce using rule 23 (comparison_op -> LEQ .)
     ONES            reduce using rule 23 (comparison_op -> LEQ .)
     EYE             reduce using rule 23 (comparison_op -> LEQ .)
-    MINUS           reduce using rule 23 (comparison_op -> LEQ .)
+    -               reduce using rule 23 (comparison_op -> LEQ .)
     (               reduce using rule 23 (comparison_op -> LEQ .)
     ID              reduce using rule 23 (comparison_op -> LEQ .)
     STRING          reduce using rule 23 (comparison_op -> LEQ .)
@@ -3739,8 +3739,8 @@ state 112
 state 113
 
     (50) array_line -> array_line , expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -3751,8 +3751,8 @@ state 113
     ,               reduce using rule 50 (array_line -> array_line , expression .)
     ;               reduce using rule 50 (array_line -> array_line , expression .)
     ]               reduce using rule 50 (array_line -> array_line , expression .)
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
+    +               shift and go to state 82
+    -               shift and go to state 83
     *               shift and go to state 84
     /               shift and go to state 85
     DOTADD          shift and go to state 86
@@ -3763,9 +3763,9 @@ state 113
 
 state 114
 
-    (70) add_expression -> expression PLUS expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression + expression .
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -3773,40 +3773,40 @@ state 114
     (76) dot_mul_expression -> expression . DOTMUL expression
     (77) dot_div_expression -> expression . DOTDIV expression
 
-    PLUS            reduce using rule 70 (add_expression -> expression PLUS expression .)
-    MINUS           reduce using rule 70 (add_expression -> expression PLUS expression .)
-    DOTADD          reduce using rule 70 (add_expression -> expression PLUS expression .)
-    DOTSUB          reduce using rule 70 (add_expression -> expression PLUS expression .)
-    ,               reduce using rule 70 (add_expression -> expression PLUS expression .)
-    ;               reduce using rule 70 (add_expression -> expression PLUS expression .)
-    <               reduce using rule 70 (add_expression -> expression PLUS expression .)
-    >               reduce using rule 70 (add_expression -> expression PLUS expression .)
-    EQ              reduce using rule 70 (add_expression -> expression PLUS expression .)
-    NEQ             reduce using rule 70 (add_expression -> expression PLUS expression .)
-    GEQ             reduce using rule 70 (add_expression -> expression PLUS expression .)
-    LEQ             reduce using rule 70 (add_expression -> expression PLUS expression .)
-    ]               reduce using rule 70 (add_expression -> expression PLUS expression .)
-    )               reduce using rule 70 (add_expression -> expression PLUS expression .)
+    +               reduce using rule 70 (add_expression -> expression + expression .)
+    -               reduce using rule 70 (add_expression -> expression + expression .)
+    DOTADD          reduce using rule 70 (add_expression -> expression + expression .)
+    DOTSUB          reduce using rule 70 (add_expression -> expression + expression .)
+    ,               reduce using rule 70 (add_expression -> expression + expression .)
+    ;               reduce using rule 70 (add_expression -> expression + expression .)
+    <               reduce using rule 70 (add_expression -> expression + expression .)
+    >               reduce using rule 70 (add_expression -> expression + expression .)
+    EQ              reduce using rule 70 (add_expression -> expression + expression .)
+    NEQ             reduce using rule 70 (add_expression -> expression + expression .)
+    GEQ             reduce using rule 70 (add_expression -> expression + expression .)
+    LEQ             reduce using rule 70 (add_expression -> expression + expression .)
+    ]               reduce using rule 70 (add_expression -> expression + expression .)
+    )               reduce using rule 70 (add_expression -> expression + expression .)
     *               shift and go to state 84
     /               shift and go to state 85
     DOTMUL          shift and go to state 88
     DOTDIV          shift and go to state 89
 
-  ! *               [ reduce using rule 70 (add_expression -> expression PLUS expression .) ]
-  ! /               [ reduce using rule 70 (add_expression -> expression PLUS expression .) ]
-  ! DOTMUL          [ reduce using rule 70 (add_expression -> expression PLUS expression .) ]
-  ! DOTDIV          [ reduce using rule 70 (add_expression -> expression PLUS expression .) ]
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
+  ! *               [ reduce using rule 70 (add_expression -> expression + expression .) ]
+  ! /               [ reduce using rule 70 (add_expression -> expression + expression .) ]
+  ! DOTMUL          [ reduce using rule 70 (add_expression -> expression + expression .) ]
+  ! DOTDIV          [ reduce using rule 70 (add_expression -> expression + expression .) ]
+  ! +               [ shift and go to state 82 ]
+  ! -               [ shift and go to state 83 ]
   ! DOTADD          [ shift and go to state 86 ]
   ! DOTSUB          [ shift and go to state 87 ]
 
 
 state 115
 
-    (71) sub_expression -> expression MINUS expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (71) sub_expression -> expression - expression .
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -3814,31 +3814,31 @@ state 115
     (76) dot_mul_expression -> expression . DOTMUL expression
     (77) dot_div_expression -> expression . DOTDIV expression
 
-    PLUS            reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    MINUS           reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    DOTADD          reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    DOTSUB          reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    ,               reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    ;               reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    <               reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    >               reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    EQ              reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    NEQ             reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    GEQ             reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    LEQ             reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    ]               reduce using rule 71 (sub_expression -> expression MINUS expression .)
-    )               reduce using rule 71 (sub_expression -> expression MINUS expression .)
+    +               reduce using rule 71 (sub_expression -> expression - expression .)
+    -               reduce using rule 71 (sub_expression -> expression - expression .)
+    DOTADD          reduce using rule 71 (sub_expression -> expression - expression .)
+    DOTSUB          reduce using rule 71 (sub_expression -> expression - expression .)
+    ,               reduce using rule 71 (sub_expression -> expression - expression .)
+    ;               reduce using rule 71 (sub_expression -> expression - expression .)
+    <               reduce using rule 71 (sub_expression -> expression - expression .)
+    >               reduce using rule 71 (sub_expression -> expression - expression .)
+    EQ              reduce using rule 71 (sub_expression -> expression - expression .)
+    NEQ             reduce using rule 71 (sub_expression -> expression - expression .)
+    GEQ             reduce using rule 71 (sub_expression -> expression - expression .)
+    LEQ             reduce using rule 71 (sub_expression -> expression - expression .)
+    ]               reduce using rule 71 (sub_expression -> expression - expression .)
+    )               reduce using rule 71 (sub_expression -> expression - expression .)
     *               shift and go to state 84
     /               shift and go to state 85
     DOTMUL          shift and go to state 88
     DOTDIV          shift and go to state 89
 
-  ! *               [ reduce using rule 71 (sub_expression -> expression MINUS expression .) ]
-  ! /               [ reduce using rule 71 (sub_expression -> expression MINUS expression .) ]
-  ! DOTMUL          [ reduce using rule 71 (sub_expression -> expression MINUS expression .) ]
-  ! DOTDIV          [ reduce using rule 71 (sub_expression -> expression MINUS expression .) ]
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
+  ! *               [ reduce using rule 71 (sub_expression -> expression - expression .) ]
+  ! /               [ reduce using rule 71 (sub_expression -> expression - expression .) ]
+  ! DOTMUL          [ reduce using rule 71 (sub_expression -> expression - expression .) ]
+  ! DOTDIV          [ reduce using rule 71 (sub_expression -> expression - expression .) ]
+  ! +               [ shift and go to state 82 ]
+  ! -               [ shift and go to state 83 ]
   ! DOTADD          [ shift and go to state 86 ]
   ! DOTSUB          [ shift and go to state 87 ]
 
@@ -3846,8 +3846,8 @@ state 115
 state 116
 
     (72) mul_expression -> expression * expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -3855,8 +3855,8 @@ state 116
     (76) dot_mul_expression -> expression . DOTMUL expression
     (77) dot_div_expression -> expression . DOTDIV expression
 
-    PLUS            reduce using rule 72 (mul_expression -> expression * expression .)
-    MINUS           reduce using rule 72 (mul_expression -> expression * expression .)
+    +               reduce using rule 72 (mul_expression -> expression * expression .)
+    -               reduce using rule 72 (mul_expression -> expression * expression .)
     *               reduce using rule 72 (mul_expression -> expression * expression .)
     /               reduce using rule 72 (mul_expression -> expression * expression .)
     DOTADD          reduce using rule 72 (mul_expression -> expression * expression .)
@@ -3874,8 +3874,8 @@ state 116
     ]               reduce using rule 72 (mul_expression -> expression * expression .)
     )               reduce using rule 72 (mul_expression -> expression * expression .)
 
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
+  ! +               [ shift and go to state 82 ]
+  ! -               [ shift and go to state 83 ]
   ! *               [ shift and go to state 84 ]
   ! /               [ shift and go to state 85 ]
   ! DOTADD          [ shift and go to state 86 ]
@@ -3887,8 +3887,8 @@ state 116
 state 117
 
     (73) div_expression -> expression / expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -3896,8 +3896,8 @@ state 117
     (76) dot_mul_expression -> expression . DOTMUL expression
     (77) dot_div_expression -> expression . DOTDIV expression
 
-    PLUS            reduce using rule 73 (div_expression -> expression / expression .)
-    MINUS           reduce using rule 73 (div_expression -> expression / expression .)
+    +               reduce using rule 73 (div_expression -> expression / expression .)
+    -               reduce using rule 73 (div_expression -> expression / expression .)
     *               reduce using rule 73 (div_expression -> expression / expression .)
     /               reduce using rule 73 (div_expression -> expression / expression .)
     DOTADD          reduce using rule 73 (div_expression -> expression / expression .)
@@ -3915,8 +3915,8 @@ state 117
     ]               reduce using rule 73 (div_expression -> expression / expression .)
     )               reduce using rule 73 (div_expression -> expression / expression .)
 
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
+  ! +               [ shift and go to state 82 ]
+  ! -               [ shift and go to state 83 ]
   ! *               [ shift and go to state 84 ]
   ! /               [ shift and go to state 85 ]
   ! DOTADD          [ shift and go to state 86 ]
@@ -3928,8 +3928,8 @@ state 117
 state 118
 
     (74) dot_add_expression -> expression DOTADD expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -3937,8 +3937,8 @@ state 118
     (76) dot_mul_expression -> expression . DOTMUL expression
     (77) dot_div_expression -> expression . DOTDIV expression
 
-    PLUS            reduce using rule 74 (dot_add_expression -> expression DOTADD expression .)
-    MINUS           reduce using rule 74 (dot_add_expression -> expression DOTADD expression .)
+    +               reduce using rule 74 (dot_add_expression -> expression DOTADD expression .)
+    -               reduce using rule 74 (dot_add_expression -> expression DOTADD expression .)
     DOTADD          reduce using rule 74 (dot_add_expression -> expression DOTADD expression .)
     DOTSUB          reduce using rule 74 (dot_add_expression -> expression DOTADD expression .)
     ,               reduce using rule 74 (dot_add_expression -> expression DOTADD expression .)
@@ -3960,8 +3960,8 @@ state 118
   ! /               [ reduce using rule 74 (dot_add_expression -> expression DOTADD expression .) ]
   ! DOTMUL          [ reduce using rule 74 (dot_add_expression -> expression DOTADD expression .) ]
   ! DOTDIV          [ reduce using rule 74 (dot_add_expression -> expression DOTADD expression .) ]
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
+  ! +               [ shift and go to state 82 ]
+  ! -               [ shift and go to state 83 ]
   ! DOTADD          [ shift and go to state 86 ]
   ! DOTSUB          [ shift and go to state 87 ]
 
@@ -3969,8 +3969,8 @@ state 118
 state 119
 
     (75) dot_sub_expression -> expression DOTSUB expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -3978,8 +3978,8 @@ state 119
     (76) dot_mul_expression -> expression . DOTMUL expression
     (77) dot_div_expression -> expression . DOTDIV expression
 
-    PLUS            reduce using rule 75 (dot_sub_expression -> expression DOTSUB expression .)
-    MINUS           reduce using rule 75 (dot_sub_expression -> expression DOTSUB expression .)
+    +               reduce using rule 75 (dot_sub_expression -> expression DOTSUB expression .)
+    -               reduce using rule 75 (dot_sub_expression -> expression DOTSUB expression .)
     DOTADD          reduce using rule 75 (dot_sub_expression -> expression DOTSUB expression .)
     DOTSUB          reduce using rule 75 (dot_sub_expression -> expression DOTSUB expression .)
     ,               reduce using rule 75 (dot_sub_expression -> expression DOTSUB expression .)
@@ -4001,8 +4001,8 @@ state 119
   ! /               [ reduce using rule 75 (dot_sub_expression -> expression DOTSUB expression .) ]
   ! DOTMUL          [ reduce using rule 75 (dot_sub_expression -> expression DOTSUB expression .) ]
   ! DOTDIV          [ reduce using rule 75 (dot_sub_expression -> expression DOTSUB expression .) ]
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
+  ! +               [ shift and go to state 82 ]
+  ! -               [ shift and go to state 83 ]
   ! DOTADD          [ shift and go to state 86 ]
   ! DOTSUB          [ shift and go to state 87 ]
 
@@ -4010,8 +4010,8 @@ state 119
 state 120
 
     (76) dot_mul_expression -> expression DOTMUL expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -4019,8 +4019,8 @@ state 120
     (76) dot_mul_expression -> expression . DOTMUL expression
     (77) dot_div_expression -> expression . DOTDIV expression
 
-    PLUS            reduce using rule 76 (dot_mul_expression -> expression DOTMUL expression .)
-    MINUS           reduce using rule 76 (dot_mul_expression -> expression DOTMUL expression .)
+    +               reduce using rule 76 (dot_mul_expression -> expression DOTMUL expression .)
+    -               reduce using rule 76 (dot_mul_expression -> expression DOTMUL expression .)
     *               reduce using rule 76 (dot_mul_expression -> expression DOTMUL expression .)
     /               reduce using rule 76 (dot_mul_expression -> expression DOTMUL expression .)
     DOTADD          reduce using rule 76 (dot_mul_expression -> expression DOTMUL expression .)
@@ -4038,8 +4038,8 @@ state 120
     ]               reduce using rule 76 (dot_mul_expression -> expression DOTMUL expression .)
     )               reduce using rule 76 (dot_mul_expression -> expression DOTMUL expression .)
 
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
+  ! +               [ shift and go to state 82 ]
+  ! -               [ shift and go to state 83 ]
   ! *               [ shift and go to state 84 ]
   ! /               [ shift and go to state 85 ]
   ! DOTADD          [ shift and go to state 86 ]
@@ -4051,8 +4051,8 @@ state 120
 state 121
 
     (77) dot_div_expression -> expression DOTDIV expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -4060,8 +4060,8 @@ state 121
     (76) dot_mul_expression -> expression . DOTMUL expression
     (77) dot_div_expression -> expression . DOTDIV expression
 
-    PLUS            reduce using rule 77 (dot_div_expression -> expression DOTDIV expression .)
-    MINUS           reduce using rule 77 (dot_div_expression -> expression DOTDIV expression .)
+    +               reduce using rule 77 (dot_div_expression -> expression DOTDIV expression .)
+    -               reduce using rule 77 (dot_div_expression -> expression DOTDIV expression .)
     *               reduce using rule 77 (dot_div_expression -> expression DOTDIV expression .)
     /               reduce using rule 77 (dot_div_expression -> expression DOTDIV expression .)
     DOTADD          reduce using rule 77 (dot_div_expression -> expression DOTDIV expression .)
@@ -4079,8 +4079,8 @@ state 121
     ]               reduce using rule 77 (dot_div_expression -> expression DOTDIV expression .)
     )               reduce using rule 77 (dot_div_expression -> expression DOTDIV expression .)
 
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
+  ! +               [ shift and go to state 82 ]
+  ! -               [ shift and go to state 83 ]
   ! *               [ shift and go to state 84 ]
   ! /               [ shift and go to state 85 ]
   ! DOTADD          [ shift and go to state 86 ]
@@ -4094,8 +4094,8 @@ state 122
     (47) array -> [ array_lines ] .
 
     '               reduce using rule 47 (array -> [ array_lines ] .)
-    PLUS            reduce using rule 47 (array -> [ array_lines ] .)
-    MINUS           reduce using rule 47 (array -> [ array_lines ] .)
+    +               reduce using rule 47 (array -> [ array_lines ] .)
+    -               reduce using rule 47 (array -> [ array_lines ] .)
     *               reduce using rule 47 (array -> [ array_lines ] .)
     /               reduce using rule 47 (array -> [ array_lines ] .)
     DOTADD          reduce using rule 47 (array -> [ array_lines ] .)
@@ -4134,7 +4134,7 @@ state 123
     (54) array_special -> . EYE ( id_or_number )
     (57) transposition -> . identifier '
     (58) transposition -> . array '
-    (59) negation -> . MINUS expression
+    (59) negation -> . - expression
     (78) expression_group -> . ( expression )
     (79) elementary -> . id_or_number
     (80) elementary -> . text
@@ -4151,8 +4151,8 @@ state 123
     (82) id_or_number -> . identifier
     (83) id_or_number -> . number
     (81) text -> . STRING
-    (70) add_expression -> . expression PLUS expression
-    (71) sub_expression -> . expression MINUS expression
+    (70) add_expression -> . expression + expression
+    (71) sub_expression -> . expression - expression
     (72) mul_expression -> . expression * expression
     (73) div_expression -> . expression / expression
     (74) dot_add_expression -> . expression DOTADD expression
@@ -4168,7 +4168,7 @@ state 123
     ZEROS           shift and go to state 50
     ONES            shift and go to state 51
     EYE             shift and go to state 52
-    MINUS           shift and go to state 56
+    -               shift and go to state 56
     (               shift and go to state 53
     ID              shift and go to state 24
     STRING          shift and go to state 67
@@ -4221,8 +4221,8 @@ state 126
 
     (78) expression_group -> ( expression ) .
 
-    PLUS            reduce using rule 78 (expression_group -> ( expression ) .)
-    MINUS           reduce using rule 78 (expression_group -> ( expression ) .)
+    +               reduce using rule 78 (expression_group -> ( expression ) .)
+    -               reduce using rule 78 (expression_group -> ( expression ) .)
     *               reduce using rule 78 (expression_group -> ( expression ) .)
     /               reduce using rule 78 (expression_group -> ( expression ) .)
     DOTADD          reduce using rule 78 (expression_group -> ( expression ) .)
@@ -4251,8 +4251,8 @@ state 127
     MULASSIGN       reduce using rule 84 (identifier -> ID [ array_line ] .)
     DIVASSIGN       reduce using rule 84 (identifier -> ID [ array_line ] .)
     '               reduce using rule 84 (identifier -> ID [ array_line ] .)
-    PLUS            reduce using rule 84 (identifier -> ID [ array_line ] .)
-    MINUS           reduce using rule 84 (identifier -> ID [ array_line ] .)
+    +               reduce using rule 84 (identifier -> ID [ array_line ] .)
+    -               reduce using rule 84 (identifier -> ID [ array_line ] .)
     *               reduce using rule 84 (identifier -> ID [ array_line ] .)
     /               reduce using rule 84 (identifier -> ID [ array_line ] .)
     DOTADD          reduce using rule 84 (identifier -> ID [ array_line ] .)
@@ -4302,8 +4302,8 @@ state 128
 state 129
 
     (17) bool_expression -> expression comparison_op expression .
-    (70) add_expression -> expression . PLUS expression
-    (71) sub_expression -> expression . MINUS expression
+    (70) add_expression -> expression . + expression
+    (71) sub_expression -> expression . - expression
     (72) mul_expression -> expression . * expression
     (73) div_expression -> expression . / expression
     (74) dot_add_expression -> expression . DOTADD expression
@@ -4312,8 +4312,8 @@ state 129
     (77) dot_div_expression -> expression . DOTDIV expression
 
     )               reduce using rule 17 (bool_expression -> expression comparison_op expression .)
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
+    +               shift and go to state 82
+    -               shift and go to state 83
     *               shift and go to state 84
     /               shift and go to state 85
     DOTADD          shift and go to state 86
@@ -4376,8 +4376,8 @@ state 133
 
     (55) array_special_specifier -> ( id_or_number ) .
 
-    PLUS            reduce using rule 55 (array_special_specifier -> ( id_or_number ) .)
-    MINUS           reduce using rule 55 (array_special_specifier -> ( id_or_number ) .)
+    +               reduce using rule 55 (array_special_specifier -> ( id_or_number ) .)
+    -               reduce using rule 55 (array_special_specifier -> ( id_or_number ) .)
     *               reduce using rule 55 (array_special_specifier -> ( id_or_number ) .)
     /               reduce using rule 55 (array_special_specifier -> ( id_or_number ) .)
     DOTADD          reduce using rule 55 (array_special_specifier -> ( id_or_number ) .)
@@ -4422,8 +4422,8 @@ state 135
 
     (54) array_special -> EYE ( id_or_number ) .
 
-    PLUS            reduce using rule 54 (array_special -> EYE ( id_or_number ) .)
-    MINUS           reduce using rule 54 (array_special -> EYE ( id_or_number ) .)
+    +               reduce using rule 54 (array_special -> EYE ( id_or_number ) .)
+    -               reduce using rule 54 (array_special -> EYE ( id_or_number ) .)
     *               reduce using rule 54 (array_special -> EYE ( id_or_number ) .)
     /               reduce using rule 54 (array_special -> EYE ( id_or_number ) .)
     DOTADD          reduce using rule 54 (array_special -> EYE ( id_or_number ) .)
@@ -4468,8 +4468,8 @@ state 138
 
     (56) array_special_specifier -> ( id_or_number , id_or_number ) .
 
-    PLUS            reduce using rule 56 (array_special_specifier -> ( id_or_number , id_or_number ) .)
-    MINUS           reduce using rule 56 (array_special_specifier -> ( id_or_number , id_or_number ) .)
+    +               reduce using rule 56 (array_special_specifier -> ( id_or_number , id_or_number ) .)
+    -               reduce using rule 56 (array_special_specifier -> ( id_or_number , id_or_number ) .)
     *               reduce using rule 56 (array_special_specifier -> ( id_or_number , id_or_number ) .)
     /               reduce using rule 56 (array_special_specifier -> ( id_or_number , id_or_number ) .)
     DOTADD          reduce using rule 56 (array_special_specifier -> ( id_or_number , id_or_number ) .)

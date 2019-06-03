@@ -35,9 +35,8 @@ class Parser:
         ("left", "ELSE"),
         ("nonassoc", '=', "ADDASSIGN", "SUBASSIGN", "MULASSIGN", "DIVASSIGN"),
         ("nonassoc", '<', '>', "EQ", "NEQ", "LEQ", "GEQ"),
-        ("left", 'PLUS', 'MINUS', "DOTADD", "DOTSUB"),
+        ("left", '+', '-', "DOTADD", "DOTSUB"),
         ("left", '*', '/', "DOTMUL", "DOTDIV"),
-        ("nonassoc", "MINUS"),
         ("nonassoc", "'")
     )
 
@@ -235,7 +234,7 @@ class Parser:
 
     # 4.4 Unary negation
     def p_negation(self, p):
-        """negation : MINUS expression"""
+        """negation : '-' expression"""
         p[0] = AST.Negation(p[2])
         p[0].line = self.lexer.lexer.lineno
 
@@ -260,12 +259,12 @@ class Parser:
         p[0] = p[1]
 
     def p_add_expression(self, p):
-        """add_expression : expression PLUS expression"""
+        """add_expression : expression '+' expression"""
         p[0] = AST.BinExpr(p[2], p[1], p[3])
         p[0].line = self.lexer.lexer.lineno
 
     def p_sub_expression(self, p):
-        """sub_expression : expression MINUS expression"""
+        """sub_expression : expression '-' expression"""
         p[0] = AST.BinExpr(p[2], p[1], p[3])
         p[0].line = self.lexer.lexer.lineno
 
