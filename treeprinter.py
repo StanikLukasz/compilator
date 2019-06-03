@@ -84,9 +84,8 @@ class TreePrinter:
 
     @addToClass(AST.CodeBlock)
     def printTree(self, indent=0):
-        TreePrinter.printIndented('{', indent)
+        TreePrinter.printIndented('CODE_BLOCK', indent)
         self.program.printTree(indent + 1)
-        TreePrinter.printIndented('}', indent)
 
 # 2.1 Condition statements
     @addToClass(AST.Condition)

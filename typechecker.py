@@ -131,7 +131,7 @@ class TypeChecker(NodeVisitor):
                 return
 
         try:
-            self.visit(_value)
+            _value = self.visit(_value)
         except TypeError:
             return
 
@@ -186,16 +186,21 @@ class TypeChecker(NodeVisitor):
 
 # 4.3 Array transposition
     def visit_Transposition(self, node):
-        pass
+        _argument = node.argument
+        self.visit(_argument)
+        if not isinstance(_argument, AST.Number): #todo and not isinstance(_expression, AST.Array):
+            print('Semantic error at line {}:s Cannot negate anything else than number'.format(node.line))
+            raise TypeError
+        return node.argument
 
 # 4.4 Unary negation
     def visit_Negation(self, node):
         _expression = node.expression
         self.visit(_expression)
         if not isinstance(_expression, AST.Number): #todo and not isinstance(_expression, AST.Array):
-            print('Semantic error at line {}: Cannot negate anything else than number'.format(node.line))
+            print('Semantic error at line {}:s Cannot negate anything else than number'.format(node.line))
             raise TypeError
-        return node.expression
+        return -node.expression
 
 # 4.5 Binary expressions
     def visit_BinExpr(self, node):
