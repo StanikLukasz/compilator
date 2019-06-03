@@ -37,6 +37,7 @@ class Parser:
         ("nonassoc", '<', '>', "EQ", "NEQ", "LEQ", "GEQ"),
         ("left", 'PLUS', 'MINUS', "DOTADD", "DOTSUB"),
         ("left", '*', '/', "DOTMUL", "DOTDIV"),
+        ("nonassoc", "MINUS"),
         ("nonassoc", "'")
     )
 
@@ -53,7 +54,7 @@ class Parser:
         """program : instruction_lines
                    | empty"""
         p[0] = AST.Program(p[1])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_empty(self, p):
         """empty : """
@@ -84,22 +85,22 @@ class Parser:
             p[0] = AST.IfElse(p[2], p[3])
         else:
             p[0] = AST.IfElse(p[2], p[3], p[5])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_while_loop(self, p):
         """while_loop : WHILE condition instruction_line"""
         p[0] = AST.WhileLoop(p[2], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_for_loop(self, p):
         """for_loop : FOR identifier '=' range instruction_line"""
         p[0] = AST.ForLoop(p[2], p[4], p[5])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_code_block(self, p):
         """code_block : '{' program '}' """
         p[0] = AST.CodeBlock(p[2])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     # 2.1 Condition statements
     def p_condition(self, p):
@@ -109,7 +110,7 @@ class Parser:
     def p_bool_expression(self, p):
         """bool_expression : expression comparison_op expression"""
         p[0] = AST.Condition(p[2], p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_comparison_op(self, p):
         """comparison_op : '<'
@@ -124,7 +125,7 @@ class Parser:
     def p_range(self, p):
         """range : id_or_number ':' id_or_number"""
         p[0] = AST.Range(p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
 
     ## 3. Instruction types
@@ -140,27 +141,27 @@ class Parser:
     def p_assignment(self, p):
         """assignment : identifier assignment_op expression"""
         p[0] = AST.Assignment(p[2], p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_printing(self, p):
         """printing : PRINT array_line"""
         p[0] = AST.Print(p[2])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_continue_statement(self, p):
         """continue_statement : CONTINUE"""
         p[0] = AST.Continue()
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_break_statement(self, p):
         """break_statement : BREAK"""
         p[0] = AST.Break()
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_returning(self, p):
         """returning : RETURN expression"""
         p[0] = AST.Return(p[2])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     # 3.1 Assignment operators
     def p_assignment_op(self, p):
@@ -189,7 +190,7 @@ class Parser:
     def p_array(self, p):
         """array : '[' array_lines ']' """
         p[0] = AST.Array(p[2])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_array_lines(self, p):
         """array_lines : array_lines ';' array_line
@@ -211,9 +212,11 @@ class Parser:
     def p_array_special(self, p):
         """array_special : ZEROS array_special_specifier
                          | ONES array_special_specifier
-                         | EYE array_special_specifier """
-        p[0] = AST.Function(p[1], p[2])
-        p[0].line = "todo"
+                         | EYE '(' id_or_number ')' """
+        if len(p) == 3:
+            p[0] = AST.Function(p[1], p[2])
+        else:
+            p[0] = AST.Function(p[1], [p[3]])
 
     def p_array_special_specifier(self, p):
         """array_special_specifier : '(' id_or_number ')'
@@ -228,13 +231,13 @@ class Parser:
         """transposition : identifier "'"
                          | array "'" """
         p[0] = AST.Transposition(p[1])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     # 4.4 Unary negation
     def p_negation(self, p):
         """negation : MINUS expression"""
         p[0] = AST.Negation(p[2])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     # 4.5 Binary expressions
     def p_expression_binary(self, p):
@@ -259,42 +262,42 @@ class Parser:
     def p_add_expression(self, p):
         """add_expression : expression PLUS expression"""
         p[0] = AST.BinExpr(p[2], p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_sub_expression(self, p):
         """sub_expression : expression MINUS expression"""
         p[0] = AST.BinExpr(p[2], p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_mul_expression(self, p):
         """mul_expression : expression '*' expression"""
         p[0] = AST.BinExpr(p[2], p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_div_expression(self, p):
         """div_expression : expression '/' expression"""
         p[0] = AST.BinExpr(p[2], p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_dot_add_expression(self, p):
         """dot_add_expression : expression DOTADD expression"""
         p[0] = AST.BinExpr(p[2], p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_dot_sub_expression(self, p):
         """dot_sub_expression : expression DOTSUB expression"""
         p[0] = AST.BinExpr(p[2], p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_dot_mul_expression(self, p):
         """dot_mul_expression : expression DOTMUL expression"""
         p[0] = AST.BinExpr(p[2], p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_dot_div_expression(self, p):
         """dot_div_expression : expression DOTDIV expression"""
         p[0] = AST.BinExpr(p[2], p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     # 4.6 Expressions in parenthesis
     def p_expression_group(self, p):
@@ -310,7 +313,7 @@ class Parser:
     def p_text(self, p):
         """text : STRING"""
         p[0] = AST.String(p[1])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_id_or_number(self, p):
         """id_or_number : identifier
@@ -324,7 +327,7 @@ class Parser:
             p[0] = AST.Identifier(p[1])
         else:
             p[0] = AST.Reference(p[1], p[3])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_number(self, p):
         """number : integer
@@ -334,7 +337,7 @@ class Parser:
     def p_integer(self, p):
         """integer : INTNUM"""
         p[0] = AST.Integer(p[1])
-        p[0].line = "todo"
+        p[0].line = self.lexer.lexer.lineno
 
     def p_real(self, p):
         """real : REALNUM"""
