@@ -88,12 +88,12 @@ class Interpreter(object):
     def visit(self, node):
         self.visit(node.program)
 
-    # 2.1 Condition statements
+# 2.1 Condition statements
     @when(AST.Condition)
     def visit(self, node):
         pass
 
-    # 2.2 Values range
+# 2.2 Values range
     @when(AST.Range)
     def visit(self, node):
         start = node.start_number.accept(self)
@@ -106,12 +106,39 @@ class Interpreter(object):
 
         return range(start, end)
 
-    ## 3. Instruction types
+## 3. Instruction types
 
     # TODO
+    # tutaj nei rozumiem zbytnio wszystkiego
     @when(AST.Assignment)
     def visit(self, node):
-        pass
+        right = None
+        left = node.left if isinstance(node.left, AST.Variable) else node.left.value
+        if node.op == "=":
+            right = node.right.accept(self)
+        elif node.op == "+=":
+            right = operator.add(right, node.right.accept(self))
+        elif node.op == "*=":
+            right = node.right.accept(self)
+            right = operator.mul(right, node.right.accept(self))
+        elif node.op == "/=":
+            right = node.right.accept(self)
+            right = operator.truediv(right, node.right.accept(self))
+        elif node.op == "-=":
+            right = node.right.accept(self)
+            right = operator.sub(right, node.right.accept(self))
+
+        if isinstance(node.left, AST.Variable):
+            variable = self.memory_stack.get(left.variable)
+            where = left.key.accept(self)
+            access = variable
+            for iterator in where[:-1]:
+                access = access[iterator]
+            access[-1] = right
+            self.memory_stack.insert((left.variable, variable))
+        else:
+            self.memory_stack.insert(left, right)
+
 
     @when(AST.Print)
     def visit(self, node):
@@ -130,28 +157,73 @@ class Interpreter(object):
     def visit(self, node):
         raise ReturnValueException(node.result.accept(self))
 
+# 3.1 Assignment operators
+# no AST classes for this part
 
+## 4. Expressions
 
-    @when(AST.BinOp)
-    def visit(self, node):
-        r1 = node.left.accept(self)
-        r2 = node.right.accept(self)
-        # try sth smarter than:
-        # if(node.op=='+') return r1+r2
-        # elsif(node.op=='-') ...
-        # but do not use python eval
-
-    @when(AST.Assignment)
+# 4.1 Array definition (and array lines used in other structures)
+    @when(AST.Array)  #TODO
     def visit(self, node):
         pass
-    #
-    #
 
-    # simplistic while loop interpretation
-    @when(AST.WhileInstr)
+# 4.2 Array special functions
+    @when(AST.Function)  #TODO
     def visit(self, node):
-        r = None
-        while node.cond.accept(self):
-            r = node.body.accept(self)
-        return r
+        pass
 
+# 4.3 Array transposition
+    @when(AST.Transposition)
+    def visit(self, node):
+        r = node.operand.accept(self)
+        return np.transpose(r)
+
+# 4.4 Unary negation
+    @when(AST.Negation)
+    def visit(self, node):
+        r = node.operand.accept(self)
+        return node.operand.neg(r)
+
+# 4.5 Binary expressions
+    @when(AST.BinExpr)  #TODO
+    def visit(self, node):
+        pass
+
+# 4.6 Expressions in parenthesis
+# no AST classes for this part
+
+# 4.7 Elementary types
+    @when(AST.String)  #TODO
+    def visit(self, node):
+        pass
+
+    @when(AST.Identifier)  #TODO
+    def visit(self, node):
+        pass
+
+    @when(AST.Reference)  #TODO
+    def visit(self, node):
+        pass
+
+    @when(AST.Integer)  #TODO
+    def visit(self, node):
+        pass
+
+    @when(AST.Real)  #TODO
+    def visit(self, node):
+        pass
+
+# X. Error raising
+
+    @when(AST.Error)
+    def visit(self, node):
+        pass
+
+
+    def get_scopes(self):
+        scopes = []
+        parent = self.scope
+        while parent:
+            scopes.append(parent.name)
+            parent = parent.parent
+        return scopes
