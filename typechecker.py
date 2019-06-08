@@ -133,7 +133,7 @@ class TypeChecker(NodeVisitor):
         try:
             _value = self.visit(_value)
         except TypeError:
-            print("Semantic error at line {}: Assignment value error".format(node.line))
+            print("DEBUG: wyebao TypeErrora w Assignment _value".format(node.line))
             return
 
         if isinstance(_id, AST.Variable) and isinstance(_value, AST.Value):
@@ -174,6 +174,7 @@ class TypeChecker(NodeVisitor):
             if len(vector) != row_size:
                 print('Semantic error at line {}: Incompatible row sizes in array'.format(node.line))
                 raise TypeError
+        return node
 
 # 4.2 Array special functions
     def visit_Function(self, node):
@@ -259,10 +260,24 @@ class TypeChecker(NodeVisitor):
         return node
 
     def visit_Identifier(self, node):
-        pass
+        return node
 
     def visit_Reference(self, node):
-        pass
+        variable = self.scope.symbols.get(node.name)
+        if not variable:
+            print('Semantic error at line {}: Identifier/Refernce used before initialization'.format(node.line))
+            raise TypeError
+
+        if not isinstance(variable, AST.Array):
+            print('Semantic error at line {}: Referenced to something what is not an array'.format(node.line))
+            raise TypeError
+
+        if len(node.indicies) == 1:
+            if len(variable.content) != 1:
+                print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, len(variable.content), len(node.indicies)))
+        elif len(node.indicies) == 2:
+            if len(variable.content) != 2:
+                print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, len(variable.content), len(node.indicies)))
 
     def visit_Integer(self, node):
         return node
