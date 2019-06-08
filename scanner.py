@@ -59,12 +59,12 @@ class Scanner:
         pass
 
     def t_REALNUM(self,t):
-        r'[-+]?(((\d+\.\d*)|(\d*\.\d+))([eE][-+]?\d+)?|\d+[eE][-+]?\d+)'
+        r'(((\d+\.\d*)|(\d*\.\d+))([eE][-+]?\d+)?|\d+[eE][-+]?\d+)'
         t.value = float(t.value)
         return t
 
     def t_INTNUM(self,t):
-        r'[-+]?\d+'
+        r'\d+'
         t.value = int(t.value)
         return t
 
