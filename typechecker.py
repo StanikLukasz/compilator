@@ -10,16 +10,16 @@ class Vector(object):
 bin_op_result = dict()
 
 for op in ['+', '-', '/', '*', '+=', '-=', '*=', '/=']:
-    bin_op_result[(op, 'int', 'int')] = 'int'
-    bin_op_result[(op, 'float', 'float')] = 'float'
-    bin_op_result[(op, 'int', 'float')] = 'float'
-    bin_op_result[(op, 'float', 'int')] = 'float'
+    bin_op_result[(op, AST.Integer, AST.Integer)] = AST.Integer
+    bin_op_result[(op, AST.Real, AST.Real)] = AST.Real
+    bin_op_result[(op, AST.Integer, AST.Real)] = AST.Real
+    bin_op_result[(op, AST.Real, AST.Integer)] = AST.Real
 
 for op in ['>', '<', '==', '!=', '>=', '<=']:
-    bin_op_result[(op, 'int', 'int')] = 'int'
-    bin_op_result[(op, 'float', 'float')] = 'int'
-    bin_op_result[(op, 'int', 'float')] = 'int'
-    bin_op_result[(op, 'float', 'int')] = 'int'
+    bin_op_result[(op, AST.Integer, AST.Integer)] = AST.Integer
+    bin_op_result[(op, AST.Real, AST.Real)] = AST.Integer
+    bin_op_result[(op, AST.Integer, AST.Real)] = AST.Integer
+    bin_op_result[(op, AST.Real, AST.Integer)] = AST.Integer
 
 for op in ['.+', '.-', './', '.*']:
     bin_op_result[(op, Vector.__name__, Vector.__name__)] = Vector.__name__
