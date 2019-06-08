@@ -5,7 +5,7 @@ from memory import *
 import exceptions
 from visit import *
 import sys
-
+from exceptions import *
 import operator
 import numpy as np
 
@@ -53,16 +53,16 @@ class Interpreter(object):
 ## 1. Initial rules
 
     @when(AST.Program)
-    def visit_Program(self, node):
+    def visit(self, node):
         self.visit(node.instruction_lines)
 
-    def visit_Empty(self, node):
+    def visit(self, node):
         pass
 
 ## 2. Statement types
 
     @when(AST.IfElse)
-    def visit_IfElse(self, node):
+    def visit(self, node):
         if node.condition.accept(self):
             return node.instruction_line.accept(self)
         else:
@@ -70,14 +70,14 @@ class Interpreter(object):
                 return node.instruction_line.accept(self)
 
     @when(AST.WhileLoop)
-    def visit_WhileLoop(self, node):
+    def visit(self, node):
         result = None
         while node.cond.accept(self):
             result = node.instruction.accept(self)
         return result
 
     @when(AST.ForLoop)
-    def visit_ForLoop(self, node):
+    def visit(self, node):
         result = None
         for iterator in node.range.accept(self):
             self.memory_stack.insert((node.iterator, iterator))
@@ -85,11 +85,50 @@ class Interpreter(object):
         return result
 
     @when(AST.CodeBlock)
-    def visit_CodeBlock(self, node):
+    def visit(self, node):
         self.visit(node.program)
 
+    # 2.1 Condition statements
+    @when(AST.Condition)
+    def visit(self, node):
+        pass
 
+    # 2.2 Values range
+    @when(AST.Range)
+    def visit(self, node):
+        start = node.start_number.accept(self)
+        end = node.end_number.accept(self)
 
+        if type(start) == str:
+            start = self.memory_stack.get(start)
+        if type(end) == str:
+            end = self.memory_stack.get(end)
+
+        return range(start, end)
+
+    ## 3. Instruction types
+
+    # TODO
+    @when(AST.Assignment)
+    def visit(self, node):
+        pass
+
+    @when(AST.Print)
+    def visit(self, node):
+        for iterator in node.array_line:
+            print(iterator.accept(self))
+
+    @when(AST.Condition)
+    def visit(self, node):
+        raise ContinueException()
+
+    @when(AST.Break)
+    def visit(self, node):
+        raise BreakException()
+
+    @when(AST.Return)
+    def visit(self, node):
+        raise ReturnValueException(node.result.accept(self))
 
 
 

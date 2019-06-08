@@ -260,7 +260,7 @@ class TypeChecker(NodeVisitor):
         return node
 
     def visit_Identifier(self, node):
-        pass
+        return node
 
     def visit_Reference(self, node):
         variable = self.scope.symbols.get(node.name)
