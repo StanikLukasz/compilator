@@ -107,8 +107,16 @@ class Return(Node):
 # 4.1 Array definition (and array lines used in other structures)
 # todo: Array(Value)
 class Array(Node):
-    def __init__(self, content):
+    def __init__(self, content, rows=None, columns=None):
         self.content = content
+        if rows:
+            self.rows = rows
+        else:
+            self.rows = len(content)
+        if columns:
+            self.columns = columns
+        else:
+            self.columns = len(content[0])
 
 # 4.2 Array special functions
 class Function(Node):
