@@ -28,7 +28,12 @@ for op in ['.+', '.-', './', '.*']:
     bin_op_result[('/', AST.Array, AST.Array)] = AST.Array
     bin_op_result[('*=', AST.Array, AST.Array)] = AST.Array
     bin_op_result[('/=', AST.Array, AST.Array)] = AST.Array
-
+    bin_op_result[('*', AST.Integer, AST.Array)] = AST.Array
+    bin_op_result[('*', AST.Array, AST.Integer)] = AST.Array
+    bin_op_result[('*', AST.Real, AST.Array)] = AST.Array
+    bin_op_result[('*', AST.Array, AST.Real)] = AST.Array
+    bin_op_result[('/', AST.Array, AST.Integer)] = AST.Array
+    bin_op_result[('/', AST.Array, AST.Real)] = AST.Array
 
 
 class NodeVisitor(object):
@@ -127,31 +132,29 @@ class TypeChecker(NodeVisitor):
         _id = node.identifier
         _value = node.expression
         _op = node.op
-
         if not isinstance(_id, AST.Variable):
             print('Semantic error at line {}: Cannot assign to something what is not a variable'.format(node.line))
             try:
                 _id = self.visit(_id)
             except:
                 _id = None
-
         try:
             _value = self.visit(_value)
         except TypeError:
-#            print("DEBUG: wyebao TypeErrora w Assignment _value".format(node.line))
+            #print("DEBUG: TypeError raised while visiting _value".format(node.line))
             return
-
+        if _value == None:
+            print("Pan Koloczek")
         if isinstance(_value, AST.Variable):
             if _value.name not in self.scope.symbols.keys():
                 print('Semantic error at line {}: Identifier/Reference used before initialization'.format(node.line))
                 return
-
         if isinstance(_id, AST.Variable) and isinstance(_value, AST.Value):
                 self.scope.put(_id.name, _value)
-#                print('DEBUG: self.scope.put({},{})'.format(_id.name, _value))
+               # print('DEBUG: self.scope.put({},{})'.format(_id.name, _value))
         elif isinstance(_id, AST.Variable) and isinstance(_value, AST.Array):
                 self.scope.put(_id.name, _value)
-#                print('DEBUG: self.scope.put({},{})'.format(_id.name, _value))
+               # print('DEBUG: self.scope.put({},{})'.format(_id.name, _value))
 
     def visit_Print(self, node):
         self.visit(node.array_line)
@@ -193,15 +196,17 @@ class TypeChecker(NodeVisitor):
             columns = node.arguments[1].value
         else:
             columns = rows
+        row = [AST.Integer(None)] * columns
+        array = [row] * rows
         if (node.name == "zeros"):
             # print("DEBUG: created an array of zeros [{},{}]".format(rows, columns))
-            return AST.Array(None, rows, columns)
+            return AST.Array(array, rows, columns)
         if (node.name == "ones"):
             # print("DEBUG: created an array of ones [{},{}]".format(rows, columns))
-            return AST.Array(None, rows, columns)
+            return AST.Array(array, rows, columns)
         if (node.name == "eye"):
             # print("DEBUG: created an eye array [{},{}]".format(rows, columns))
-            return AST.Array(None, rows, columns)
+            return AST.Array(array, rows, columns)
         print('Semantic error at line {}: Unknown function used'.format(node.line))
 
 # 4.3 Array transposition
@@ -236,6 +241,7 @@ class TypeChecker(NodeVisitor):
         op_left_right = (op, left_type, right_type)
         if op_left_right not in bin_op_result.keys():
             print('Semantic error at line {}: Operation {} not supported between operands of types {} and {}'.format(node.line, op, left_type, right_type))
+            raise TypeError
         elif left_type == AST.Array and right_type == AST.Array:
             if op in ('.+', '.-', '.*', './'):
                 if left.rows != right.rows or left.columns != right.columns:
@@ -247,6 +253,10 @@ class TypeChecker(NodeVisitor):
                     print('Semantic error at line {}: Operation {} needs arrays sizes [axb] and [bxc]. Given array 1: [{}x{}], array 2: [{}x{}]'.format(node.line, op, left.rows, left.columns, right.rows, right.columns))
                     raise TypeError
                 return AST.Array(None, left.rows, right.columns)
+        elif left_type == AST.Array and right_type in (AST.Integer, AST.Real):
+            return AST.Array(None, left.rows, left.columns)
+        elif left_type in (AST.Integer, AST.Real) and right_type == AST.Array:
+            return AST.Array(None, right.rows, right.columns)
         else:
             result_type = bin_op_result[op_left_right]
             if result_type == AST.Integer:
@@ -278,9 +288,16 @@ class TypeChecker(NodeVisitor):
             print('Semantic error at line {}: Referenced to something what is not an array'.format(node.line))
             raise TypeError
 
+        array_depth = 0
+        array = variable
+        while isinstance(array.content, list):
+            array.content = array.content[0]
+            array_depth = array_depth + 1
+
         if len(node.indicies) == 1:
-            if len(variable.content) != 1:
+            if variable.rows != 1:
                 print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, variable.rows, len(node.indicies)))
+                raise TypeError
             try:
                 row_vector = variable.content[0]
                 referenced_element = row_vector[node.indicies[0].value]
@@ -288,9 +305,10 @@ class TypeChecker(NodeVisitor):
             except IndexError:
                 print('Semantic error at line {}: Referenced index {} of an array of size {}'.format(node.line, node.indicies[0].value, variable.columns))
                 raise TypeError
-        elif len(node.indicies) == 2:
-            if len(variable.content) != 2:
+        elif len(node.indicies) == 2 and node.indicies[0] != 0:
+            if variable.rows < 2:
                 print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, variable.rows, len(node.indicies)))
+                raise TypeError
             try:
                 row_vector = variable.content[node.indicies[0].value]
                 referenced_element = row_vector[node.indicies[1].value]
@@ -298,7 +316,9 @@ class TypeChecker(NodeVisitor):
             except IndexError:
                 print('Semantic error at line {}: Referenced index [{},{}] of an array of size [{},{}]'.format(node.line, node.indicies[0].value, node.indicies[1].value, variable.rows, variable.columns))
                 raise TypeError
-
+        elif len(node.indicies) != array_depth:
+            print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, variable.rows, len(node.indicies)))
+            raise TypeError
 
     def visit_Integer(self, node):
         return node
