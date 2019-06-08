@@ -3,6 +3,8 @@
 import AST
 import symboltable
 
+from copy import deepcopy
+
 class Vector(object):
     def __init__(self, size):
         self.size = size
@@ -289,14 +291,14 @@ class TypeChecker(NodeVisitor):
             raise TypeError
 
         array_depth = 0
-        array = variable
+        array = deepcopy(variable)
         while isinstance(array.content, list):
             array.content = array.content[0]
             array_depth = array_depth + 1
 
         if len(node.indicies) == 1:
             if variable.rows != 1:
-                print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, variable.rows, len(node.indicies)))
+                print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, array_depth, len(node.indicies)))
                 raise TypeError
             try:
                 row_vector = variable.content[0]
@@ -307,7 +309,7 @@ class TypeChecker(NodeVisitor):
                 raise TypeError
         elif len(node.indicies) == 2 and node.indicies[0] != 0:
             if variable.rows < 2:
-                print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, variable.rows, len(node.indicies)))
+                print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, array_depth, len(node.indicies)))
                 raise TypeError
             try:
                 row_vector = variable.content[node.indicies[0].value]
@@ -317,7 +319,7 @@ class TypeChecker(NodeVisitor):
                 print('Semantic error at line {}: Referenced index [{},{}] of an array of size [{},{}]'.format(node.line, node.indicies[0].value, node.indicies[1].value, variable.rows, variable.columns))
                 raise TypeError
         elif len(node.indicies) != array_depth:
-            print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, variable.rows, len(node.indicies)))
+            print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, array_depth, len(node.indicies)))
             raise TypeError
 
     def visit_Integer(self, node):
