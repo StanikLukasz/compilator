@@ -44,11 +44,54 @@ class Interpreter(object):
             'ONES': np.ones,
         }
 
-
+# 0. Base Node class
 
     @on('node')
     def visit(self, node):
         pass
+
+## 1. Initial rules
+
+    @when(AST.Program)
+    def visit_Program(self, node):
+        self.visit(node.instruction_lines)
+
+    def visit_Empty(self, node):
+        pass
+
+## 2. Statement types
+
+    @when(AST.IfElse)
+    def visit_IfElse(self, node):
+        if node.condition.accept(self):
+            return node.instruction_line.accept(self)
+        else:
+            if node.else_instruction(self):
+                return node.instruction_line.accept(self)
+
+    @when(AST.WhileLoop)
+    def visit_WhileLoop(self, node):
+        result = None
+        while node.cond.accept(self):
+            result = node.instruction.accept(self)
+        return result
+
+    @when(AST.ForLoop)
+    def visit_ForLoop(self, node):
+        result = None
+        for iterator in node.range.accept(self):
+            self.memory_stack.insert((node.iterator, iterator))
+            result = node.instruction.accept(self)
+        return result
+
+    @when(AST.CodeBlock)
+    def visit_CodeBlock(self, node):
+        self.visit(node.program)
+
+
+
+
+
 
     @when(AST.BinOp)
     def visit(self, node):
