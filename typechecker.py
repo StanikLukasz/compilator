@@ -10,16 +10,16 @@ class Vector(object):
 bin_op_result = dict()
 
 for op in ['+', '-', '/', '*', '+=', '-=', '*=', '/=']:
-    bin_op_result[(op, 'int', 'int')] = 'int'
-    bin_op_result[(op, 'float', 'float')] = 'float'
-    bin_op_result[(op, 'int', 'float')] = 'float'
-    bin_op_result[(op, 'float', 'int')] = 'float'
+    bin_op_result[(op, AST.Integer, AST.Integer)] = AST.Integer
+    bin_op_result[(op, AST.Real, AST.Real)] = AST.Real
+    bin_op_result[(op, AST.Integer, AST.Real)] = AST.Real
+    bin_op_result[(op, AST.Real, AST.Integer)] = AST.Real
 
 for op in ['>', '<', '==', '!=', '>=', '<=']:
-    bin_op_result[(op, 'int', 'int')] = 'int'
-    bin_op_result[(op, 'float', 'float')] = 'int'
-    bin_op_result[(op, 'int', 'float')] = 'int'
-    bin_op_result[(op, 'float', 'int')] = 'int'
+    bin_op_result[(op, AST.Integer, AST.Integer)] = AST.Integer
+    bin_op_result[(op, AST.Real, AST.Real)] = AST.Integer
+    bin_op_result[(op, AST.Integer, AST.Real)] = AST.Integer
+    bin_op_result[(op, AST.Real, AST.Integer)] = AST.Integer
 
 for op in ['.+', '.-', './', '.*']:
     bin_op_result[(op, Vector.__name__, Vector.__name__)] = Vector.__name__
@@ -122,22 +122,24 @@ class TypeChecker(NodeVisitor):
         _id = node.identifier
         _value = node.expression
         _op = node.op
+        try:
+            _id = self.visit(_id)
+        except:
+            _id = None
 
-        _id = self.visit(_id)
-
-        if not isinstance(_id, AST.Variable):
+        if _id != None and not isinstance(_id, AST.Variable):
             print('Semantic error at line {}: Cannot assign to something what is not a variable'.format(node.line))
-
-        if isinstance(_value, AST.Variable):
-            if _value.name not in self.scope.symbols.keys():
-                print('Semantic error at line {}: Identifier/Refernce used before initialization'.format(node.line))
-                return
 
         try:
             _value = self.visit(_value)
         except TypeError:
             print("DEBUG: wyebao TypeErrora w Assignment _value".format(node.line))
             return
+
+        if isinstance(_value, AST.Variable):
+            if _value.name not in self.scope.symbols.keys():
+                print('Semantic error at line {}: Identifier/Reference used before initialization'.format(node.line))
+                return
 
         if isinstance(_id, AST.Variable) and isinstance(_value, AST.Value):
                 self.scope.put(_id.name, _value)
@@ -171,7 +173,7 @@ class TypeChecker(NodeVisitor):
 ## 4. Expressions
 
 # 4.1 Array definition (and array lines used in other structures)
-    def visit_Array(self, node):
+    def visit_Array(self, node): #todo: check if we don't have unassigned variables inside
         row_size = len(node.content[0])
         for vector in node.content[1:]:
             if len(vector) != row_size:
@@ -205,11 +207,12 @@ class TypeChecker(NodeVisitor):
 
 # 4.3 Array transposition
     def visit_Transposition(self, node):
-        _argument = node.argument
-        self.visit(_argument)
-        if not isinstance(_argument, AST.Number): #todo and not isinstance(_expression, AST.Array):
-            print('Semantic error at line {}:s Cannot negate anything else than number'.format(node.line))
+        argument = node.argument
+        argument = self.visit(argument)
+        if not isinstance(argument, AST.Array): #todo and not isinstance(_expression, AST.Array):
+            print('Semantic error at line {}: Cannot transpose anything else than array'.format(node.line))
             raise TypeError
+        argument.rows, argument.columns = argument.columns, argument.rows
         return node.argument
 
 # 4.4 Unary negation
@@ -225,8 +228,8 @@ class TypeChecker(NodeVisitor):
 # 4.5 Binary expressions
     def visit_BinExpr(self, node):
         result = {}
-        right = self.visit(node.left)  # type1 = node.left.accept(self)
-        left = self.visit(node.right)  # type2 = node.right.accept(self)
+        left = self.visit(node.left)  # type1 = node.left.accept(self)
+        right = self.visit(node.right)  # type2 = node.right.accept(self)
         right_type = right.get('type')
         left_type = left.get('type')
         op = node.op
@@ -264,9 +267,11 @@ class TypeChecker(NodeVisitor):
         return node
 
     def visit_Reference(self, node):
+        for index in node.indicies:
+            self.visit(index)
         variable = self.scope.symbols.get(node.name)
         if not variable:
-            print('Semantic error at line {}: Identifier/Refernce used before initialization'.format(node.line))
+            print('Semantic error at line {}: Identifier/Reference used before initialization'.format(node.line))
             raise TypeError
 
         if not isinstance(variable, AST.Array):
@@ -282,7 +287,7 @@ class TypeChecker(NodeVisitor):
                 return referenced_element
             except IndexError:
                 print('Semantic error at line {}: Referenced index {} of anarray of size {}'.format(node.line, node.indicies[0].value, len(variable.content[0])))
-                return None
+                raise TypeError
         elif len(node.indicies) == 2:
             if len(variable.content) != 2:
                 print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, len(variable.content), len(node.indicies)))
@@ -292,7 +297,7 @@ class TypeChecker(NodeVisitor):
                 return referenced_element
             except IndexError:
                 print('Semantic error at line {}: Referenced index [{},{}] of an array of size [{},{}]'.format(node.line, node.indicies[0].value, node.indicies[1].value, len(variable.content), len(variable.content[0])))
-                return None
+                raise TypeError
 
 
     def visit_Integer(self, node):
