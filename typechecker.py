@@ -207,11 +207,12 @@ class TypeChecker(NodeVisitor):
 
 # 4.3 Array transposition
     def visit_Transposition(self, node):
-        _argument = node.argument
-        _argument = self.visit(_argument)
-        if not isinstance(_argument, AST.Array): #todo and not isinstance(_expression, AST.Array):
+        argument = node.argument
+        argument = self.visit(argument)
+        if not isinstance(argument, AST.Array): #todo and not isinstance(_expression, AST.Array):
             print('Semantic error at line {}: Cannot transpose anything else than array'.format(node.line))
             raise TypeError
+        argument.rows, argument.columns = argument.columns, argument.rows
         return node.argument
 
 # 4.4 Unary negation
