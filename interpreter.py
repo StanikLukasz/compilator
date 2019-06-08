@@ -193,32 +193,34 @@ class Interpreter(object):
 # no AST classes for this part
 
 # 4.7 Elementary types
-    @when(AST.String)  #TODO
+    @when(AST.String)
     def visit(self, node):
-        pass
+        return node.value
 
-    @when(AST.Identifier)  #TODO
+    @when(AST.Identifier)
     def visit(self, node):
-        pass
+        return node.value
 
-    @when(AST.Reference)  #TODO
+    @when(AST.Reference)
     def visit(self, node):
-        pass
+        var = node.variable.accept(self)
+        for index in node.indicies:
+            var = var[index.accept(self)]
+        return var
 
-    @when(AST.Integer)  #TODO
+    @when(AST.Integer)
     def visit(self, node):
-        pass
+        return node.value
 
-    @when(AST.Real)  #TODO
+    @when(AST.Real)
     def visit(self, node):
-        pass
+        return node.value
 
 # X. Error raising
 
     @when(AST.Error)
     def visit(self, node):
         pass
-
 
     def get_scopes(self):
         scopes = []
