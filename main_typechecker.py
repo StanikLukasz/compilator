@@ -28,4 +28,4 @@ if __name__ == '__main__':
         ast = parser.parse(text, lexer=lexer)
         typeChecker.visit(ast)
     except ValueError as e:
-        print(e)
+        print("ERROR AT THE MAIN")
