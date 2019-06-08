@@ -123,7 +123,10 @@ class TypeChecker(NodeVisitor):
         _value = node.expression
         _op = node.op
 
-        self.visit(_id)
+        _id = self.visit(_id)
+
+        if not isinstance(_id, AST.Variable):
+            print('Semantic error at line {}: Cannot assign to something what is not a variable'.format(node.line))
 
         if isinstance(_value, AST.Variable):
             if _value.name not in self.scope.symbols.keys():
@@ -179,12 +182,10 @@ class TypeChecker(NodeVisitor):
 # 4.2 Array special functions
     def visit_Function(self, node):
         rows = node.arguments[0].value
-
         if len(node.arguments) == 2:
             columns = node.arguments[1].value
         else:
             columns = rows
-
         if (node.name == "zeros"):
             row = [0] * columns
             array = [row] * rows
@@ -275,9 +276,24 @@ class TypeChecker(NodeVisitor):
         if len(node.indicies) == 1:
             if len(variable.content) != 1:
                 print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, len(variable.content), len(node.indicies)))
+            try:
+                row_vector = variable.content[0]
+                referenced_element = row_vector[node.indicies[0].value]
+                return referenced_element
+            except IndexError:
+                print('Semantic error at line {}: Referenced index {} of anarray of size {}'.format(node.line, node.indicies[0].value, len(variable.content[0])))
+                return None
         elif len(node.indicies) == 2:
             if len(variable.content) != 2:
                 print('Semantic error at line {}: Referenced to a {}-dimensional array with {} indicies'.format(node.line, len(variable.content), len(node.indicies)))
+            try:
+                row_vector = variable.content[node.indicies[0].value]
+                referenced_element = row_vector[node.indicies[1].value]
+                return referenced_element
+            except IndexError:
+                print('Semantic error at line {}: Referenced index [{},{}] of an array of size [{},{}]'.format(node.line, node.indicies[0].value, node.indicies[1].value, len(variable.content), len(variable.content[0])))
+                return None
+
 
     def visit_Integer(self, node):
         return node
