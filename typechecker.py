@@ -7,22 +7,22 @@ class Vector(object):
     def __init__(self, size):
         self.size = size
 
-op_and_type_map = dict()
+bin_op_result = dict()
 
 for op in ['+', '-', '/', '*', '+=', '-=', '*=', '/=']:
-    op_and_type_map[(op, 'int', 'int')] = 'int'
-    op_and_type_map[(op, 'float', 'float')] = 'float'
-    op_and_type_map[(op, 'int', 'float')] = 'float'
-    op_and_type_map[(op, 'float', 'int')] = 'float'
+    bin_op_result[(op, 'int', 'int')] = 'int'
+    bin_op_result[(op, 'float', 'float')] = 'float'
+    bin_op_result[(op, 'int', 'float')] = 'float'
+    bin_op_result[(op, 'float', 'int')] = 'float'
 
 for op in ['>', '<', '==', '!=', '>=', '<=']:
-    op_and_type_map[(op, 'int', 'int')] = 'int'
-    op_and_type_map[(op, 'float', 'float')] = 'int'
-    op_and_type_map[(op, 'int', 'float')] = 'int'
-    op_and_type_map[(op, 'float', 'int')] = 'int'
+    bin_op_result[(op, 'int', 'int')] = 'int'
+    bin_op_result[(op, 'float', 'float')] = 'int'
+    bin_op_result[(op, 'int', 'float')] = 'int'
+    bin_op_result[(op, 'float', 'int')] = 'int'
 
 for op in ['.+', '.-', './', '.*']:
-    op_and_type_map[(op, Vector.__name__, Vector.__name__)] = Vector.__name__
+    bin_op_result[(op, Vector.__name__, Vector.__name__)] = Vector.__name__
 
 
 
@@ -133,18 +133,16 @@ class TypeChecker(NodeVisitor):
         try:
             _value = self.visit(_value)
         except TypeError:
+            print("Semantic error at line {}: Assignment value error'.format(node.line)")
             return
 
-        if isinstance(_value, AST.Value):
-            if isinstance(_id, AST.Variable):
+        if isinstance(_id, AST.Variable) and isinstance(_value, AST.Value):
                 self.scope.put(_id.name, _value.value)
                 print('DEBUG: self.scope.put({},{})'.format(_id.name, _value.value))
-        elif isinstance(_value, AST.Array):
-            if isinstance(_id, AST.Variable):
+        elif isinstance(_id, AST.Variable) and isinstance(_value, AST.Array):
                 self.scope.put(_id.name, _value.content)
                 print('DEBUG: self.scope.put({},{})'.format(_id.name, _value.content))
-        elif isinstance(_value, AST.Negation):
-            if isinstance(_id, AST.Variable):
+        elif isinstance(_id, AST.Variable) and isinstance(_value, AST.Negation):
                 self.scope.put(_id.name, -_value.expression.value)
                 print('DEBUG: self.scope.put({},{})'.format(_id.name, -_value.expression.value))
 
@@ -200,7 +198,8 @@ class TypeChecker(NodeVisitor):
         if not isinstance(_expression, AST.Number): #todo and not isinstance(_expression, AST.Array):
             print('Semantic error at line {}:s Cannot negate anything else than number'.format(node.line))
             raise TypeError
-        return -node.expression
+        node.expression.value = -node.expression.value
+        return node.expression
 
 # 4.5 Binary expressions
     def visit_BinExpr(self, node):
@@ -211,7 +210,7 @@ class TypeChecker(NodeVisitor):
         left_type = left.get('type')
         op = node.op
         key = (op, left_type, right_type)
-        if key not in op_and_type_map.key():
+        if key not in bin_op_result.key():
             print('niewspierana operacja badz typ')
         elif left_type is 'Vector' and right_type is 'Vector':
             dim1 = right.get('size')
@@ -230,7 +229,7 @@ class TypeChecker(NodeVisitor):
             else:
                 print("incompatible types line")
         else:
-            result['type'] = op_and_type_map[(op, left_type, right_type)]
+            result['type'] = bin_op_result[(op, left_type, right_type)]
         return result
 
 # 4.6 Expressions in parenthesis
@@ -238,7 +237,7 @@ class TypeChecker(NodeVisitor):
 
 # 4.7 Elementary types
     def visit_String(self, node):
-        pass
+        return node
 
     def visit_Identifier(self, node):
         pass
@@ -247,10 +246,10 @@ class TypeChecker(NodeVisitor):
         pass
 
     def visit_Integer(self, node):
-        pass
+        return node
 
     def visit_Real(self, node):
-        pass
+        return node
 
 
 # X. Error raising
