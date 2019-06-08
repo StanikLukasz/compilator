@@ -133,18 +133,15 @@ class TypeChecker(NodeVisitor):
         try:
             _value = self.visit(_value)
         except TypeError:
-            print("Semantic error at line {}: Assignment value error'.format(node.line)")
+            print("Semantic error at line {}: Assignment value error".format(node.line))
             return
 
         if isinstance(_id, AST.Variable) and isinstance(_value, AST.Value):
-                self.scope.put(_id.name, _value.value)
-                print('DEBUG: self.scope.put({},{})'.format(_id.name, _value.value))
+                self.scope.put(_id.name, _value)
+                print('DEBUG: self.scope.put({},{})'.format(_id.name, _value))
         elif isinstance(_id, AST.Variable) and isinstance(_value, AST.Array):
-                self.scope.put(_id.name, _value.content)
-                print('DEBUG: self.scope.put({},{})'.format(_id.name, _value.content))
-        elif isinstance(_id, AST.Variable) and isinstance(_value, AST.Negation):
-                self.scope.put(_id.name, -_value.expression.value)
-                print('DEBUG: self.scope.put({},{})'.format(_id.name, -_value.expression.value))
+                self.scope.put(_id.name, _value)
+                print('DEBUG: self.scope.put({},{})'.format(_id.name, _value))
 
     def visit_Print(self, node):
         self.visit(node.array_line)
@@ -180,7 +177,29 @@ class TypeChecker(NodeVisitor):
 
 # 4.2 Array special functions
     def visit_Function(self, node):
-        pass
+        rows = node.arguments[0].value
+
+        if len(node.arguments) == 2:
+            columns = node.arguments[1].value
+        else:
+            columns = rows
+
+        if (node.name == "zeros"):
+            row = [0] * columns
+            array = [row] * rows
+            print("DEBUG: created an array of zeros [{},{}]".format(rows, columns))
+            return AST.Array(array)
+        if (node.name == "ones"):
+            row = [1] * columns
+            array = [row] * rows
+            print("DEBUG: created an array of ones [{},{}]".format(rows, columns))
+            return AST.Array(array)
+        if (node.name == "eye"):
+            row = [0] * columns
+            array = [row] * rows
+            print("DEBUG: created an array of zeros [{},{}]".format(rows, columns))
+            return AST.Array(array)
+        print('Semantic error at line {}: Unknown function used'.format(node.line))
 
 # 4.3 Array transposition
     def visit_Transposition(self, node):
