@@ -150,8 +150,8 @@ class TypeChecker(NodeVisitor):
         for number in (start_number, end_number):
             if not isinstance(number, AST.Integer):
                 print('Semantic error at line {}: Cannot build a range between not Integer values'.format(node.line))
-        # if start_number.value >= end_number.value:
-        #     print('Semantic error at line {}: Cannot build a decrementic range'.format(node.line))
+        if start_number.value >= end_number.value:
+            print('Semantic error at line {}: Cannot build a decrementic range'.format(node.line))
         return start_number
 
 
