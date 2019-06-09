@@ -105,7 +105,7 @@ class TypeChecker(NodeVisitor):
     def visit_ForLoop(self, node):
         range = self.visit(node.range)
         self.scope = self.scope.push_scope('ForLoop')
-        self.scope.put(node.iterator, range)
+        self.scope.put(node.iterator.name, range)
         self.visit(node.instruction)
         self.scope = self.scope.pop_scope()
 
