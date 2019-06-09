@@ -25,6 +25,9 @@ class Node(object):
         self.line = 0
         self.column = 0
 
+    def accept(self, visitor):
+        return visitor.visit(self)
+
 
 ## 1. Initial rules
 
