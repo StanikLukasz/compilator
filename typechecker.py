@@ -145,20 +145,19 @@ class TypeChecker(NodeVisitor):
         try:
             _value = self.visit(_value)
         except TypeError:
-            #print("DEBUG: TypeError raised while visiting _value".format(node.line))
+            # print("DEBUG (line {}): TypeError raised while visiting _value".format(node.line))
             return
-        if _value == None:
-            print("Pan Koloczek")
+
         if isinstance(_value, AST.Variable):
             if _value.name not in self.scope.symbols.keys():
                 print('Semantic error at line {}: Identifier/Reference used before initialization'.format(node.line))
                 return
         if isinstance(_id, AST.Variable) and isinstance(_value, AST.Value):
                 self.scope.put(_id.name, _value)
-               # print('DEBUG: self.scope.put({},{})'.format(_id.name, _value))
+                # print('DEBUG (line {}): self.scope.put({},{})'.format(node.line, _id.name, _value))
         elif isinstance(_id, AST.Variable) and isinstance(_value, AST.Array):
                 self.scope.put(_id.name, _value)
-               # print('DEBUG: self.scope.put({},{})'.format(_id.name, _value))
+               # print('DEBUG (line {}): self.scope.put({},{})'.format(node.line, _id.name, _value))
 
     def visit_Print(self, node):
         self.visit(node.array_line)
@@ -203,13 +202,13 @@ class TypeChecker(NodeVisitor):
         row = [AST.Integer(None)] * columns
         array = [row] * rows
         if (node.name == "zeros"):
-            # print("DEBUG: created an array of zeros [{},{}]".format(rows, columns))
+            # print("DEBUG (line {}): created an array of zeros [{},{}]".format(node.line, rows, columns))
             return AST.Array(array, rows, columns)
         if (node.name == "ones"):
-            # print("DEBUG: created an array of ones [{},{}]".format(rows, columns))
+            # print("DEBUG (line {}): created an array of ones [{},{}]".format(node.line, rows, columns))
             return AST.Array(array, rows, columns)
         if (node.name == "eye"):
-            # print("DEBUG: created an eye array [{},{}]".format(rows, columns))
+            # print("DEBUG (line {}): created an eye array [{},{}]".format(node.line, rows, columns))
             return AST.Array(array, rows, columns)
         print('Semantic error at line {}: Unknown function used'.format(node.line))
 
