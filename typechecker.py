@@ -197,9 +197,9 @@ class TypeChecker(NodeVisitor):
 
 # 4.2 Array special functions
     def visit_Function(self, node):
-        rows = node.arguments[0].value
+        rows = self.visit(node.arguments[0]).value
         if len(node.arguments) == 2:
-            columns = node.arguments[1].value
+            columns = self.visit(node.arguments[1]).value
         else:
             columns = rows
         row = [AST.Integer(None)] * columns
