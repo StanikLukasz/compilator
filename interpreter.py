@@ -30,18 +30,18 @@ class Interpreter(object):
             "<=": operator.le,
             ">=": operator.ge,
             "==": operator.eq,
-            "!=": operator.ne,
+            "!=": operator.ne
         }
 
         self.unary_operations = {
             "-": operator.neg,
-            "'": np.transpose,
+            "'": np.transpose
         }
 
         self.functions = {
             'EYE': np.eye,
             'ZEROS': np.zeros,
-            'ONES': np.ones,
+            'ONES': np.ones
         }
 
 # 0. Base Node class
@@ -55,9 +55,6 @@ class Interpreter(object):
     @when(AST.Program)
     def visit(self, node):
         self.visit(node.instruction_lines)
-
-    def visit(self, node):
-        pass
 
 ## 2. Statement types
 
@@ -145,7 +142,7 @@ class Interpreter(object):
         for iterator in node.array_line:
             print(iterator.accept(self))
 
-    @when(AST.Condition)
+    @when(AST.Continue)
     def visit(self, node):
         raise ContinueException()
 

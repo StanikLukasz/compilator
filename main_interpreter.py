@@ -1,5 +1,4 @@
 import sys
-import ply.yacc as yacc
 import scanner
 import parser
 import treeprinter
@@ -18,7 +17,9 @@ if __name__ == '__main__':
     lexer = scanner.Scanner()
     lexer.build()
 
-    parser = parser.parser
+    parser = parser.Parser(lexer)
+    parser.build()
+
     text = file.read()
 
     typeChecker = typechecker.TypeChecker()
@@ -34,5 +35,3 @@ if __name__ == '__main__':
     # ast.accept(OptimizationPass1())
     # ast.accept(OptimizationPass2())
     # ast.accept(CodeGenerator())
-
-
