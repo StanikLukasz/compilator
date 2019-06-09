@@ -6,7 +6,7 @@ class Memory:
         self.memory = {}
 
     def has_key(self, name):  # variable name
-        return name in self.memory.key()
+        return name in self.memory.keys()
 
     def get(self, name):         # gets from memory current value of variable <name>
         return self.memory.get(name)
@@ -27,6 +27,7 @@ class MemoryStack:
         for i in indices:
             if self.stack[i].has_key(name):
                 return self.stack[i].get(name)
+        raise KeyError
 
     def insert(self, name, value): # inserts into memory stack variable <name> with value <value>
         self.stack[-1].put(name, value)
@@ -36,6 +37,7 @@ class MemoryStack:
         for i in indices:
             if self.stack[i].has_key(name):
                 self.stack[i].put(name,value)
+        raise KeyError
 
     def push(self, memory): # pushes memory <memory> onto the stack
         self.stack.append(memory)
