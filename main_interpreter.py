@@ -30,7 +30,8 @@ if __name__ == '__main__':
     except ValueError as e:
          print(e)
 
-    # ast.accept(Interpreter())
+    ast.accept(interpreter.Interpreter())
+    
     # in future
     # ast.accept(OptimizationPass1())
     # ast.accept(OptimizationPass2())

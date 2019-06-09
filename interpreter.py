@@ -54,7 +54,9 @@ class Interpreter(object):
 
     @when(AST.Program)
     def visit(self, node):
-        self.visit(node.instruction_lines)
+        print("lol")
+        # self.visit(node.instruction_lines)
+
 
 ## 2. Statement types
 
