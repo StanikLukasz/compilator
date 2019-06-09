@@ -26,16 +26,16 @@ for op in ['>', '<', '==', '!=', '>=', '<=']:
 for op in ['.+', '.-', './', '.*']:
     bin_op_result[(op, AST.Array, AST.Array)] = AST.Array
 
-    bin_op_result[('*', AST.Array, AST.Array)] = AST.Array
-    bin_op_result[('/', AST.Array, AST.Array)] = AST.Array
-    bin_op_result[('*=', AST.Array, AST.Array)] = AST.Array
-    bin_op_result[('/=', AST.Array, AST.Array)] = AST.Array
-    bin_op_result[('*', AST.Integer, AST.Array)] = AST.Array
-    bin_op_result[('*', AST.Array, AST.Integer)] = AST.Array
-    bin_op_result[('*', AST.Real, AST.Array)] = AST.Array
-    bin_op_result[('*', AST.Array, AST.Real)] = AST.Array
-    bin_op_result[('/', AST.Array, AST.Integer)] = AST.Array
-    bin_op_result[('/', AST.Array, AST.Real)] = AST.Array
+bin_op_result[('*', AST.Array, AST.Array)] = AST.Array
+bin_op_result[('/', AST.Array, AST.Array)] = AST.Array
+bin_op_result[('*=', AST.Array, AST.Array)] = AST.Array
+bin_op_result[('/=', AST.Array, AST.Array)] = AST.Array
+bin_op_result[('*', AST.Integer, AST.Array)] = AST.Array
+bin_op_result[('*', AST.Array, AST.Integer)] = AST.Array
+bin_op_result[('*', AST.Real, AST.Array)] = AST.Array
+bin_op_result[('*', AST.Array, AST.Real)] = AST.Array
+bin_op_result[('/', AST.Array, AST.Integer)] = AST.Array
+bin_op_result[('/', AST.Array, AST.Real)] = AST.Array
 
 
 class NodeVisitor(object):
