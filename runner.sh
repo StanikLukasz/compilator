@@ -14,5 +14,8 @@ case $1 in
 	lab4)
 		LAB=typechecker
 		;;
+	lab5)
+		LAB=interpreter
+		;;
 esac
 python main_$LAB.py examples/example$2_$3.m
