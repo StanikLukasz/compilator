@@ -41,7 +41,7 @@ class Parser:
     )
 
     # Error handling
-    def p_error(self, p):
+    def p_error(self, p): #TODO: no raising mode, just like the semantic errors are handled
         if p:
             raise ValueError("Syntax error at line {0}, column {1}: LexToken({2}, '{3}')".format(p.lineno, self.lexer.find_tok_column(p), p.type, p.value))
         else:
