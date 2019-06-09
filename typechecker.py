@@ -87,7 +87,10 @@ class TypeChecker(NodeVisitor):
 ## 2. Statement types
 
     def visit_IfElse(self, node):
-        self.visit(node.condition)
+        try:
+            self.visit(node.condition)
+        except TypeError:
+            pass
         self.scope = self.scope.push_scope('If')
         self.visit(node.instruction_line)
         self.scope = self.scope.pop_scope()
@@ -97,7 +100,10 @@ class TypeChecker(NodeVisitor):
             self.scope = self.scope.pop_scope()
 
     def visit_WhileLoop(self, node):
-        self.visit(node.condition)
+        try:
+            self.visit(node.condition)
+        except TypeError:
+            pass
         self.scope = self.scope.push_scope('WhileLoop')
         self.visit(node.instruction)
         self.scope = self.scope.pop_scope()
@@ -115,7 +121,26 @@ class TypeChecker(NodeVisitor):
         self.scope = self.scope.pop_scope()
 
 # 2.1 Condition statements
-    def visit_Condition(self, node):
+    def visit_Condition(self, node): #todo
+        both_sides_ok = True
+        try:
+            left = self.visit(node.left)
+        except TypeError:
+            both_sides_ok = False
+        try:
+            right = self.visit(node.right)
+        except TypeError:
+            both_sides_ok = False
+        if not both_sides_ok:
+            raise TypeError
+        left_type = type(left)
+        right_type = type(right)
+        op = node.op
+        # print("DEBUG (line {}): ".format(node.line), node.left, op, node.right)
+        op_left_right = (op, left_type, right_type)
+        if op_left_right not in bin_op_result.keys():
+            print('Semantic error at line {}: Operation {} not supported between operands of types {} and {}'.format(node.line, op, left_type, right_type))
+            raise TypeError
         pass
 
 # 2.2 Values range
@@ -237,7 +262,6 @@ class TypeChecker(NodeVisitor):
 
 # 4.5 Binary expressions
     def visit_BinExpr(self, node): #todo: dzielenie przez zero
-        result = {}
         both_sides_ok = True
         try:
             left = self.visit(node.left)
