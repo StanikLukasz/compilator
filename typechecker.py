@@ -275,10 +275,15 @@ class TypeChecker(NodeVisitor):
         return node
 
     def visit_Identifier(self, node):
+        # print("DEBUG (line {}): visiting id: {}".format(node.line, node.name))
         variable = self.scope.symbols.get(node.name)
+        if not variable:
+            print('Semantic error at line {}: Identifier/Reference {} used before initialization'.format(node.line, node.name))
+            raise TypeError
         return variable
 
     def visit_Reference(self, node):
+        # print("DEBUG (line {}): visiting ref: {}{}".format(node.line, node.name, node.indicies)) #todo map(.value, node.indicies)
         for index in node.indicies:
             self.visit(index)
         variable = self.scope.symbols.get(node.name)
