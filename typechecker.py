@@ -160,7 +160,10 @@ class TypeChecker(NodeVisitor):
                # print('DEBUG (line {}): self.scope.put({},{})'.format(node.line, _id.name, _value))
 
     def visit_Print(self, node):
-        self.visit(node.array_line)
+        try:
+            self.visit(node.array_line)
+        except TypeError:
+            pass
 
     def visit_Continue(self, node):
         scopes = self.get_scopes()
